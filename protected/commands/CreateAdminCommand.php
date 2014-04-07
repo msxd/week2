@@ -13,7 +13,7 @@ class CreateAdminCommand extends CConsoleCommand
 		$model->pass = $password;
 		$model->r_pass = $repeat_password;
 		$model->phone = $phone;
-		$model->approved = '1';
+		$model->approved = User::APPROVE_TRUE;
 
 		if ($model->save())
 			die('Success!\n');
