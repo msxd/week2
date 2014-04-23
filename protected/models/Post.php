@@ -108,6 +108,17 @@ class Post extends CActiveRecord
 		return $this;
 	}
 
+	public function getNew($pid)
+	{
+		$c = $this->getDbCriteria();
+		$c->addColumnCondition(array(
+			$this->getTableAlias() . '.id' => $pid,
+		));
+
+		return $this;
+
+	}
+
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 *
