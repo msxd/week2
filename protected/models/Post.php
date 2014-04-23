@@ -12,6 +12,7 @@
  * @property integer $user_id
  * @property integer $published
  * @property string $img_path
+ * @property User $user1
  */
 class Post extends CActiveRecord
 {
@@ -45,10 +46,10 @@ class Post extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('body, title, user_id', 'required'),
-			array('title, img_path', 'length', 'max'=>127),
+			array('title, img_path', 'length', 'max' => 127),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, body, title, created_at, updated_at, user_id', 'safe', 'on'=>'search'),
+			array('id, body, title, created_at, updated_at, user_id', 'safe', 'on' => 'search'),
 		);
 	}
 
@@ -60,6 +61,7 @@ class Post extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'user' => array(self::BELONGS_TO, 'User', 'user_id'),//имя => [тип связи, Модель, связывающая колонка ]
 		);
 	}
 
@@ -80,6 +82,32 @@ class Post extends CActiveRecord
 		);
 	}
 
+	public function defaultScope()
+	{
+		return array(
+			'order' => 't.id DESC'
+		);
+	}
+
+	public function published()
+	{
+		$c = $this->getDbCriteria();
+		$c->addColumnCondition(array(
+			$this->getTableAlias() . '.published' => '1',
+		));
+
+		return $this;
+	}
+
+	public function hotNews()
+	{
+		$c = $this->getDbCriteria();
+		//SELECT * FROM `posts` WHERE created_at BETWEEN Now()-interval 5 hour AND Now()
+		//$c->addCondition($this->getTableAlias() . '.created_-at', new CDbExpression('Now()-interval 5 hour'),new CDbExpression('Now()'));
+		$c->addCondition($this->getTableAlias().'.created_at BETWEEN Now()-interval 3 hour AND Now()');
+		return $this;
+	}
+
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 *
@@ -96,19 +124,19 @@ class Post extends CActiveRecord
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
-		$criteria=new CDbCriteria;
+		$criteria = new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('body',$this->body,true);
-		$criteria->compare('title',$this->title,true);
-		$criteria->compare('created_at',$this->created_at,true);
-		$criteria->compare('updated_at',$this->updated_at);
-		$criteria->compare('user_id',$this->user_id);
-		$criteria->compare('published',$this->published);
-		$criteria->compare('img_path',$this->img_path,true);
+		$criteria->compare('id', $this->id);
+		$criteria->compare('body', $this->body, true);
+		$criteria->compare('title', $this->title, true);
+		$criteria->compare('created_at', $this->created_at, true);
+		$criteria->compare('updated_at', $this->updated_at);
+		$criteria->compare('user_id', $this->user_id);
+		$criteria->compare('published', $this->published);
+		$criteria->compare('img_path', $this->img_path, true);
 
 		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
+			'criteria' => $criteria,
 		));
 	}
 
@@ -118,7 +146,7 @@ class Post extends CActiveRecord
 	 * @param string $className active record class name.
 	 * @return Post the static model class
 	 */
-	public static function model($className=__CLASS__)
+	public static function model($className = __CLASS__)
 	{
 		return parent::model($className);
 	}

@@ -24,7 +24,11 @@ class SiteController extends Controller
 	{
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
-		$this->render('index');
+
+		$all_posts = Post::model()->hotNews()->with('user')->findAll();
+
+
+		$this->render('index', array('posts' => $all_posts));
 	}
 
 	/**
@@ -109,7 +113,7 @@ class SiteController extends Controller
 
 	public function actionRegistration()
 	{
-		$model=new User('registration');
-		$this->render('registration',array('model'=>$model));
+		$model = new User('registration');
+		$this->render('registration', array('model' => $model));
 	}
 }

@@ -16,6 +16,7 @@
  * @property integer $role_id
  * @property integer $deleted
  * @property integer $approved
+ * @property Post[] $posts
  */
 class User extends CActiveRecord
 {
@@ -83,7 +84,9 @@ class User extends CActiveRecord
 	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
-		return array();
+		return array(
+			'post'=>array(self::HAS_MANY, 'Post', 'user_id')// имя => [self::has..., Model, связующая колонка в таблице модели]
+		);
 	}
 
 	/**
