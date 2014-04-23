@@ -32,12 +32,18 @@ $this->pageTitle = Yii::app()->name;
 		echo CHtml::link('Sign In', array('/site/login'), array('class' => 'btn btn-primary btn-lg', 'style' => 'margin-right:10px'));
 		echo CHtml::link('Sign Up', array('/site/registration'), array('class' => 'btn btn-primary btn-lg'));
 	} else {
-		if(isset($posts))
-		foreach($posts as $post){
-			echo $post->user->first_name." ".$post->id."<br/>";
-			echo $post->title."<br/>";
-			echo $post->body."<br/>". $post->created_at."<br/>";
+		if (isset($posts)) {
+			foreach ($posts as $post) {
+				echo $post->user->first_name . " " . CHtml::link($post->title,array('site/index&pid='.$post->id)) . "<br/>"
+					. $post->body . "<br/>" . $post->created_at . "<br/>";
+			}
 		}
+		if (isset($errors)) {
+			foreach ($errors as $error) {
+				echo $error;
+			}
+		}
+
 	}
 	?>
 </p>
