@@ -32,18 +32,8 @@ class User extends CActiveRecord
 
 	private $_identity;
 
-	public $id;
-	public $facebook_id;
-	public $email;
 	public $pass;
 	public $r_pass;
-	private $hashed_password;
-	public $phone;
-	public $first_name;
-	public $last_name;
-	public $role_id = 0;
-	public $deleted = 0;
-	public $approved = 0;
 
 	/**
 	 * @return string the associated database table name
@@ -109,6 +99,9 @@ class User extends CActiveRecord
 		);
 	}
 
+	public function getUser($mail){
+
+	}
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 *
@@ -130,7 +123,6 @@ class User extends CActiveRecord
 		$criteria->compare('id', $this->id);
 		$criteria->compare('facebook_id', $this->facebook_id, true);
 		$criteria->compare('email', $this->email, true);
-		$criteria->compare('hashed_password', $this->hashed_password, true);
 		$criteria->compare('phone', $this->phone, true);
 		$criteria->compare('first_name', $this->first_name, true);
 		$criteria->compare('last_name', $this->last_name, true);
@@ -159,18 +151,63 @@ class User extends CActiveRecord
 
 	public function login()
 	{
-		if ($this->_identity === null) {
-			$this->_identity = new UserIdentity($this->email, $this->hashed_password);
-			$this->_identity->authenticate();
+		$model = $this;
+		if ($this->email)
+		{
+			if ($model = self::findByAttributes(array('email'=>$this->email)))
+			{
+				if (!$model->validatePassword($this->pass))
+				{
+					$this->addError('password', 'Wrong login or password');
+					return false;
+				}
+			}
+			else
+			{
+				$this->addError('password', 'Wrong login or password');
+				return false;
+			}
 		}
-		if ($this->_identity->errorCode === UserIdentity::ERROR_NONE) {
-			$duration = 3600 * 24 * 30; // 30 days
-			Yii::app()->user->login($this->_identity, $duration);
-			return true;
-		} else
+
+		if (!$model->id)
+		{
+			$this->addError('email', 'User not found');
 			return false;
+		}
+		$identity = new UserIdentity($model);
+		$identity->authenticate();
+		Yii::app()->user->login($identity, 3600 * 24 * 365 * 5); // 5 лет
+		return true;
 	}
 
+	public function validatePassword($pass)
+	{
+		return $pass == $this->hashed_password;
+	}
+
+	public function regU()
+	{
+		$model = $this;
+		if($model = self::findByAttributes(array('email'=>$this->email))){
+			$this->addError('email','Данный адрес зарегистрирован');
+			return false;
+		}
+		if($this->pass!=$this->r_pass){
+			$this->addError('pass','Пароли не совпадают');
+			return false;
+		}
+		if(strlen($this->first_name)<2){
+			$this->addError('first_name','Введите полное имя');
+			return false;
+		}
+		if(strlen($this->last_name)<2){
+			$this->addError('first_name','Введите фамилию');
+			return false;
+		}
+		$this->hashed_password = $this->pass;
+		$this->save();
+		return $this->login();
+	}
 
 	public static function model($className = __CLASS__)
 	{

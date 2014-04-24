@@ -123,6 +123,10 @@ class Post extends CActiveRecord
 
 	}
 
+	public function edit($id){
+
+	}
+
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 *

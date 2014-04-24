@@ -4,7 +4,29 @@ class PostController extends Controller
 {
 	public function actionIndex()
 	{
-		$this->render('index',array('pid'=>23));
+		var_dump($_POST);
+		/** @var Post $model */
+		$model = Post::model()->findByPk($_GET['eid']);
+
+		if(isset($_POST['some'])){
+			$model->body = $_POST['some'];
+			if($model->save()){
+				echo 'OK!';
+			}else{
+				echo 'FAIL:(';
+			}
+		}
+		$this->render('index',array('model'=>$model));
+	}
+
+	public function actionError()
+	{
+		if ($error = Yii::app()->errorHandler->error) {
+			if (Yii::app()->request->isAjaxRequest)
+				echo $error['message'];
+			else
+				$this->render('error', $error);
+		}
 	}
 
 	// Uncomment the following methods and override them if needed

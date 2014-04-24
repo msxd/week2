@@ -6,6 +6,11 @@
 
 <div id="form_signup" class="col-sm-offset-3 col-sm-6">
 	<h2 align="center">Log In</h2>
+	<?
+	if(!Yii::app()->user->isGuest){
+		$this->redirect(Yii::app()->user->returnUrl);
+	}
+	?>
 	<?php $form = $this->beginWidget('CActiveForm', array(
 		'id' => 'user-registration-form',
 		// Please note: When you enable ajax validation, make sure the corresponding
@@ -70,7 +75,7 @@
 
 	<div class="form-group">
 		<div class="row buttons">
-			<?php echo CHtml::submitButton('Submit',array('class'=>'btn btn-primary btn-lg','disabled'=>'true')); ?>
+			<?php echo CHtml::submitButton('Submit',array('class'=>'btn btn-primary btn-lg')); ?>
 		</div>
 	</div>
 

@@ -4,41 +4,48 @@
  * UserIdentity represents the data needed to identity a user.
  * It contains the authentication method that checks if the provided
  * data can identity the user.
- * @property User $user
  */
 class UserIdentity extends CUserIdentity
 {
-	/**
-	 * Authenticates a user.
-	 * The example implementation makes sure if the username and password
-	 * are both 'demo'.
-	 * In practical applications, this should be changed to authenticate
-	 * against some persistent user identity storage (e.g. database).
-	 * @return boolean whether authentication succeeds.
-	 */
 	private $_id;
+
+	/** @var User $_user */
+	private $_user;
+
+	public $email;
+
+	public function __construct($user)
+	{
+		$this->_user = $user;
+	}
 
 	public function authenticate()
 	{
-		/** @var User $record */
-		$record = User::model()->findByAttributes(array('email' => $this->username));
+		// если есть модель, авторизуемся
+		if ($this->_user)
+		{
+			$user = $this->_user;
+			$this->_id = $user->id;
+			$this->email = $user->email;
 
-		if (!$record)
-			$this->errorCode = self::ERROR_USERNAME_INVALID;
-		else if ($record->hashed_password != $this->password)
-			$this->errorCode = self::ERROR_PASSWORD_INVALID;
-		else {
-			$this->_id = $record->id;
-			$this->setState('facebook_id', $record->facebook_id);
-			$this->errorCode = self::ERROR_NONE;
+			// RBAC
+			/*
+			$auth = Yii::app()->authManager;
+			if (!$auth->isAssigned($user->role, $user->id))
+			{
+				if ($auth->assign($user->role, $user->id))
+				{
+					Yii::app()->authManager->save();
+				}
+			}*/
 		}
 
-
-		return !$this->errorCode;
+		return $this->errorCode == self::ERROR_NONE;
 	}
 
 	public function getId()
 	{
 		return $this->_id;
 	}
+
 }

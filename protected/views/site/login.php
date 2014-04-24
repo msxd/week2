@@ -6,7 +6,12 @@
 
 <div id="form_sign" class="col-sm-offset-3 col-sm-6">
 	<h2 align="center">Log In</h2>
-<?php $form=$this->beginWidget('CActiveForm', array(
+<?php
+
+	if(!Yii::app()->user->isGuest){
+		$this->redirect(Yii::app()->user->returnUrl);
+	}
+	$form=$this->beginWidget('CActiveForm', array(
 	'id'=>'user-login-form',
 	// Please note: When you enable ajax validation, make sure the corresponding
 	// controller action is handling ajax validation correctly.

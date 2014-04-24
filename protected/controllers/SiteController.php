@@ -75,7 +75,6 @@ class SiteController extends Controller
 			Yii::app()->end();
 		}
 		*/
-
 			if ($model->attributes = Yii::app()->request->getPost('User')) {
 
 			if ($model->login()) {
@@ -99,6 +98,16 @@ class SiteController extends Controller
 	public function actionRegistration()
 	{
 		$model = new User('registration');
+
+		if ($model->attributes = Yii::app()->request->getPost('User')) {
+
+			if ($model->regU()) {
+				// form inputs are valid, do something here
+				$this->redirect(Yii::app()->user->returnUrl);
+				return;
+			}
+		}
+
 		$this->render('registration', array('model' => $model));
 	}
 }
