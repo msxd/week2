@@ -22,20 +22,20 @@ class SiteController extends Controller
 	 */
 	public function actionIndex()
 	{
-		// renders the view file 'protected/views/site/index.php'
-		// using the default layout 'protected/views/layouts/main.php'
-		$pid = isset($_GET['pid'])?$_GET['pid']: '';
-		if ($pid==='') {
-			//$all_posts = Post::model()->hotNews()->with('user')->findAll();
+// renders the view file 'protected/views/site/index.php'
+// using the default layout 'protected/views/layouts/main.php'
+		$pid = isset($_GET['pid']) ? $_GET['pid'] : '-';
+		if ($pid === '-') {
+			//	$all_posts = Post::model()->hotNews()->with('user')->findAll();
 			$all_posts = Post::model()->published()->with('user')->findAll();
 			$this->render('index', array('posts' => $all_posts));
 		} else {
-			$post_with_pid = Post::model()->getNew($pid)->with('user')->findAll();
-			if ($post_with_pid[0]['published']!=0) {
-				$this->render('index', array('posts'=>$post_with_pid));
+			$post_with_pid = Post::model()->getNew($pid)->with('comments')->with('user')->findAll();
+			if ($post_with_pid[0]['published'] != 0) {
+				$this->render('index', array('posts' => $post_with_pid));
 			} else {
-					//$this->redirect(Yii::app()->user->returnUrl);
-					$this->render('index', array('errors'=>array('Post not found')));
+				//$this->redirect(Yii::app()->user->returnUrl);
+				$this->render('index', array('errors' => array('Post not found')));
 
 			}
 		}

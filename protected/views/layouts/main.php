@@ -34,8 +34,6 @@
 
 
 <script type="text/javascript" src="<?=Yii::app()->request->baseUrl;?>/vendors/jquery/jquery-2.1.0.min.js"></script>
-<script type="text/javascript" src="<?=Yii::app()->request->baseUrl;?>/vendors/jquery/jquery.cookie.js"></script>
-<script type="text/javascript" src="<?=Yii::app()->request->baseUrl;?>/vendors/jquery/jquery-ui-1.9.2.custom.min.js"></script>
 <script type="text/javascript" src="<?=Yii::app()->request->baseUrl;?>/js/app.js"></script>
 </body>
 </html>

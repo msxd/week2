@@ -2,7 +2,7 @@
 
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
-
+Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../extensions/booster');
 // This is the main Web application configuration. Any writable
 // CWebApplication properties can be configured here.
 return array(
@@ -10,7 +10,7 @@ return array(
 	'name'=>'Work app',
 
 	// preloading 'log' component
-	'preload'=>array('log'),
+	'preload'=>array('log','bootstrap'),
 
 	// autoloading model and component classes
 	'import'=>array(
@@ -32,6 +32,18 @@ return array(
 
 	// application components
 	'components'=>array(
+		'bootstrap'=>array(
+			'class' => 'bootstrap.components.Bootstrap',
+			'coreCss'=>false,
+			'bootstrapCss'=>false,
+			'enableJS'=>false,
+
+		),
+		'mailer'=>array(
+			'class' => 'application.extensions.mailer.YiiMailer',
+
+
+		),
 		'user'=>array(
 			// enable cookie-based authentication
 			'allowAutoLogin'=>true,
@@ -88,5 +100,11 @@ return array(
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'my@example.com',
+		'YiiMailer' => array(
+			'From' => 'no-reply@' . $_SERVER['HTTP_HOST'],
+			'FromName' => '',
+			'CharSet' => 'UTF-8',
+			'ContentType' => 'text/html',
+		)
 	),
 );

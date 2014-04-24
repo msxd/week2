@@ -12,7 +12,8 @@
  * @property integer $user_id
  * @property integer $published
  * @property string $img_path
- * @property User $user1
+ * @property User $user
+ * @property Comment[] $comments
  */
 class Post extends CActiveRecord
 {
@@ -28,7 +29,7 @@ class Post extends CActiveRecord
 	public $created_at;
 	public $updated_at;
 	public $user_id;
-	private $published;
+	public $published;
 	public $img_path;
 
 
@@ -62,6 +63,7 @@ class Post extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'user' => array(self::BELONGS_TO, 'User', 'user_id'),//имя => [тип связи, Модель, связывающая колонка ]
+			'comments' => array(self::HAS_MANY,'Comment', 'post_id'),
 		);
 	}
 
@@ -89,14 +91,16 @@ class Post extends CActiveRecord
 		);
 	}
 
-	public function published()
+	public function published($flag=true)
 	{
-		$c = $this->getDbCriteria();
-		$c->addColumnCondition(array(
+		$cr = $this->getDbCriteria();
+		$cr->addColumnCondition(array(
 			$this->getTableAlias() . '.published' => '1',
 		));
-
+		if($flag)
 		return $this;
+		else
+		return $cr;
 	}
 
 	public function hotNews()
@@ -104,7 +108,7 @@ class Post extends CActiveRecord
 		$c = $this->getDbCriteria();
 		//SELECT * FROM `posts` WHERE created_at BETWEEN Now()-interval 5 hour AND Now()
 		//$c->addCondition($this->getTableAlias() . '.created_-at', new CDbExpression('Now()-interval 5 hour'),new CDbExpression('Now()'));
-		$c->addCondition($this->getTableAlias().'.created_at BETWEEN Now()-interval 3 hour AND Now()');
+		$c->addCondition($this->getTableAlias().'.created_at BETWEEN Now()-interval 8 hour AND Now()');
 		return $this;
 	}
 

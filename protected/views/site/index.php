@@ -3,10 +3,10 @@
  * @var SiteController $this
  * @var Post[] $posts
  */
-
+//Yii::app()->bootstrap->init();
 $this->pageTitle = Yii::app()->name;
 ?>
-<p id="text">
+<p class="text">
 	<?
 	if (!Yii::app()->user->isGuest) {
 		echo '<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum auctor diam neque.
@@ -35,7 +35,12 @@ $this->pageTitle = Yii::app()->name;
 		if (isset($posts)) {
 			foreach ($posts as $post) {
 				echo $post->user->first_name . " " . CHtml::link($post->title,array('site/index&pid='.$post->id)) . "<br/>"
-					. $post->body . "<br/>" . $post->created_at . "<br/>";
+					. $post->body . "<br/>" . $post->created_at . "<br/><br/><br/>";
+
+				foreach($post->comments as $value){
+					echo '<a href="mailto:'.$value->email.'">'.$value->email.'</a> '.$value->created_at.'<br/>'.$value->body.'<br/><br/>';
+				}
+
 			}
 		}
 		if (isset($errors)) {
@@ -45,6 +50,19 @@ $this->pageTitle = Yii::app()->name;
 		}
 
 	}
+/*
+	$this->widget(
+		'bootstrap.widgets.TbCKEditor',
+		array(
+			'name'=>'smt'
+		)
+	);*/
+
+
+	Yii::app()->mailer->AddAddress('valikov.ids@gmail.com');
+	Yii::app()->mailer->Body = 'body';
+	Yii::app()->mailer->Send();
+
 	?>
 </p>
 
