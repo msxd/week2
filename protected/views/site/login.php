@@ -1,7 +1,7 @@
 <?php
-/* @var $this UserController */
-/* @var $model User */
-/* @var $form CActiveForm */
+/* @var UserController $this  */
+/* @var User $model  */
+/* @var CActiveForm $form  */
 ?>
 
 <div id="form_sign" class="col-sm-offset-3 col-sm-6">
@@ -37,7 +37,7 @@
 	</div>
 	<div class="form-group">
 		<div class="row buttons">
-			<?php echo CHtml::submitButton('Submit',array('class'=>'btn btn-primary btn-lg','disabled'=>'true')); ?>
+			<?php echo CHtml::submitButton('Submit',array('class'=>'btn btn-primary btn-lg')); ?>
 		</div>
 	</div>
 
