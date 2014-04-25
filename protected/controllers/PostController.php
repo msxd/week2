@@ -2,11 +2,11 @@
 
 class PostController extends Controller
 {
-	public function actionIndex()
+	public function actionIndex($id)
 	{
 		var_dump($_POST);
 		/** @var Post $model */
-		$model = Post::model()->findByPk($_GET['eid']);
+		$model = $this->loadModel($id);
 
 		if(isset($_POST['some'])){
 			$model->body = $_POST['some'];
@@ -18,7 +18,15 @@ class PostController extends Controller
 		}
 		$this->render('index',array('model'=>$model));
 	}
-
+	public function loadModel($id)
+	{
+		$model = Post::model()->findByPk($id);
+		if ($model === null)
+		{
+			throw new CHttpException(404, 'post not found');
+		}
+		return $model;
+	}
 	public function actionError()
 	{
 		if ($error = Yii::app()->errorHandler->error) {
