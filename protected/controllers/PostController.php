@@ -4,23 +4,25 @@ class PostController extends Controller
 {
 	public function actionIndex($id)
 	{
-		var_dump($_POST);
 		/** @var Post $model */
 		$model = $this->loadModel($id);
 
-		if(isset($_POST['some'])){
+		if(isset($_POST['some'])&&isset($_POST['Post']['title'])){
+
 			$model->body = $_POST['some'];
+			$model->title = $_POST['Post']['title'];
+
+
 			if($model->save()){
-				echo 'OK!';
 			}else{
-				echo 'FAIL:(';
+				throw new CDbException('Error in request, try again later');
 			}
 		}
 		$this->render('index',array('model'=>$model));
 	}
 	public function loadModel($id)
 	{
-		$model = Post::model()->findByPk($id);
+		$model = Post::model()->published()->findByPk($id);
 		if ($model === null)
 		{
 			throw new CHttpException(404, 'post not found');

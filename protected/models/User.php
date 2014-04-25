@@ -54,8 +54,8 @@ class User extends CActiveRecord
 		return array(
 			array('email, pass', 'required'),
 			//registration
-			array('email', 'unique', 'on'=>'registration'),
-			array('r_pass, first_name, last_name', 'required', 'on'=>'registration'),
+			array('email', 'unique', 'on' => 'registration'),
+			array('r_pass, first_name, last_name', 'required', 'on' => 'registration'),
 			//all
 			array('facebook_id', 'length', 'max' => 50, 'min' => 2),
 			array('email, hashed_password, phone, first_name, last_name', 'length', 'max' => 127),
@@ -75,7 +75,7 @@ class User extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'post'=>array(self::HAS_MANY, 'Post', 'user_id')// имя => [self::has..., Model, связующая колонка в таблице модели]
+			'post' => array(self::HAS_MANY, 'Post', 'user_id') // имя => [self::has..., Model, связующая колонка в таблице модели]
 		);
 	}
 
@@ -99,9 +99,6 @@ class User extends CActiveRecord
 		);
 	}
 
-	public function getUser($mail){
-
-	}
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 *
@@ -152,25 +149,19 @@ class User extends CActiveRecord
 	public function login()
 	{
 		$model = $this;
-		if ($this->email)
-		{
-			if ($model = self::findByAttributes(array('email'=>$this->email)))
-			{
-				if (!$model->validatePassword($this->pass))
-				{
+		if ($this->email) {
+			if ($model = self::findByAttributes(array('email' => $this->email))) {
+				if (!$model->validatePassword($this->pass)) {
 					$this->addError('password', 'Wrong login or password');
 					return false;
 				}
-			}
-			else
-			{
+			} else {
 				$this->addError('password', 'Wrong login or password');
 				return false;
 			}
 		}
 
-		if (!$model->id)
-		{
+		if (!$model->id) {
 			$this->addError('email', 'User not found');
 			return false;
 		}
@@ -188,25 +179,31 @@ class User extends CActiveRecord
 	public function regU()
 	{
 		$model = $this;
-		if($model = self::findByAttributes(array('email'=>$this->email))){
-			$this->addError('email','Данный адрес зарегистрирован');
+		if ($model = self::findByAttributes(array('email' => $this->email))) {
+			$this->addError('email', 'Данный адрес зарегистрирован');
 			return false;
 		}
-		if($this->pass!=$this->r_pass){
-			$this->addError('pass','Пароли не совпадают');
+		if ($this->pass != $this->r_pass) {
+			$this->addError('pass', 'Пароли не совпадают');
 			return false;
 		}
-		if(strlen($this->first_name)<2){
-			$this->addError('first_name','Введите полное имя');
+		if (strlen($this->first_name) < 2) {
+			$this->addError('first_name', 'Введите полное имя');
 			return false;
 		}
-		if(strlen($this->last_name)<2){
-			$this->addError('first_name','Введите фамилию');
+		if (strlen($this->last_name) < 2) {
+			$this->addError('first_name', 'Введите фамилию');
 			return false;
 		}
 		$this->hashed_password = $this->pass;
 		$this->save();
 		return $this->login();
+	}
+
+
+	public function getRole()
+	{
+		return $this->role_id;
 	}
 
 	public static function model($className = __CLASS__)

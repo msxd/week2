@@ -2,14 +2,7 @@
 class WebUser extends CWebUser
 {
 	private $model = null;
-        private $_role = null;
-        public function getRole()
-        {
-            if ($user = $this->getModel())
-            {
-                return $user->role_id;
-            }
-        }
+
 	public function getModel()
 	{
 		if (!isset($this->id)) {
