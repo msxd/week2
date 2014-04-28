@@ -2,33 +2,43 @@
 
 class PostController extends Controller
 {
-	public function actionIndex($id)
+	public function actionIndex($id = null)
 	{
 		/** @var Post $model */
+	if($id!=null){
 		$model = $this->loadModel($id);
 
-		if(isset($_POST['some'])&&isset($_POST['Post']['title'])){
+		if (isset($_POST['some']) && isset($_POST['Post']['title'])) {
 
 			$model->body = $_POST['some'];
 			$model->title = $_POST['Post']['title'];
+			$model->published = $_POST['Post']['published'];
 
 
-			if($model->save()){
-			}else{
+			if ($model->save()) {
+			} else {
 				throw new CDbException('Error in request, try again later');
 			}
 		}
-		$this->render('index',array('model'=>$model));
+
+
+		$this->render('index', array('model' => $model));}
+		else{
+			$model = Post::model()->with('user')->findAll();
+			$this->render('shows', array('model' => $model));
+		}
+
 	}
+
 	public function loadModel($id)
 	{
-		$model = Post::model()->published()->findByPk($id);
-		if ($model === null)
-		{
-			throw new CHttpException(404, 'post not found');
+		$model = Post::model()->findByPk($id);
+		if ($model === null) {
+			throw new CHttpException(404, 'post with id '.$id.' not found');
 		}
 		return $model;
 	}
+
 	public function actionError()
 	{
 		if ($error = Yii::app()->errorHandler->error) {

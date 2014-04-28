@@ -48,6 +48,7 @@ class Post extends CActiveRecord
 		return array(
 			array('body, title, user_id', 'required'),
 			array('title, img_path', 'length', 'max' => 127),
+			array('created_at, updated_at', 'default', 'setOnEmpty'=>true, 'value'=>null),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, body, title, created_at, updated_at, user_id', 'safe', 'on' => 'search'),
@@ -157,6 +158,18 @@ class Post extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria' => $criteria,
 		));
+	}
+
+
+	public function behaviors(){
+
+		return array(
+			'CTimestampBehavior' => array(
+				'class' => 'zii.behaviors.CTimestampBehavior',
+				'createAttribute' => 'created_at',
+				'updateAttribute' => 'updated_at',
+			)
+		);
 	}
 
 	/**
