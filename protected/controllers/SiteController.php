@@ -101,10 +101,11 @@ class SiteController extends Controller
 
 		if ($model->attributes = Yii::app()->request->getPost('User')) {
 
-			if ($model->regU()) {
+			if ($model->save()) {
 				// form inputs are valid, do something here
+				$model->login();
 				$this->redirect(Yii::app()->user->returnUrl);
-				return;
+
 			}
 		}
 

@@ -54,7 +54,7 @@ class User extends CActiveRecord
 		return array(
 			array('email, pass', 'required'),
 			//registration
-			array('email', 'unique', 'on' => 'registration'),
+			array('email', 'unique', 'except' => 'login'),
 			array('r_pass, first_name, last_name', 'required', 'on' => 'registration'),
 			//all
 			array('facebook_id', 'length', 'max' => 50, 'min' => 2),
@@ -149,6 +149,7 @@ class User extends CActiveRecord
 	public function login()
 	{
 		$model = $this;
+		$model->setScenario('login');
 		if ($this->email) {
 			if ($model = self::findByAttributes(array('email' => $this->email))) {
 				if (!$model->validatePassword($this->pass)) {
@@ -176,28 +177,14 @@ class User extends CActiveRecord
 		return $pass == $this->hashed_password;
 	}
 
-	public function regU()
+
+	public function beforeSave()
 	{
-		$model = $this;
-		if ($model = self::findByAttributes(array('email' => $this->email))) {
-			$this->addError('email', 'Данный адрес зарегистрирован');
-			return false;
+		if (parent::beforeSave()) {
+			$this->hashed_password = $this->pass;
+			return true;
 		}
-		if ($this->pass != $this->r_pass) {
-			$this->addError('pass', 'Пароли не совпадают');
-			return false;
-		}
-		if (strlen($this->first_name) < 2) {
-			$this->addError('first_name', 'Введите полное имя');
-			return false;
-		}
-		if (strlen($this->last_name) < 2) {
-			$this->addError('first_name', 'Введите фамилию');
-			return false;
-		}
-		$this->hashed_password = $this->pass;
-		$this->save();
-		return $this->login();
+		return false;
 	}
 
 
