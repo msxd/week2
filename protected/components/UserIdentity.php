@@ -29,15 +29,15 @@ class UserIdentity extends CUserIdentity
 			$this->email = $user->email;
 
 			// RBAC
-			/*
+
 			$auth = Yii::app()->authManager;
-			if (!$auth->isAssigned($user->role, $user->id))
+			if (!$auth->isAssigned($user->role_id, $user->id))
 			{
-				if ($auth->assign($user->role, $user->id))
+				if ($auth->assign($user->role_id, $user->id))
 				{
 					Yii::app()->authManager->save();
 				}
-			}*/
+			}
 		}
 
 		return $this->errorCode == self::ERROR_NONE;

@@ -1,29 +1,36 @@
 <?php
 
+/*
+ *
+ *
+ */
+
 class PostController extends Controller
 {
 	public function actionIndex($id = null)
 	{
 		/** @var Post $model */
-	if($id!=null){
-		$model = $this->loadModel($id);
+		if ($id != null) {
+			$model = $this->loadModel($id);
 
-		if (isset($_POST['some']) && isset($_POST['Post']['title'])) {
+				/*
+							$model->body = $_POST['some'];
+							$model->title = $_POST['Post']['title'];
+							$model->published = $_POST['Post']['published'];
+				*/
+				if ($model->attributes = Yii::app()->request->getPost(get_class($model)))
+				{
+					if ($model->save())
+					{
+					} else {
+						throw new CDbException('Error in request, try again later');
+					}
+				}
 
-			$model->body = $_POST['some'];
-			$model->title = $_POST['Post']['title'];
-			$model->published = $_POST['Post']['published'];
 
 
-			if ($model->save()) {
-			} else {
-				throw new CDbException('Error in request, try again later');
-			}
-		}
-
-
-		$this->render('index', array('model' => $model));}
-		else{
+			$this->render('index', array('model' => $model));
+		} else {
 			$model = Post::model()->with('user')->findAll();
 			$this->render('shows', array('model' => $model));
 		}
@@ -34,7 +41,7 @@ class PostController extends Controller
 	{
 		$model = Post::model()->findByPk($id);
 		if ($model === null) {
-			throw new CHttpException(404, 'post with id '.$id.' not found');
+			throw new CHttpException(404, 'post with id ' . $id . ' not found');
 		}
 		return $model;
 	}

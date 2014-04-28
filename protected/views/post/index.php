@@ -16,11 +16,12 @@ $form = $this->beginWidget(
 
 echo $form->textFieldRow($model, 'title', array('class' => 'span3'));
 echo $form->textFieldRow($model, 'published', array('class' => 'span3'));
+
 $this->widget(
 	'bootstrap.widgets.TbCKEditor',
 	array(
-		'name'=>'some',
-		'value'=>$model->body,
+		'model'=>$model,
+		'attribute'=>'body',
 	)
 );
 

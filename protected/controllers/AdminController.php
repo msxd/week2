@@ -2,6 +2,23 @@
 
 class AdminController extends Controller
 {
+	public function filters()
+	{
+		return array(
+			'accessControl',
+		);
+	}
+
+	public function accessRules()
+	{
+		return array(
+			array('deny',
+				'actions' => array('index'),
+				'users' => array('*'),
+			),
+		);
+	}
+
 	public function actionIndex()
 	{
 		$this->render('index');

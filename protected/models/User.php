@@ -150,6 +150,7 @@ class User extends CActiveRecord
 	{
 		$model = $this;
 		$model->setScenario('login');
+
 		if ($this->email) {
 			if ($model = self::findByAttributes(array('email' => $this->email))) {
 				if (!$model->validatePassword($this->pass)) {
@@ -180,11 +181,12 @@ class User extends CActiveRecord
 
 	public function beforeSave()
 	{
-		if (parent::beforeSave()) {
-			$this->hashed_password = $this->pass;
-			return true;
-		}
-		return false;
+		if (!parent::beforeSave()) return false;
+
+		$this->hashed_password = $this->pass;
+
+
+		return true;
 	}
 
 

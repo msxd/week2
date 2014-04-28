@@ -1,4 +1,4 @@
-<?
+<?php
 class UpdateAccessRulesCommand extends CConsoleCommand
 {
 	public function run($args)

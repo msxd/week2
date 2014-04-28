@@ -39,6 +39,9 @@ return array(
 			'enableJS'=>false,
 
 		),
+		'authManager'=>array(
+			'class' => 'CPhpAuthManager',
+		),
 		'mailer'=>array(
 			'class' => 'application.extensions.mailer.YiiMailer',
 
@@ -69,13 +72,7 @@ return array(
 		*/
 		// uncomment the following to use a MySQL database
 
-		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=week3',
-			'emulatePrepare' => true,
-			'username' => 'root',
-			'password' => '0000',
-			'charset' => 'utf8',
-		),
+		'db'=>require('db.php'),
 
 		'errorHandler'=>array(
 			// use 'site/error' action to display errors
@@ -104,7 +101,7 @@ return array(
 		// this is used in contact page
 		'adminEmail'=>'my@example.com',
 		'YiiMailer' => array(
-			'From' => 'no-reply@' . $_SERVER['HTTP_HOST'],
+			'From' => 'no-reply@' . (!empty($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : ''),
 			'FromName' => '',
 			'CharSet' => 'UTF-8',
 			'ContentType' => 'text/html',
