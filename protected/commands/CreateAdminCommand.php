@@ -18,5 +18,3 @@ class CreateAdminCommand extends CConsoleCommand
 			die('Success!');
 	}
 }
-
-
