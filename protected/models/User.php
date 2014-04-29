@@ -52,7 +52,7 @@ class User extends CActiveRecord
 		// will receive user inputs.
 		//
 		return array(
-			array('email, pass', 'required'),
+			array('email, pass', 'required', 'on'=>array('login','registration')),
 			//registration
 			array('email', 'unique', 'except' => 'login'),
 			array('r_pass, first_name, last_name', 'required', 'on' => 'registration'),
@@ -61,7 +61,9 @@ class User extends CActiveRecord
 			array('email, hashed_password, phone, first_name, last_name', 'length', 'max' => 127),
 			array('first_name, last_name', 'length', 'min' => 2),
 			array('email', 'length', 'min' => 2),
+			array('phone', 'numerical', 'integerOnly' => true),
 			// The following rule is used by search().
+
 			// @todo Please remove those attributes that should not be searched.
 			array('id, facebook_id, email, phone, first_name, last_name', 'safe', 'on' => 'search'),
 		);
@@ -111,6 +113,15 @@ class User extends CActiveRecord
 	 * @return CActiveDataProvider the data provider that can return the models
 	 * based on the search/filter conditions.
 	 */
+	public function findByMail($email)
+	{
+		$cr = $this->getDbCriteria();
+		$cr->addColumnCondition(array(
+			$this->getTableAlias() . '.email' => $email,
+		));
+			return $this;
+	}
+
 	public function search()
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
@@ -146,20 +157,32 @@ class User extends CActiveRecord
 	 * @return User the static model class
 	 */
 
-	public function login()
+	public function login($isUrl = false)
 	{
 		$model = $this;
 		$model->setScenario('login');
 
 		if ($this->email) {
-			if ($model = self::findByAttributes(array('email' => $this->email))) {
-				if (!$model->validatePassword($this->pass)) {
+			if (!$isUrl) {
+				if ($model = self::findByAttributes(array('email' => $this->email))) {
+					if (!$model->validatePassword($this->pass)) {
+						$this->addError('password', 'Wrong login or password');
+						return false;
+					}
+				} else {
 					$this->addError('password', 'Wrong login or password');
 					return false;
 				}
 			} else {
-				$this->addError('password', 'Wrong login or password');
-				return false;
+				if ($model = self::findByAttributes(array('email' => $this->email))) {
+					if (!$model->validateHashPassword($this->pass)) {
+						$this->addError('password', 'Wrong login or password');
+						return false;
+					}
+				} else {
+					$this->addError('password', 'Wrong login or password');
+					return false;
+				}
 			}
 		}
 
@@ -173,6 +196,11 @@ class User extends CActiveRecord
 		return true;
 	}
 
+	public function validateHashPassword($pass)
+	{
+		return $pass == $this->hashed_password;
+	}
+
 	public function validatePassword($pass)
 	{
 		return $pass == $this->hashed_password;
@@ -181,11 +209,9 @@ class User extends CActiveRecord
 
 	public function beforeSave()
 	{
+		//На случай редактирования пользователя предусмотреть, что пароль не обязателен при редактировании
 		if (!parent::beforeSave()) return false;
-
 		$this->hashed_password = $this->pass;
-
-
 		return true;
 	}
 
@@ -200,5 +226,39 @@ class User extends CActiveRecord
 		return parent::model($className);
 	}
 
+	/** @var User $user */
+	public function genAproveUrl($user)
+	{
+		if(!Yii::app()->user->isGuest)
+			if($user->approved==0)
+				return '<a href="'.(Yii::app()->controller->createAbsoluteUrl(
+					'/mailur/aprove?url='.str_replace('=', '', base64_encode('aprove_email:1:' . $user->hashed_password .
+						':' . $user->email . ':' . $user->last_name . ':' . $user->first_name)))).'">Confirm email</a>';
+				//return ''.(Yii::app()->controller->createUrl('/mailur/aprove?url='.str_replace('=', '', base64_encode('aprove_email:1:' . $user->hashed_password . ':' . $user->email . ':' . $user->last_name . ':' . $user->first_name))));
+		else
+			return 'U r aprroved';
+		else
+			return 'Please sign up';
+	}
 
+	public function aproveMe($url)
+	{
+
+		$data = explode(':', base64_decode($url));
+		if (count($data) != 6) {
+			return false;
+		}
+		if ($data[0] != 'aprove_email' && $data[1] != '1') {
+			return false;
+		}
+		$me = $this->findByMail($data[3])->find();
+		/** @var User $me */
+		$me->approved = 1;
+
+
+		if($me->save())
+			return true;
+		else
+			return false;
+	}
 }
