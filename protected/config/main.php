@@ -32,6 +32,7 @@ return array(
 
 	// application components
 	'components'=>array(
+
 		'bootstrap'=>array(
 			'class' => 'bootstrap.components.Bootstrap',
 			'coreCss'=>false,
@@ -43,7 +44,7 @@ return array(
 			'class' => 'CPhpAuthManager',
 		),
 		'mailer'=>array(
-			'class' => 'application.extensions.mailer.YiiMailer',
+			'class' => 'mailer.YiiMailer',
 
 
 		),
@@ -97,6 +98,7 @@ return array(
 
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']
+
 	'params'=>array(
 		// this is used in contact page
 		'adminEmail'=>'my@example.com',

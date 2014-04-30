@@ -30,10 +30,10 @@ class User extends CActiveRecord
 	const APPROVE_FALSE = 0;
 	const APPROVE_TRUE = 1;
 
-	private $_identity;
-
 	public $pass;
 	public $r_pass;
+	private $_identity;
+
 
 	/**
 	 * @return string the associated database table name

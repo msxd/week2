@@ -7,21 +7,19 @@
 
 class PostController extends Controller
 {
+
+
 	public function actionIndex($id = null)
 	{
 		/** @var Post $model */
 		if ($id != null) {
 			$model = $this->loadModel($id);
 
-				/*
-							$model->body = $_POST['some'];
-							$model->title = $_POST['Post']['title'];
-							$model->published = $_POST['Post']['published'];
-				*/
 				if ($model->attributes = Yii::app()->request->getPost(get_class($model)))
 				{
 					if ($model->save())
 					{
+
 					} else {
 						throw new CDbException('Error in request, try again later');
 					}

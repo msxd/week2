@@ -2,7 +2,8 @@
 
 class CreateAdminCommand extends CConsoleCommand
 {
-	public function actionIndex($email='admin@adm.in', $first_name='admin', $last_name='admin', $phone='1230011223', $password='admin', $repeat_password='admin')
+	public function actionIndex($email='admini@stradm.in', $first_name='administrator', $last_name='admininstfxvc',
+								$phone='1231231234', $password='admin', $repeat_password='admin')
 	{
 		$model = new User();
 		$model->role_id = User::ROLE_ADMIN;
@@ -15,6 +16,6 @@ class CreateAdminCommand extends CConsoleCommand
 		$model->approved = '1';
 
 		if ($model->save())
-			die('Success!');
+			die('Success!\n');
 	}
 }
