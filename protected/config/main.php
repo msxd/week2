@@ -9,6 +9,8 @@ return array(
 	'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
 	'name' => 'Work app',
 
+
+
 	// preloading 'log' component
 	'preload' => array('log', 'bootstrap'),
 
@@ -100,8 +102,8 @@ return array(
 
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']
-
 	'params' => array(
+		'aproveUser'=>true,
 		'adminEmail' => 'valikov.ids@gmail.com',
 		'fromEmail' => 'no-reply@testproject.ru',
 	),

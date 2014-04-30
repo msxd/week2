@@ -67,14 +67,6 @@ class SiteController extends Controller
 	{
 		$model = new User('login');
 
-		// uncomment the following code to enable ajax-based validation
-		/*
-		if(isset($_POST['ajax']) && $_POST['ajax']==='user-login-form')
-		{
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
-		}
-		*/
 			if ($model->attributes = Yii::app()->request->getPost('User')) {
 
 			if ($model->login()) {
@@ -100,11 +92,14 @@ class SiteController extends Controller
 		$model = new User('registration');
 
 		if ($model->attributes = Yii::app()->request->getPost('User')) {
-
+			if(!Yii::app()->params['aproveUser']){
+				$model->approved = 1;
+			}
 			if ($model->save()) {
 				// form inputs are valid, do something here
-				$model->login();
+				$model->afterReg();
 				$this->redirect(Yii::app()->user->returnUrl);
+
 
 			}
 		}

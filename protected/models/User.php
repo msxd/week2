@@ -52,7 +52,7 @@ class User extends CActiveRecord
 		// will receive user inputs.
 		//
 		return array(
-			array('email, pass', 'required', 'on'=>array('login','registration')),
+			array('email, pass', 'required', 'on' => array('login', 'registration')),
 			//registration
 			array('email', 'unique', 'except' => 'login'),
 			array('r_pass, first_name, last_name', 'required', 'on' => 'registration'),
@@ -118,7 +118,7 @@ class User extends CActiveRecord
 		$cr->addColumnCondition(array(
 			$this->getTableAlias() . '.email' => $email,
 		));
-			return $this;
+		return $this;
 	}
 
 	public function search()
@@ -189,6 +189,11 @@ class User extends CActiveRecord
 			$this->addError('email', 'User not found');
 			return false;
 		}
+
+		if ($model->approved != 1 && Yii::app()->params['aproveUser']) {
+			$this->addError('aprove', 'Please aprove your email adress');
+			return false;
+		}
 		$identity = new UserIdentity($model);
 		$identity->authenticate();
 		Yii::app()->user->login($identity, 3600 * 24 * 365 * 5); // 5 лет
@@ -210,7 +215,11 @@ class User extends CActiveRecord
 	{
 		//На случай редактирования пользователя предусмотреть, что пароль не обязателен при редактировании
 		if (!parent::beforeSave()) return false;
-		$this->hashed_password = $this->pass;
+		if ($this->scenario != 'approve')
+		{
+			$this->hashed_password = $this->pass;
+		}
+
 		return true;
 	}
 
@@ -226,18 +235,32 @@ class User extends CActiveRecord
 	}
 
 	/** @var User $user */
-	public function genAproveUrl($user)
+	public function genAproveUrl()
 	{
-		if(!Yii::app()->user->isGuest)
-			if($user->approved==0)
-				return '<a href="'.(Yii::app()->controller->createAbsoluteUrl(
-					'/mailur/aprove?url='.str_replace('=', '', base64_encode('aprove_email:1:' . $user->hashed_password .
-						':' . $user->email . ':' . $user->last_name . ':' . $user->first_name)))).'">Confirm email</a>';
-				//return ''.(Yii::app()->controller->createUrl('/mailur/aprove?url='.str_replace('=', '', base64_encode('aprove_email:1:' . $user->hashed_password . ':' . $user->email . ':' . $user->last_name . ':' . $user->first_name))));
-		else
-			return 'U r aprroved';
-		else
-			return 'Please sign up';
+		if ($this->approved == 0) {
+			return $this->sendMail('Copy and past it '.Yii::app()->controller->createAbsoluteUrl(
+					'/mailur/aprove?url=' . str_replace('=', '', base64_encode('aprove_email:1:' . $this->hashed_password . ':' . $this->email . ':' . $this->last_name . ':' . $this->first_name))),'Pleace, <a href="' . (Yii::app()->controller->createAbsoluteUrl(
+				'/mailur/aprove?url=' . str_replace('=', '', base64_encode('aprove_email:1:' . $this->hashed_password . ':' . $this->email . ':' . $this->last_name . ':' . $this->first_name)))) . '">Click here</a>');
+		} else {
+			return 'Something went wrong. Please contact with administrator <a href="mailto:'.Yii::app()->params['adminEmail'].'';
+		}
+	}
+
+	public function sendMail($alt,$text)
+	{
+		$message = "Message sent!";
+		$mail = Yii::app()->mailer;
+		$mail->AddAddress($this->email, $this->first_name);
+		$mail->IsHTML(true); // set email format to HTML
+		$mail->Subject = "Regestration";
+		$mail->Body = $text;
+		$mail->AltBody = $alt;
+		if (!$mail->Send()) {
+			$message = "Message could not be sent. <p>";
+			$message = "Mailer Error: " . $mail->ErrorInfo;
+			return false;
+		}
+		return true;
 	}
 
 	public function aproveMe($url)
@@ -253,11 +276,15 @@ class User extends CActiveRecord
 		$me = $this->findByMail($data[3])->find();
 		/** @var User $me */
 		$me->approved = 1;
-
-
-		if($me->save())
+		$me->scenario = 'approve';
+		if ($me->save())
 			return true;
 		else
 			return false;
+	}
+
+	public function afterReg()
+	{
+		$this->genAproveUrl();
 	}
 }
