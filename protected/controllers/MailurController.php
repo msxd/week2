@@ -12,24 +12,33 @@ class MailurController extends Controller
 
 		/** @var User $usr */
 		$usr = User::model();
-		echo '132 = '.$usr->approved;
 		if ($url == null) {
-			$this->render('aprove', array('model' => 'Somthing went wrong try agin, or contact with administrator '.
-										'<a href="mailto:'.Yii::app()->params['adminEmail'].'">'.Yii::app()->params['adminEmail'].'</a>'));
+			$this->render('aprove', array('model' => 'Somthing went wrong try agin, or contact with administrator ' .
+				'<a href="mailto:' . Yii::app()->params['adminEmail'] . '">' . Yii::app()->params['adminEmail'] . '</a>'));
 		} else {
 			if ($usr->aproveMe($url))
 				$this->render('aprove', array('model' => 'Thx u r aproved'));
 		}
 	}
 
-	public function actionRecovery($mail = null)
+	public function actionRecovery($email = null)
 	{
-		if ($mail) {
-			$model = User::model()->findByMail($mail)->findAll();
-			$this->render('recover', array('recover' => $model));
-		} else {
-			$this->render('recover', array('recover' => 'form'));
+		$model = new User('passRecovery');
+		/** @var User $model */
+		if (isset($_POST['User']['email'])) {
+			$model = User::model()->findByMail($_POST['User']['email'])->find();
 		}
+		$this->render('recover', array('model' => $model));
+	}
+	/** @var User $usr */
+	public function actionCheck($url){
+		$datas = explode(':',base64_decode($url));
+		if(count($datas)==6){
+			/** @var User $usr */
+			$usr = User::model();
+			$usr->changePass(true,$url);
+		}
+		$this->render('recok');
 	}
 
 

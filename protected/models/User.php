@@ -207,7 +207,7 @@ class User extends CActiveRecord
 
 	public function validatePassword($pass)
 	{
-		return $pass == $this->hashed_password;
+		return $this->cryptPass($pass) == $this->hashed_password;
 	}
 
 
@@ -215,14 +215,16 @@ class User extends CActiveRecord
 	{
 		//На случай редактирования пользователя предусмотреть, что пароль не обязателен при редактировании
 		if (!parent::beforeSave()) return false;
-		if ($this->scenario != 'approve')
-		{
-			$this->hashed_password = $this->pass;
+		if ($this->scenario != 'approve' || $this->scenario != 'recovery') {
+			$this->hashed_password = $this->cryptPass($this->pass);
 		}
-
 		return true;
 	}
 
+	public function cryptPass($str)
+	{
+		return md5($str);
+	}
 
 	public function getRole()
 	{
@@ -238,21 +240,21 @@ class User extends CActiveRecord
 	public function genAproveUrl()
 	{
 		if ($this->approved == 0) {
-			return $this->sendMail('Copy and past it '.Yii::app()->controller->createAbsoluteUrl(
-					'/mailur/aprove?url=' . str_replace('=', '', base64_encode('aprove_email:1:' . $this->hashed_password . ':' . $this->email . ':' . $this->last_name . ':' . $this->first_name))),'Pleace, <a href="' . (Yii::app()->controller->createAbsoluteUrl(
-				'/mailur/aprove?url=' . str_replace('=', '', base64_encode('aprove_email:1:' . $this->hashed_password . ':' . $this->email . ':' . $this->last_name . ':' . $this->first_name)))) . '">Click here</a>');
+			return $this->sendMail('Copy and past it ' . Yii::app()->controller->createAbsoluteUrl(
+					'/mailur/aprove?url=' . str_replace('=', '', base64_encode('aprove_email:1:' . $this->hashed_password . ':' . $this->email . ':' . $this->last_name . ':' . $this->first_name))), 'Pleace, <a href="' . (Yii::app()->controller->createAbsoluteUrl(
+					'/mailur/aprove?url=' . str_replace('=', '', base64_encode('aprove_email:1:' . $this->hashed_password . ':' . $this->email . ':' . $this->last_name . ':' . $this->first_name)))) . '">Click here</a>');
 		} else {
-			return 'Something went wrong. Please contact with administrator <a href="mailto:'.Yii::app()->params['adminEmail'].'';
+			return 'Something went wrong. Please contact with administrator <a href="mailto:' . Yii::app()->params['adminEmail'] . '';
 		}
 	}
 
-	public function sendMail($alt,$text)
+	public function sendMail($alt, $text)
 	{
 		$message = "Message sent!";
 		$mail = Yii::app()->mailer;
 		$mail->AddAddress($this->email, $this->first_name);
 		$mail->IsHTML(true); // set email format to HTML
-		$mail->Subject = "Regestration";
+		$mail->Subject = "From my site";
 		$mail->Body = $text;
 		$mail->AltBody = $alt;
 		if (!$mail->Send()) {
@@ -286,5 +288,55 @@ class User extends CActiveRecord
 	public function afterReg()
 	{
 		$this->genAproveUrl();
+	}
+
+	/**
+	 * @param User $user
+	 * @return string
+	 */
+	public function passRecovery()
+	{
+		$str = '<a href="' . Yii::app()->controller->createAbsoluteUrl(
+				'/mailur/check?url=' . str_replace('=', '', base64_encode(base64_encode('recover') . ':' . base64_encode($this->hashed_password) . ':' . base64_encode(time()) . ':' . base64_encode($this->email) . ':' . base64_encode($this->last_name) . ':' . base64_encode($this->first_name)))) . '">url to recovery password</a>';
+		$alt = 'Copy and past this url in u browser and create new password';
+		return self::sendMail($alt, $str);
+	}
+
+	/**
+	 * @param bool $recover
+	 * @param string $url
+	 * @param string $oldPass
+	 * @param string $newPass
+	 * @param string $newPassRep
+	 * @param User $user
+	 */
+	public function changePass($recover, $url = 0, $oldPass = 0, $newPass = 0, $newPassRep = 0, $user = 0)
+	{
+
+		if ($recover) {
+			$datas = explode(':', base64_decode($url));
+			$i = 0;
+			foreach ($datas as $val) {
+				$res[$i] = base64_decode($val);
+				$i += 1;
+			}
+		}
+		if (($res[2] - time()) < (24 * 60 * 60)) {
+			/** @var User $me */
+			$this->setScenario('recovery');
+			$me = $this->findByMail($res[3])->find();
+			$me->setScenario('recovery');
+			if($me->hashed_password==$res[1]){
+			$me->pass = ('benvolio13');
+				$me->r_pass = ('benvolio13');
+			$me->save();
+			$me->sendMail('Your new password is: '.$me->pass,'Your new password is: '.$me->pass);
+			}else{
+				echo 'smt went wrong';
+			}
+		} else {
+			return 'Просрочено';
+		}
+		return 'lol';
 	}
 }

@@ -67,7 +67,7 @@ class SiteController extends Controller
 	{
 		$model = new User('login');
 
-			if ($model->attributes = Yii::app()->request->getPost('User')) {
+		if ($model->attributes = Yii::app()->request->getPost('User')) {
 
 			if ($model->login()) {
 				// form inputs are valid, do something here
@@ -92,7 +92,7 @@ class SiteController extends Controller
 		$model = new User('registration');
 
 		if ($model->attributes = Yii::app()->request->getPost('User')) {
-			if(!Yii::app()->params['aproveUser']){
+			if (!Yii::app()->params['aproveUser']) {
 				$model->approved = 1;
 			}
 			if ($model->save()) {

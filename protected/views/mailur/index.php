@@ -11,8 +11,5 @@ $this->breadcrumbs=array(
 	You may change the content of this page by modifying
 	the file <tt><?php echo __FILE__; ?></tt>.
 <hr/>
-<pre style="text-align: left;">
-	<?
-	?>
-</pre>
+
 </p>
