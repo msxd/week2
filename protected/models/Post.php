@@ -23,14 +23,6 @@ class Post extends CActiveRecord
 	const PUBLISHED_FALSE = 0;
 	const PUBLISHED_TRUE = 1;
 
-	public $id;
-	public $body;
-	public $title;
-	public $created_at;
-	public $updated_at;
-	public $user_id;
-	public $published;
-	public $img_path;
 
 
 	public function tableName()

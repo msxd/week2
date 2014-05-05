@@ -36,11 +36,15 @@ $this->pageTitle = Yii::app()->name;
 			$i = 0;
 			foreach ($posts as $post) {
 
-				echo $post->user->first_name . " " . CHtml::link($post->title,array('site/index?pid='.$post->id)) . "<br/>"
-					. $post->body . "<br/>" . $post->created_at . "<br/><br/><br/>";
-				$i+=1;
+				echo $post->user->first_name . " " . CHtml::link($post->title, array('site/index?pid=' . $post->id)) . "<br/>"
+					. $post->body . "<br/> Created: " . $post->created_at;
+				if (strtotime($post->updated_at) > 0) {
+					echo '||Last update: ' . $post->updated_at;
+				}
+				echo "<br/><hr/><br/><br/>";
+				$i += 1;
 			}
-			if($i==0){
+			if ($i == 0) {
 				echo 'All news comming soon';
 			}
 		}
@@ -52,11 +56,11 @@ $this->pageTitle = Yii::app()->name;
 
 	}
 
-/*
-	Yii::app()->mailer->AddAddress('valikov.ids@gmail.com');
-	Yii::app()->mailer->Body = 'body';
-	Yii::app()->mailer->Send();
-*/
+	/*
+		Yii::app()->mailer->AddAddress('valikov.ids@gmail.com');
+		Yii::app()->mailer->Body = 'body';
+		Yii::app()->mailer->Send();
+	*/
 	?>
 </p>
 
