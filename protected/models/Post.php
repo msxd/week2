@@ -49,9 +49,10 @@ class Post extends CActiveRecord
 			array('body, title, user_id', 'required'),
 			array('title, img_path', 'length', 'max' => 127),
 			array('created_at, updated_at', 'default', 'setOnEmpty'=>true, 'value'=>null),
+			array('published', 'default', 'setOnEmpty'=>true, 'value'=>0),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, body, title, created_at, updated_at, user_id', 'safe', 'on' => 'search'),
+			array('id, body, title, created_at, updated_at, user_id, published', 'safe', 'on' => 'search'),
 		);
 	}
 
@@ -124,8 +125,13 @@ class Post extends CActiveRecord
 
 	}
 
-	public function edit($id){
-
+	public function edit($id,$arr){
+		$this->findByPk($id)->find();
+		$this->attributes = $arr;
+		if($this->save())
+			return true;
+		else
+			return false;
 	}
 
 	/**

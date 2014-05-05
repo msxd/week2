@@ -7,6 +7,27 @@
 
 class PostController extends Controller
 {
+	public function filters()
+	{
+		return array(
+			'accessControl',
+		);
+	}
+
+	public function accessRules()
+	{
+		return array(
+			array('allow',
+				'actions' => array('index'),
+				'roles' => array(User::ROLE_ADMIN, User::ROLE_MODER),
+			),
+			array('deny',
+				'actions' => array('index'),
+				'users' => array('*'),
+			),
+
+		);
+	}
 
 
 	public function actionIndex($id = null)
@@ -17,10 +38,8 @@ class PostController extends Controller
 
 				if ($model->attributes = Yii::app()->request->getPost(get_class($model)))
 				{
-					if ($model->save())
+					if (!$model->edit($id,$_REQUEST['Post']))
 					{
-
-					} else {
 						throw new CDbException('Error in request, try again later');
 					}
 				}
@@ -53,31 +72,4 @@ class PostController extends Controller
 				$this->render('error', $error);
 		}
 	}
-
-	// Uncomment the following methods and override them if needed
-	/*
-	public function filters()
-	{
-		// return the filter configuration for this controller, e.g.:
-		return array(
-			'inlineFilterName',
-			array(
-				'class'=>'path.to.FilterClass',
-				'propertyName'=>'propertyValue',
-			),
-		);
-	}
-
-	public function actions()
-	{
-		// return external action classes, e.g.:
-		return array(
-			'action1'=>'path.to.ActionClass',
-			'action2'=>array(
-				'class'=>'path.to.AnotherActionClass',
-				'propertyName'=>'propertyValue',
-			),
-		);
-	}
-	*/
 }

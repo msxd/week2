@@ -12,10 +12,15 @@ class AdminController extends Controller
 	public function accessRules()
 	{
 		return array(
+			array('allow',
+				'actions' => array('index'),
+				'roles' => array(User::ROLE_ADMIN, User::ROLE_MODER),
+			),
 			array('deny',
 				'actions' => array('index'),
 				'users' => array('*'),
 			),
+
 		);
 	}
 

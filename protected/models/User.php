@@ -194,6 +194,10 @@ class User extends CActiveRecord
 			$this->addError('aprove', 'Please aprove your email adress');
 			return false;
 		}
+		if ($model->deleted == 1) {
+			$this->addError('banned', 'You are deleted, please contact with administrator, or moderator');
+			return false;
+		}
 		$identity = new UserIdentity($model);
 		$identity->authenticate();
 		Yii::app()->user->login($identity, 3600 * 24 * 365 * 5); // 5 лет
@@ -326,12 +330,12 @@ class User extends CActiveRecord
 			$this->setScenario('recovery');
 			$me = $this->findByMail($res[3])->find();
 			$me->setScenario('recovery');
-			if($me->hashed_password==$res[1]){
-			$me->pass = ('benvolio13');
-				$me->r_pass = ('benvolio13');
-			$me->save();
-			$me->sendMail('Your new password is: '.$me->pass,'Your new password is: '.$me->pass);
-			}else{
+			if ($me->hashed_password == $res[1]) {
+				$me->pass =  Yii::app()->getSecurityManager()->generateRandomString(8);
+				//$me->r_pass =  Yii::app()->getSecurityManager()->generateRandomString(8);
+				$me->save();
+				$me->sendMail('Your new password is: ' . $me->pass, 'Your new password is: ' . $me->pass);
+			} else {
 				echo 'smt went wrong';
 			}
 		} else {
