@@ -41,6 +41,12 @@
 		</div>
 	</div>
 	<div class="form-group">
+		<div class="col-sm-8 col-sm-offset-2" style="text-align: right;">
+			<?php echo '<a href="'.$this->createUrl('/mailur/recovery/').'">Forgot password?</a>'; ?>
+		</div>
+	</div>
+
+	<div class="form-group">
 		<div class="row buttons">
 			<?php echo CHtml::submitButton('Submit',array('class'=>'btn btn-primary btn-lg')); ?>
 		</div>
