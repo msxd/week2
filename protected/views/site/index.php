@@ -33,15 +33,15 @@ $this->pageTitle = Yii::app()->name;
 		echo CHtml::link('Sign Up', array('/site/registration'), array('class' => 'btn btn-primary btn-lg'));
 	} else {
 		if (isset($posts)) {
+			$i = 0;
 			foreach ($posts as $post) {
+
 				echo $post->user->first_name . " " . CHtml::link($post->title,array('site/index?pid='.$post->id)) . "<br/>"
 					. $post->body . "<br/>" . $post->created_at . "<br/><br/><br/>";
-				/*
-				foreach($post->comments as $value){
-					echo '<a href="mailto:'.$value->email.'">'.$value->email.'</a> '.$value->created_at.'<br/>'.$value->body.'<br/><br/>';
-				}
-				*/
-
+				$i+=1;
+			}
+			if($i==0){
+				echo 'All news comming soon';
 			}
 		}
 		if (isset($errors)) {
