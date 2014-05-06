@@ -24,7 +24,6 @@ class Post extends CActiveRecord
 	const PUBLISHED_TRUE = 1;
 
 
-
 	public function tableName()
 	{
 		return 'posts';
@@ -40,13 +39,15 @@ class Post extends CActiveRecord
 		return array(
 			array('body, title, user_id', 'required'),
 			array('title, img_path', 'length', 'max' => 127),
-			array('created_at, updated_at', 'default', 'setOnEmpty'=>true, 'value'=>null),
-			array('published', 'default', 'setOnEmpty'=>true, 'value'=>0),
+			array('created_at, updated_at', 'default', 'setOnEmpty' => true, 'value' => null),
+			array('published', 'default', 'setOnEmpty' => true, 'value' => 1),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, body, title, created_at, updated_at, user_id, published', 'safe', 'on' => 'search'),
 		);
 	}
+
+
 
 	/**
 	 * @return array relational rules.
@@ -56,8 +57,8 @@ class Post extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'user' => array(self::BELONGS_TO, 'User', 'user_id'),//имя => [тип связи, Модель, связывающая колонка ]
-			'comments' => array(self::HAS_MANY,'Comment', 'post_id'),
+			'user' => array(self::BELONGS_TO, 'User', 'user_id'), //имя => [тип связи, Модель, связывающая колонка ]
+			'comments' => array(self::HAS_MANY, 'Comment', 'post_id'),
 		);
 	}
 
@@ -85,16 +86,16 @@ class Post extends CActiveRecord
 		);
 	}
 
-	public function published($flag=true)
+	public function published($flag = true)
 	{
 		$cr = $this->getDbCriteria();
 		$cr->addColumnCondition(array(
 			$this->getTableAlias() . '.published' => '1',
 		));
-		if($flag)
-		return $this;
+		if ($flag)
+			return $this;
 		else
-		return $cr;
+			return $cr;
 	}
 
 	public function hotNews()
@@ -102,7 +103,7 @@ class Post extends CActiveRecord
 		$c = $this->getDbCriteria();
 		//SELECT * FROM `posts` WHERE created_at BETWEEN Now()-interval 5 hour AND Now()
 		//$c->addCondition($this->getTableAlias() . '.created_-at', new CDbExpression('Now()-interval 5 hour'),new CDbExpression('Now()'));
-		$c->addCondition($this->getTableAlias().'.created_at BETWEEN Now()-interval 8 hour AND Now()');
+		$c->addCondition($this->getTableAlias() . '.created_at BETWEEN Now()-interval 8 hour AND Now()');
 		return $this;
 	}
 
@@ -117,10 +118,11 @@ class Post extends CActiveRecord
 
 	}
 
-	public function edit($id,$arr){
+	public function edit($id, $arr)
+	{
 		$this->findByPk($id)->find();
 		$this->attributes = $arr;
-		if($this->save())
+		if ($this->save())
 			return true;
 		else
 			return false;
@@ -159,7 +161,8 @@ class Post extends CActiveRecord
 	}
 
 
-	public function behaviors(){
+	public function behaviors()
+	{
 
 		return array(
 			'CTimestampBehavior' => array(

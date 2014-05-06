@@ -36,14 +36,11 @@ class PostController extends Controller
 		if ($id != null) {
 			$model = $this->loadModel($id);
 
-				if ($model->attributes = Yii::app()->request->getPost(get_class($model)))
-				{
-					if (!$model->edit($id,$_REQUEST['Post']))
-					{
-						throw new CDbException('Error in request, try again later');
-					}
+			if ($model->attributes = Yii::app()->request->getPost(get_class($model))) {
+				if (!$model->edit($id, $_REQUEST['Post'])) {
+					throw new CDbException('Error in request, try again later');
 				}
-
+			}
 
 
 			$this->render('index', array('model' => $model));
@@ -70,6 +67,22 @@ class PostController extends Controller
 				echo $error['message'];
 			else
 				$this->render('error', $error);
+		}
+	}
+
+	public function actionAdd()
+	{
+		$model = new Post();
+		if (isset($_POST['Post'])) {
+			$model->attributes = $_POST['Post'];
+			$model->user_id = Yii::app()->user->id;
+			if($model->save()){
+				$this->redirect(array('/site'));
+			}else{
+				dbug::dumpArray($model->getErrors());
+			}
+		} else {
+			$this->render('add', array('model' => $model));
 		}
 	}
 }
