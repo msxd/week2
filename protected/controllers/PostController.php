@@ -19,7 +19,7 @@ class PostController extends Controller
 		return array(
 			array('allow',
 				'actions' => array('index'),
-				'roles' => array(User::ROLE_ADMIN, User::ROLE_MODER),
+				'roles' => array(User::ROLE_ADMIN, User::ROLE_MODER, User::ROLE_USER),
 			),
 			array('deny',
 				'actions' => array('index'),
@@ -45,17 +45,34 @@ class PostController extends Controller
 
 			$this->render('index', array('model' => $model));
 		} else {
-			$model = Post::model()->with('user')->findAll();
-			$this->render('shows', array('model' => $model));
-		}
 
+			if (Yii::app()->user->checkAccess(User::ROLE_USER)) {
+				$model = Post::model()->with('user')->ownPosts(Yii::app()->user->id)->findAll();
+				$this->render('shows', array('model' => $model));
+			}
+
+			if (Yii::app()->user->checkAccess(User::ROLE_MODER)) {
+				$model = Post::model()->with('user')->findAll();
+				$this->render('shows', array('model' => $model));
+			}
+
+		}
 	}
 
 	public function loadModel($id)
 	{
-		$model = Post::model()->findByPk($id);
-		if ($model === null) {
-			throw new CHttpException(404, 'post with id ' . $id . ' not found');
+		$model = null;
+		if (Yii::app()->user->checkAccess(User::ROLE_USER)) {
+			$model = Post::model()->ownPosts(Yii::app()->user->id)->findByPk($id);
+			if ($model === null) {
+				throw new CHttpException(404, 'post with id ' . $id . ' not found');
+			}
+		}
+		if (Yii::app()->user->checkAccess(User::ROLE_MODER)) {
+			$model = Post::model()->findByPk($id);
+			if ($model === null) {
+				throw new CHttpException(404, 'post with id ' . $id . ' not found');
+			}
 		}
 		return $model;
 	}
@@ -76,9 +93,9 @@ class PostController extends Controller
 		if (isset($_POST['Post'])) {
 			$model->attributes = $_POST['Post'];
 			$model->user_id = Yii::app()->user->id;
-			if($model->save()){
+			if ($model->save()) {
 				$this->redirect(array('/site'));
-			}else{
+			} else {
 				dbug::dumpArray($model->getErrors());
 			}
 		} else {

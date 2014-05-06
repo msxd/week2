@@ -48,7 +48,6 @@ class Post extends CActiveRecord
 	}
 
 
-
 	/**
 	 * @return array relational rules.
 	 */
@@ -171,6 +170,16 @@ class Post extends CActiveRecord
 				'updateAttribute' => 'updated_at',
 			)
 		);
+	}
+
+	public function ownPosts($id = null)
+	{
+		$cr = $this->getDbCriteria();
+		$cr->addColumnCondition(array(
+			$this->getTableAlias() . '.user_id' => $id,
+		));
+
+		return $this;
 	}
 
 	/**
