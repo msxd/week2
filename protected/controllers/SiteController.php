@@ -55,13 +55,6 @@ class SiteController extends Controller
 		}
 	}
 
-	/**
-	 * Displays the contact page
-	 */
-	public function actionContact()
-	{
-		$this->render('index');
-	}
 
 	public function actionLogin()
 	{

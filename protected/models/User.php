@@ -32,6 +32,7 @@ class User extends CActiveRecord
 
 	public $pass;
 	public $r_pass;
+	public $old_pass;
 	private $_identity;
 
 
@@ -56,6 +57,10 @@ class User extends CActiveRecord
 			//registration
 			array('email', 'unique', 'except' => 'login'),
 			array('r_pass, first_name, last_name', 'required', 'on' => 'registration'),
+			//change pass
+			array('r_pass, pass, old_pass', 'required', 'on' => 'change'),
+			array('pass', 'compare', 'compareAttribute'=>'r_pass', 'on'=>'change'),
+			array('old_pass', 'checkPassw', 'on'=>'change'),
 			//all
 			array('facebook_id', 'length', 'max' => 50, 'min' => 2),
 			array('email, hashed_password, phone, first_name, last_name', 'length', 'max' => 127),
@@ -80,6 +85,12 @@ class User extends CActiveRecord
 		);
 	}
 
+	public function checkPassw($atr)
+	{
+		if($this->cryptPass($this->old_pass)!=$this->hashed_password)
+		$this->addError($atr,'Не верный текущий пароль');
+	}
+
 	/**
 	 * @return array customized attribute labels (name=>label)
 	 */
@@ -97,6 +108,7 @@ class User extends CActiveRecord
 			'approved' => 'Approved',
 			'pass' => 'Password',
 			'r_pass' => 'Password again',
+			'old_pass' => 'Old password'
 		);
 	}
 
