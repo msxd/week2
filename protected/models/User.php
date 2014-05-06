@@ -62,7 +62,7 @@ class User extends CActiveRecord
 			array('first_name, last_name', 'length', 'min' => 2),
 			array('email', 'length', 'min' => 2),
 			// The following rule is used by search().
-
+			array('hashed_password', 'unsafe'),
 			// @todo Please remove those attributes that should not be searched.
 			array('id, facebook_id, email, phone, first_name, last_name', 'safe', 'on' => 'search'),
 		);
@@ -219,9 +219,12 @@ class User extends CActiveRecord
 	{
 		//На случай редактирования пользователя предусмотреть, что пароль не обязателен при редактировании
 		if (!parent::beforeSave()) return false;
-		if ($this->scenario != 'approve' || $this->scenario != 'recovery') {
+		if (($this->scenario != 'approve' || $this->scenario != 'recovery')&&$this->pass) {
 			$this->hashed_password = $this->cryptPass($this->pass);
 		}
+
+
+
 		return true;
 	}
 
@@ -331,7 +334,7 @@ class User extends CActiveRecord
 			$me = $this->findByMail($res[3])->find();
 			$me->setScenario('recovery');
 			if ($me->hashed_password == $res[1]) {
-				$me->pass =  Yii::app()->getSecurityManager()->generateRandomString(8);
+				$me->pass = Yii::app()->getSecurityManager()->generateRandomString(8);
 				//$me->r_pass =  Yii::app()->getSecurityManager()->generateRandomString(8);
 				$me->save();
 				$me->sendMail('Your new password is: ' . $me->pass, 'Your new password is: ' . $me->pass);
@@ -342,5 +345,20 @@ class User extends CActiveRecord
 			return 'Просрочено';
 		}
 		return 'lol';
+	}
+
+
+	public function allUsers($admin = false)
+	{
+		$c = $this->getDbCriteria();
+		if ($admin) {
+			echo ' admin1';
+			$c->addCondition($this->getTableAlias() . '.id > -1');
+		} else {
+			echo ' moderator';
+			$c->addCondition($this->getTableAlias() . '.role_id = 0');
+		}
+
+		return $this;
 	}
 }
