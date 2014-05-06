@@ -54,6 +54,7 @@ class User extends CActiveRecord
 		//
 		return array(
 			array('email, pass', 'required', 'on' => array('login', 'registration')),
+			array('email','required','on' =>'update'),
 			//registration
 			array('email', 'unique', 'except' => 'login'),
 			array('r_pass, first_name, last_name', 'required', 'on' => 'registration'),
