@@ -34,15 +34,21 @@ $this->pageTitle = Yii::app()->name;
 	} else {
 		if (isset($posts)) {
 			$i = 0;
-			dbug::dumpArray($posts);
 			foreach ($posts as $post) {
-
 				echo $post->user->first_name . " " . CHtml::link($post->title, array('site/index?pid=' . $post->id)) . "<br/>"
 					. $post->body . "<br/> Created: " . $post->created_at;
 				if (strtotime($post->updated_at) > 0) {
 					echo '||Last update: ' . $post->updated_at;
 				}
-				echo "<br/><hr/><br/><br/>";
+				echo '<div style="width: 100%;background: rgba(0,0,0,0.3);height: 10px;"></div>';
+				echo substr(strip_tags($post->body), 0, strrpos(substr(strip_tags($post->body), 0, 60), ' '));
+				echo '<div style="width: 100%;background: #000;height: 10px;"></div>';
+				if(isset($_GET['pid'])){
+					if(isset($post->comments[0]->body)){
+						echo $post->comments[0]->body;
+					}
+				}
+				echo "<br/><br/>";
 				$i += 1;
 			}
 			if ($i == 0) {
