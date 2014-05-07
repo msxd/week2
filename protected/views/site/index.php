@@ -34,6 +34,7 @@ $this->pageTitle = Yii::app()->name;
 	} else {
 		if (isset($posts)) {
 			$i = 0;
+			dbug::dumpArray($posts);
 			foreach ($posts as $post) {
 
 				echo $post->user->first_name . " " . CHtml::link($post->title, array('site/index?pid=' . $post->id)) . "<br/>"

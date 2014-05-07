@@ -24,14 +24,15 @@ class SiteController extends Controller
 	{
 // renders the view file 'protected/views/site/index.php'
 // using the default layout 'protected/views/layouts/main.php'
-		//$pid = isset($_GET['pid']) ? $_GET['pid'] : '-';
-		if ($pid === '-') {
-			//	$all_posts = Post::model()->hotNews()->with('user')->findAll();
+		if ($pid == '-') {
 			$all_posts = Post::model()->published()->with('user')->findAll();
 			$this->render('index', array('posts' => $all_posts));
 		} else {
 			/** @var Post[] $post_with_pid */
-			$post_with_pid = Post::model()->getNew($pid)->with('comments')->with('user')->findAll();
+
+			//$post_with_pid = Post::model()->getNew($pid)->with(array('user', 'comments'))->findAll();
+			$post_with_pid = Post::model()->getNew($pid)->with('user', 'comments')->findAll();
+
 			if ($post_with_pid[0]->published != 0) {
 				$this->render('index', array('posts' => $post_with_pid));
 			} else {

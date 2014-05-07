@@ -13,11 +13,11 @@
  * @property integer $post_id
  *
  * The followings are the available model relations:
- * @property Comments2 $parent
- * @property Comments2[] $comments
+ * @property Comments $parent
+ * @property Comments[] $comments
  * @property Posts $post
  */
-class Comments2 extends CActiveRecord
+class Comment extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
