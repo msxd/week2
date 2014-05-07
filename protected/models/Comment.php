@@ -11,18 +11,14 @@
  * @property string $updated_at
  * @property integer $parent_id
  * @property integer $post_id
- * @property Post $post
+ *
+ * The followings are the available model relations:
+ * @property Comments2 $parent
+ * @property Comments2[] $comments
+ * @property Posts $post
  */
-class Comment extends CActiveRecord
+class Comments2 extends CActiveRecord
 {
-	public $id;
-	public $body;
-	public $email;
-	public $created_at;
-	public $updated_at;
-	public $parent_id;
-	public $post_id;
-
 	/**
 	 * @return string the associated database table name
 	 */
@@ -57,7 +53,9 @@ class Comment extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'post' => array(self::BELONGS_TO, 'Post', 'post_id') //имя => [тип связи, Модель, связывающая колонка ]
+			'parent' => array(self::BELONGS_TO, 'Comments2', 'parent_id'),
+			'comments' => array(self::HAS_MANY, 'Comments2', 'parent_id'),
+			'post' => array(self::BELONGS_TO, 'Posts', 'post_id'),
 		);
 	}
 
@@ -93,18 +91,18 @@ class Comment extends CActiveRecord
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
-		$criteria = new CDbCriteria;
+		$criteria=new CDbCriteria;
 
-		$criteria->compare('id', $this->id);
-		$criteria->compare('body', $this->body, true);
-		$criteria->compare('email', $this->email, true);
-		$criteria->compare('created_at', $this->created_at, true);
-		$criteria->compare('updated_at', $this->updated_at, true);
-		$criteria->compare('parent_id', $this->parent_id);
-		$criteria->compare('post_id', $this->post_id);
+		$criteria->compare('id',$this->id);
+		$criteria->compare('body',$this->body,true);
+		$criteria->compare('email',$this->email,true);
+		$criteria->compare('created_at',$this->created_at,true);
+		$criteria->compare('updated_at',$this->updated_at,true);
+		$criteria->compare('parent_id',$this->parent_id);
+		$criteria->compare('post_id',$this->post_id);
 
 		return new CActiveDataProvider($this, array(
-			'criteria' => $criteria,
+			'criteria'=>$criteria,
 		));
 	}
 
@@ -112,9 +110,9 @@ class Comment extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Comment the static model class
+	 * @return Comments2 the static model class
 	 */
-	public static function model($className = __CLASS__)
+	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
