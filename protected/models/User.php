@@ -67,6 +67,7 @@ class User extends CActiveRecord
 			array('email, hashed_password, phone, first_name, last_name', 'length', 'max' => 127),
 			array('first_name, last_name', 'length', 'min' => 2),
 			array('email', 'length', 'min' => 2),
+			array('role_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			array('hashed_password', 'unsafe'),
 			// @todo Please remove those attributes that should not be searched.

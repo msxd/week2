@@ -6,7 +6,7 @@ class UserController extends Controller
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.
 	 */
-	public $layout='//layouts/column2';
+	public $layout = '//layouts/column2';
 
 	/**
 	 * @return array action filters
@@ -27,12 +27,12 @@ class UserController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','create','admin','delete','update'),
-				'roles'=>array(User::ROLE_ADMIN),
+			array('allow', // allow all users to perform 'index' and 'view' actions
+				'actions' => array('index', 'view', 'create', 'admin', 'delete', 'update'),
+				'roles' => array(User::ROLE_ADMIN),
 			),
-			array('deny',  // deny all users
-				'users'=>array('*'),
+			array('deny', // deny all users
+				'users' => array('*'),
 			),
 		);
 	}
@@ -44,8 +44,8 @@ class UserController extends Controller
 	 */
 	public function actionView($id)
 	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+		$this->render('view', array(
+			'model' => $this->loadModel($id),
 		));
 	}
 
@@ -55,20 +55,22 @@ class UserController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new User;
+		$model = new User;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['User']))
-		{
-			$model->attributes=$_POST['User'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+		if (isset($_POST['User'])) {
+			$model->attributes = $_POST['User'];
+			if ($model->save()) {
+
+				$this->redirect(array('view', 'id' => $model->id));
+			}
+
 		}
 
-		$this->render('create',array(
-			'model'=>$model,
+		$this->render('create', array(
+			'model' => $model,
 		));
 	}
 
@@ -79,21 +81,27 @@ class UserController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
-		$model=$this->loadModel($id);
+		$model = $this->loadModel($id);
+		$old_role = $model->role_id;
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['User']))
-		{
-			$model->attributes=$_POST['User'];
+		if (isset($_POST['User'])) {
+			$model->attributes = $_POST['User'];
 			$model->scenario = 'update';
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+			if ($model->save(false)) {
+
+				$auth = Yii::app()->authManager;
+				$auth->revoke($old_role,$model->id);
+				if ($auth->assign($model->role_id, $model->id)) {
+					Yii::app()->authManager->save();
+				}
+
+				$this->redirect(array('view', 'id' => $model->id));
+			}
+
 		}
 
-		$this->render('update',array(
-			'model'=>$model,
+		$this->render('update', array(
+			'model' => $model,
 		));
 	}
 
@@ -107,7 +115,7 @@ class UserController extends Controller
 		$this->loadModel($id)->deleted = 1;
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
+		if (!isset($_GET['ajax']))
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
 
@@ -116,9 +124,9 @@ class UserController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('User');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
+		$dataProvider = new CActiveDataProvider('User');
+		$this->render('index', array(
+			'dataProvider' => $dataProvider,
 		));
 	}
 
@@ -127,13 +135,13 @@ class UserController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new User('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['User']))
-			$model->attributes=$_GET['User'];
+		$model = new User('search');
+		$model->unsetAttributes(); // clear any default values
+		if (isset($_GET['User']))
+			$model->attributes = $_GET['User'];
 
-		$this->render('admin',array(
-			'model'=>$model,
+		$this->render('admin', array(
+			'model' => $model,
 		));
 	}
 
@@ -146,9 +154,9 @@ class UserController extends Controller
 	 */
 	public function loadModel($id)
 	{
-		$model=User::model()->findByPk($id);
-		if($model===null)
-			throw new CHttpException(404,'The requested page does not exist.');
+		$model = User::model()->findByPk($id);
+		if ($model === null)
+			throw new CHttpException(404, 'The requested page does not exist.');
 		return $model;
 	}
 
