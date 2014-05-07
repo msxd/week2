@@ -31,6 +31,7 @@ class UserIdentity extends CUserIdentity
 			// RBAC
 
 			$auth = Yii::app()->authManager;
+			$auth->clearAuthAssignments();
 			if (!$auth->isAssigned($user->role_id, $user->id))
 			{
 				if ($auth->assign($user->role_id, $user->id))
