@@ -105,8 +105,8 @@ return array(
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']
 	'params' => array(
-		'aproveUser'=>true,
-		'defaultPublished'=>0,//1-published or 0 moderation
+		'aproveUser'=>true,//true - не логинить подтвержденных пользователей
+		'defaultPublished'=>1,//1-published or 0 moderation
 		'adminEmail' => 'valikov.ids@gmail.com',
 		'fromEmail' => 'no-reply@testproject.ru',
 	),

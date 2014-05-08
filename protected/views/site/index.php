@@ -6,6 +6,7 @@
 //Yii::app()->bootstrap->init();
 $this->pageTitle = Yii::app()->name;
 ?>
+
 <p class="text">
 	<?
 	if (Yii::app()->user->isGuest) {
@@ -44,9 +45,18 @@ $this->pageTitle = Yii::app()->name;
 				if (strtotime($post->updated_at) > 0) {
 					echo '||Last update: ' . $post->updated_at;
 				}
+
 				if(isset($_GET['pid'])){
-					if(isset($post->comments[0]->body)){
-						echo $post->comments[0]->body;
+
+					echo '<br/>Comments:<hr/>';
+					if(isset($post->comments)){
+						foreach($post->comments as $comment){
+						echo '<br/>'.$comment->created_at.' '.$comment->path;
+							echo ' L: '.$comment->hierarchy->getLevel().' '.$comment->id;
+						echo '<hr/>';
+
+						}
+
 					}
 				}
 				echo "<br/><br/>";
@@ -56,6 +66,14 @@ $this->pageTitle = Yii::app()->name;
 				echo 'All news comming soon';
 			}
 		}
+		if(isset($pages)&&empty($_GET['pid'])){
+		$this->widget('CLinkPager',array(
+			'pages'=>$pages,
+			'maxButtonCount' => 5, // максимальное вол-ко кнопок <- 1..2..3..4..5 ->
+			'header' => ' ',//'<b>Перейти к странице:</b><br><br>', // заголовок над листалкой
+		));
+		}
+
 		if (isset($errors)) {
 			foreach ($errors as $error) {
 				echo $error;
@@ -63,7 +81,6 @@ $this->pageTitle = Yii::app()->name;
 		}
 
 	}
-
 	/*
 		Yii::app()->mailer->AddAddress('valikov.ids@gmail.com');
 		Yii::app()->mailer->Body = 'body';

@@ -45,6 +45,17 @@ class Comment extends CActiveRecord
 		);
 	}
 
+	public function behaviors()
+	{
+		return array(
+			'hierarchy'=>array(
+				'class'=>'application.behaviors.HierarchyBehavior',
+				//'property1'=>'value1',
+				//'property2'=>'value2',
+			),
+		);
+	}
+
 	/**
 	 * @return array relational rules.
 	 */
@@ -53,8 +64,8 @@ class Comment extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'parent' => array(self::BELONGS_TO, 'Comments2', 'parent_id'),
-			'comments' => array(self::HAS_MANY, 'Comments2', 'parent_id'),
+			'parent' => array(self::BELONGS_TO, 'Comment', 'parent_id'),
+			'comments' => array(self::HAS_MANY, 'Comment', 'parent_id'),
 			'post' => array(self::BELONGS_TO, 'Posts', 'post_id'),
 		);
 	}
@@ -115,5 +126,11 @@ class Comment extends CActiveRecord
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+
+	public function ttest()
+	{
+
+
 	}
 }

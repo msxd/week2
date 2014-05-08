@@ -25,13 +25,23 @@ class SiteController extends Controller
 // renders the view file 'protected/views/site/index.php'
 // using the default layout 'protected/views/layouts/main.php'
 		if ($pid == '-') {
-			$all_posts = Post::model()->published()->with('user')->findAll();
-			$this->render('index', array('posts' => $all_posts));
+
+
+			$criteria = Post::model()->published()->with('user')->getDbCriteria();
+
+			$pages = new CPagination(Post::model()->count($criteria));
+			$pages->pageSize = 5;
+			$pages->applyLimit($criteria);
+
+			$all_posts = Post::model()->findAll($criteria);
+
+
+			$this->render('index', array('posts' => $all_posts,'pages'=>$pages));
 		} else {
 			/** @var Post[] $post_with_pid */
 
 			//$post_with_pid = Post::model()->getNew($pid)->with(array('user', 'comments'))->findAll();
-			$post_with_pid = Post::model()->getNew($pid)->with('user', 'comments')->findAll();
+			$post_with_pid = Post::model()->getNew($pid)->with('user', 'comments:orderHierarchy')->findAll();
 
 			if ($post_with_pid[0]->published != 0) {
 				$this->render('index', array('posts' => $post_with_pid));
