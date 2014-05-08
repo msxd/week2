@@ -11,7 +11,7 @@ class m140425_073651_comments extends CDbMigration
 			'created_at' => "timestamp NULL",
 			'updated_at' => "timestamp NULL",
 			'parent_id' => "integer",
-			'path'=>'varchar DEFAULT "000"',
+			'path'=>"varchar (7) NOT NULL DEFAULT '0000'",
 			'post_id' => "integer NOT NULL",
 		), 'ENGINE=InnoDB DEFAULT CHARSET=utf8');
 

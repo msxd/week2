@@ -21,6 +21,7 @@ class m140425_073636_users extends CDbMigration
 	public function down()
 	{
 		echo "m140425_073636_users does not support migration down.\n";
+
 		return false;
 	}
 

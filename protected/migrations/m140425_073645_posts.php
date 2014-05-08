@@ -11,7 +11,7 @@ class m140425_073645_posts extends CDbMigration
 			'created_at' => "timestamp NULL",
 			'updated_at' => "timestamp NULL",
 			'user_id' => "integer NOT NULL",
-			'published' => "integer",
+			'published' => "integer",// 1 - published, 0 - not published
 			'img_path' => "varchar (255) NULL",
 		), 'ENGINE=InnoDB DEFAULT CHARSET=utf8');
 
