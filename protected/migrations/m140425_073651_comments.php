@@ -11,6 +11,7 @@ class m140425_073651_comments extends CDbMigration
 			'created_at' => "timestamp NULL",
 			'updated_at' => "timestamp NULL",
 			'parent_id' => "integer",
+			'path'=>'varchar DEFAULT "000"',
 			'post_id' => "integer NOT NULL",
 		), 'ENGINE=InnoDB DEFAULT CHARSET=utf8');
 
@@ -25,15 +26,4 @@ class m140425_073651_comments extends CDbMigration
 		echo "m140425_073651_comments does not support migration down.\n";
 		return false;
 	}
-
-	/*
-	// Use safeUp/safeDown to do migration with transaction
-	public function safeUp()
-	{
-	}
-
-	public function safeDown()
-	{
-	}
-	*/
 }
