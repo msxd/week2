@@ -65,6 +65,7 @@ return array(
 			'showScriptName' => false,
 			'rules' => array(
 				'post/update/<id:\d+>' => 'post/index',
+				'site/view/<pid:\d+>' => 'site/index',
 				'<controller:\w+>/<id:\d+>' => '<controller>/view',
 				'<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
 				'<controller:\w+>/<action:\w+>' => '<controller>/<action>',
@@ -105,6 +106,7 @@ return array(
 	// using Yii::app()->params['paramName']
 	'params' => array(
 		'aproveUser'=>true,
+		'defaultPublished'=>0,//1-published or 0 moderation
 		'adminEmail' => 'valikov.ids@gmail.com',
 		'fromEmail' => 'no-reply@testproject.ru',
 	),

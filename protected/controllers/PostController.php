@@ -35,14 +35,11 @@ class PostController extends Controller
 		/** @var Post $model */
 		if ($id != null) {
 			$model = $this->loadModel($id);
-
 			if ($model->attributes = Yii::app()->request->getPost(get_class($model))) {
 				if (!$model->edit($id, $_REQUEST['Post'])) {
 					throw new CDbException('Error in request, try again later');
 				}
 			}
-
-
 			$this->render('index', array('model' => $model));
 		} else {
 
@@ -62,18 +59,22 @@ class PostController extends Controller
 	public function loadModel($id)
 	{
 		$model = null;
-		if (Yii::app()->user->checkAccess(User::ROLE_USER)) {
+
+		if ((!Yii::app()->user->checkAccess(User::ROLE_MODER))&&Yii::app()->user->checkAccess(User::ROLE_USER)) {
 			$model = Post::model()->ownPosts(Yii::app()->user->id)->findByPk($id);
 			if ($model === null) {
 				throw new CHttpException(404, 'post with id ' . $id . ' not found');
 			}
 		}
+
 		if (Yii::app()->user->checkAccess(User::ROLE_MODER)) {
 			$model = Post::model()->findByPk($id);
 			if ($model === null) {
 				throw new CHttpException(404, 'post with id ' . $id . ' not found');
 			}
 		}
+
+
 		return $model;
 	}
 
@@ -93,6 +94,7 @@ class PostController extends Controller
 		if (isset($_POST['Post'])) {
 			$model->attributes = $_POST['Post'];
 			$model->user_id = Yii::app()->user->id;
+			$model->published = Yii::app()->params['defaultPublished'];
 			if ($model->save()) {
 				$this->redirect(array('/site'));
 			} else {

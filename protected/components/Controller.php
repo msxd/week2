@@ -21,4 +21,9 @@ class Controller extends CController
 	 * for more details on how to specify this property.
 	 */
 	public $breadcrumbs=array();
+	public $cs = null;
+
+	public function init(){
+		$this->cs = Yii::app()->getClientScript();
+	}
 }

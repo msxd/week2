@@ -15,7 +15,11 @@ $form = $this->beginWidget(
 );
 
 echo $form->textFieldRow($model, 'title', array('class' => 'span3'));
-echo $form->textFieldRow($model, 'published', array('class' => 'span3'));
+
+if(Yii::app()->user->checkAccess(User::ROLE_MODER))
+	echo $form->textFieldRow($model, 'published', array('class' => 'span3'));
+else
+	echo $form->textFieldRow($model, 'published', array('class' => 'span3','disabled'=>true));
 
 $this->widget(
 	'bootstrap.widgets.TbCKEditor',
