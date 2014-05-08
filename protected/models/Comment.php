@@ -13,9 +13,9 @@
  * @property integer $post_id
  *
  * The followings are the available model relations:
- * @property Comments $parent
- * @property Comments[] $comments
- * @property Posts $post
+ * @property Comment $parent
+ * @property Comment[] $comments
+ * @property Post $post
  */
 class Comment extends CActiveRecord
 {
@@ -35,7 +35,8 @@ class Comment extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('body, email, created_at, parent_id, post_id', 'required'),
+			array('body, email, post_id', 'required'),//parent_id
+			array('created_at, updated_at', 'default', 'setOnEmpty' => true, 'value' => null),
 			array('parent_id, post_id', 'numerical', 'integerOnly' => true),
 			array('email', 'length', 'max' => 255),
 			array('updated_at', 'safe'),
@@ -48,8 +49,8 @@ class Comment extends CActiveRecord
 	public function behaviors()
 	{
 		return array(
-			'hierarchy'=>array(
-				'class'=>'application.behaviors.HierarchyBehavior',
+			'hierarchy' => array(
+				'class' => 'application.behaviors.HierarchyBehavior',
 				//'property1'=>'value1',
 				//'property2'=>'value2',
 			),
@@ -102,18 +103,18 @@ class Comment extends CActiveRecord
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
-		$criteria=new CDbCriteria;
+		$criteria = new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('body',$this->body,true);
-		$criteria->compare('email',$this->email,true);
-		$criteria->compare('created_at',$this->created_at,true);
-		$criteria->compare('updated_at',$this->updated_at,true);
-		$criteria->compare('parent_id',$this->parent_id);
-		$criteria->compare('post_id',$this->post_id);
+		$criteria->compare('id', $this->id);
+		$criteria->compare('body', $this->body, true);
+		$criteria->compare('email', $this->email, true);
+		$criteria->compare('created_at', $this->created_at, true);
+		$criteria->compare('updated_at', $this->updated_at, true);
+		$criteria->compare('parent_id', $this->parent_id);
+		$criteria->compare('post_id', $this->post_id);
 
 		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
+			'criteria' => $criteria,
 		));
 	}
 
@@ -121,16 +122,31 @@ class Comment extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Comments2 the static model class
+	 * @return Comment the static model class
 	 */
-	public static function model($className=__CLASS__)
+	public static function model($className = __CLASS__)
 	{
 		return parent::model($className);
 	}
 
-	public function ttest()
+	public function actionAddComment()
 	{
+		$model = new Comment('add');
 
-
+		// uncomment the following code to enable ajax-based validation
+		/*
+		if(isset($_POST['ajax']) && $_POST['ajax']==='comment-_addComment-form')
+		{
+			echo CActiveForm::validate($model);
+			Yii::app()->end();
+		}
+		*/
+		if (isset($_POST['Comment'])) {
+			$model->attributes = $_POST['Comment'];
+			if ($model->validate()) {
+				// form inputs are valid, do something here
+				$model->save();
+			}
+		}
 	}
 }

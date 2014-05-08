@@ -58,6 +58,11 @@ $this->pageTitle = Yii::app()->name;
 						}
 
 					}
+					$model = Comment::model();
+					$this->renderPartial('_addComment',array('model'=>$model));
+					if(isset($_POST['Comment'])){
+						$model->actionAddComment();
+					}
 				}
 				echo "<br/><br/>";
 				$i += 1;

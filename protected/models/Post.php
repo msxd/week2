@@ -40,7 +40,7 @@ class Post extends CActiveRecord
 			array('body, title, user_id', 'required'),
 			array('title, img_path', 'length', 'max' => 127),
 			array('created_at, updated_at', 'default', 'setOnEmpty' => true, 'value' => null),
-			array('published', 'default', 'setOnEmpty' => true, 'value' => 1),
+			array('published', 'default', 'setOnEmpty' => true, 'value' => Yii::app()->params['defaultPublished']),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, body, title, created_at, updated_at, user_id, published', 'safe', 'on' => 'search'),
