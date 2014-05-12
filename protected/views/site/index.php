@@ -37,32 +37,37 @@ $this->pageTitle = Yii::app()->name;
 			$i = 0;
 			foreach ($posts as $post) {
 				echo $post->user->first_name . " " . CHtml::link($post->title, array('site/view/' . $post->id)) . "<br/>";
-				if(isset($_GET['pid']))
-					echo ($post->body);
+				if (isset($_GET['pid']))
+					echo($post->body);
 				else
-					echo substr(strip_tags($post->body), 0, strrpos(substr(strip_tags($post->body), 0, 250), ' '))."... ". CHtml::link('view all', array('site/view/' . $post->id));
+					echo substr(strip_tags($post->body), 0, strrpos(substr(strip_tags($post->body), 0, 250), ' ')) . "... " . CHtml::link('view all', array('site/view/' . $post->id));
 				echo "<br/> Created: " . $post->created_at;
 				if (strtotime($post->updated_at) > 0) {
 					echo '||Last update: ' . $post->updated_at;
 				}
 
-				if(isset($_GET['pid'])){
+				if (isset($_GET['pid'])) {
 
 					echo '<br/>Comments:<hr/>';
-					if(isset($post->comments)){
-						foreach($post->comments as $comment){
-						echo '<br/>'.$comment->created_at.' '.$comment->path;
-							echo ' L: '.$comment->hierarchy->getLevel().' '.$comment->id;
-						echo '<hr/>';
+					echo '<div align="left">';
+					if (isset($post->comments)) {
+						foreach ($post->comments as $comment) {
+							echo '<div style="padding-left:'.($comment->hierarchy->getLevel()*50).'px;">';
+							echo '<br/>' . $comment->created_at . ' ' . $comment->body;
+							echo '<a onclick="scroll_to_elem(\'addComment\',\'20\',\''.$comment->id.'\')">Ответ</a> ID: ' . $comment->id;
+							echo '</div>';
 
 						}
 
 					}
+					echo '</div>';
 					$model = Comment::model();
-					$this->renderPartial('_addComment',array('model'=>$model));
-					if(isset($_POST['Comment'])){
+					$model->post_id = $post->id;
+					$this->renderPartial('_addComment', array('model' => $model));
+					if (isset($_POST['Comment'])) {
 						$model->actionAddComment();
 					}
+
 				}
 				echo "<br/><br/>";
 				$i += 1;
@@ -71,12 +76,12 @@ $this->pageTitle = Yii::app()->name;
 				echo 'All news comming soon';
 			}
 		}
-		if(isset($pages)&&empty($_GET['pid'])){
-		$this->widget('CLinkPager',array(
-			'pages'=>$pages,
-			'maxButtonCount' => 5, // максимальное вол-ко кнопок <- 1..2..3..4..5 ->
-			'header' => ' ',//'<b>Перейти к странице:</b><br><br>', // заголовок над листалкой
-		));
+		if (isset($pages) && empty($_GET['pid'])) {
+			$this->widget('CLinkPager', array(
+				'pages' => $pages,
+				'maxButtonCount' => 5, // максимальное вол-ко кнопок <- 1..2..3..4..5 ->
+				'header' => ' ', //'<b>Перейти к странице:</b><br><br>', // заголовок над листалкой
+			));
 		}
 
 		if (isset($errors)) {

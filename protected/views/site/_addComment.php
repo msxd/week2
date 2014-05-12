@@ -32,29 +32,19 @@
 		<?php echo $form->error($model,'email'); ?>
 	</div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'created_at'); ?>
-		<?php echo $form->textField($model,'created_at'); ?>
-		<?php echo $form->error($model,'created_at'); ?>
-	</div>
-
-	<div class="row">
+	<div class="row" style="visibility: hidden;">
 		<?php echo $form->labelEx($model,'parent_id'); ?>
 		<?php echo $form->textField($model,'parent_id'); ?>
 		<?php echo $form->error($model,'parent_id'); ?>
 	</div>
 
-	<div class="row">
+	<div class="row" style="visibility: hidden;">
 		<?php echo $form->labelEx($model,'post_id'); ?>
 		<?php echo $form->textField($model,'post_id'); ?>
 		<?php echo $form->error($model,'post_id'); ?>
 	</div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'updated_at'); ?>
-		<?php echo $form->textField($model,'updated_at'); ?>
-		<?php echo $form->error($model,'updated_at'); ?>
-	</div>
+
 
 
 	<div class="row buttons">
@@ -64,3 +54,4 @@
 	<?php $this->endWidget(); ?>
 
 </div><!-- form -->
+<a id="addComment">txt</a>
