@@ -6,7 +6,6 @@ class UserController extends Controller
 	private $user;
 
 
-	// Actions
 	public function actionList()
 	{
 		$models = User::model()->findAll();
@@ -21,7 +20,6 @@ class UserController extends Controller
 	{
 		$this->_sendResponse(200, CJSON::encode($this->user));
 	}
-
 
 	public function actionUpdate()
 	{
@@ -151,6 +149,10 @@ class UserController extends Controller
 		echo(Yii::app()->user->id);
 	}
 
+	public function actionLogout(){
+		Yii::app()->user->logout();
+		$this->_sendResponse();
+	}
 	private function _sendResponse($status = 200, $body = '', $content_type = 'text/html')
 	{
 		// set the status
