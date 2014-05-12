@@ -2,25 +2,9 @@
 
 class UserController extends Controller
 {
-	// Members
-	/**
-	 * Key which has to be in HTTP USERNAME and PASSWORD headers
-	 */
-	Const APPLICATION_ID = 'ASCCPE';
+	/** @var  User $user */
+	private $user;
 
-	/**
-	 * Default response format
-	 * either 'json' or 'xml'
-	 */
-	private $format = 'json';
-
-	/**
-	 * @return array action filters
-	 */
-	public function filters()
-	{
-		return array();
-	}
 
 	// Actions
 	public function actionList()
@@ -35,28 +19,48 @@ class UserController extends Controller
 
 	public function actionView()
 	{
-
+		$this->_sendResponse(200, CJSON::encode($this->user));
 	}
 
-	public function actionCreate()
-	{
-
-	}
 
 	public function actionUpdate()
 	{
+		unset($_POST['approved']);
+		unset($_POST['deleted']);
+		unset($_POST['role_id']);
+		unset($_POST['pass']);
+		unset($_POST['r_pass']);
+		unset($_POST['role_id']);
+		$this->user->attributes = $_POST;
+		if ($this->user->save())
+			$this->_sendResponse(200, CJSON::encode($this->user));
+		else
+			$this->_sendResponse(200, CJSON::encode($this->user->getErrors()));
 	}
 
-	public function actionDelete()
+	public function actionChange()
 	{
-	}
+		$model = $this->user;
+		$model->setScenario('change');
 
+		if (isset($_POST)) {
+			$model->attributes = $_POST;
+			if ($model->save())
+				$this->_sendResponse(200, CJSON::encode('ok'));
+			else
+				$this->_sendResponse(200, CJSON::encode($model->getErrors()));
+		} else {
+			$this->_sendResponse(200, CJSON::encode(array('error' => array('old_pass is incorrect', 'pass is required', 'r_pass is required'))));
+		}
+
+	}
 
 	public function beforeAction($action)
 	{
 		$model = new User();
 		$headers = apache_request_headers();
 		$rows = array();
+		$rows['errors'] = 'smt went wrong';
 		$rows['code'] = 200;
 		if (Yii::app()->controller->action->id != 'signup')
 			if (isset($headers['Authorization'])) {
@@ -70,10 +74,11 @@ class UserController extends Controller
 					$rows['token'] = $model->tokenGenerator($email, $pass);
 					if (empty($rows['token'])) {
 						unset($rows['token']);
-						$rows['errors'] = 'Email or password incorrect';
+						$this->_sendResponse(200, CJSON::encode($model->getErrors()));
 						return false;
 					} else {
-						$this->_sendResponse(200, CJSON::encode($rows));
+						if (Yii::app()->controller->action->id == 'auth')
+							$this->_sendResponse(200, CJSON::encode($rows));
 						return true;
 					}
 				} else {
@@ -87,10 +92,13 @@ class UserController extends Controller
 					$model->email = $mail;
 					$model->pass = $h_pass;
 					if ($model->login(true)) {
-						$this->_sendResponse(200, CJSON::encode($model->findByMail($mail)->find()));
+						$this->user = $model->findByMail($mail)->find();
+						if (Yii::app()->controller->action->id == 'auth')
+							$this->_sendResponse(200, CJSON::encode($this->user));
 						return true;
 					} else {
-						$rows['errors'] = 'Email or password incorrect';
+
+						$this->_sendResponse(200, CJSON::encode($model->getErrors()));
 					}
 				}
 
@@ -112,7 +120,35 @@ class UserController extends Controller
 
 	public function actionSignup()
 	{
-		print_r($_REQUEST);
+		$model = new User('registration');
+		if ($model->attributes = $_POST) {
+			if (!Yii::app()->params['aproveUser']) {
+				$model->approved = 1;
+			}
+			if ($model->save()) {
+				// form inputs are valid, do something here
+				$model->afterReg();
+				$this->_sendResponse(200, CJSON::encode($model->getErrors()));
+			}
+			$this->_sendResponse(200, CJSON::encode($model->getErrors()));
+		}
+		$this->_sendResponse(200, CJSON::encode(array('errors' =>
+					array(
+						'email' =>
+							'E-mail cannot be blank',
+						"pass" =>
+							"Password cannot be blank.",
+						"r_pass" =>
+							"Password again cannot be blank.",
+						"first_name" =>
+							"First Name cannot be blank.",
+						"last_name" =>
+							"Last Name cannot be blank."
+					)
+				)
+			)
+		);
+		echo(Yii::app()->user->id);
 	}
 
 	private function _sendResponse($status = 200, $body = '', $content_type = 'text/html')
