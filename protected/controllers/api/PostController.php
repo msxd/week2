@@ -25,19 +25,19 @@ class PostController extends Controller
 
 	public function actionCreate()
 	{
-		if(!Yii::app()->user->checkAccess(User::ROLE_USER))
+		if (!Yii::app()->user->checkAccess(User::ROLE_USER))
 			$this->_sendResponse(200, CJSON::encode('You don\'t have premissions to do this'));
 
 
 		$model = new Post();
-			$model->attributes = $_POST;
-			$model->user_id = Yii::app()->user->id;
-			$model->published = Yii::app()->params['defaultPublished'];
-			if ($model->save()) {
-				$this->_sendResponse(200, CJSON::encode($model));
-			} else {
-				$this->_sendResponse(200, CJSON::encode($model->getErrors()));
-			}
+		$model->attributes = $_POST;
+		$model->user_id = Yii::app()->user->id;
+		$model->published = Yii::app()->params['defaultPublished'];
+		if ($model->save()) {
+			$this->_sendResponse(200, CJSON::encode($model));
+		} else {
+			$this->_sendResponse(200, CJSON::encode($model->getErrors()));
+		}
 
 
 	}
