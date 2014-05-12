@@ -54,20 +54,20 @@ class User extends CActiveRecord
 		//
 		return array(
 			array('email, pass', 'required', 'on' => array('login', 'registration')),
-			array('email','required','on' =>'update'),
+			array('email', 'required', 'on' => 'update'),
 			//registration
 			array('email', 'unique', 'except' => 'login'),
 			array('r_pass, first_name, last_name', 'required', 'on' => 'registration'),
 			//change pass
 			array('r_pass, pass, old_pass', 'required', 'on' => 'change'),
-			array('pass', 'compare', 'compareAttribute'=>'r_pass', 'on'=>'change'),
-			array('old_pass', 'checkPassw', 'on'=>'change'),
+			array('pass', 'compare', 'compareAttribute' => 'r_pass', 'on' => 'change'),
+			array('old_pass', 'checkPassw', 'on' => 'change'),
 			//all
 			array('facebook_id', 'length', 'max' => 50, 'min' => 2),
 			array('email, hashed_password, phone, first_name, last_name', 'length', 'max' => 127),
 			array('first_name, last_name', 'length', 'min' => 2),
 			array('email', 'length', 'min' => 2),
-			array('role_id', 'numerical', 'integerOnly'=>true),
+			array('role_id', 'numerical', 'integerOnly' => true),
 			// The following rule is used by search().
 			array('hashed_password', 'unsafe'),
 			// @todo Please remove those attributes that should not be searched.
@@ -89,8 +89,8 @@ class User extends CActiveRecord
 
 	public function checkPassw($atr)
 	{
-		if($this->cryptPass($this->old_pass)!=$this->hashed_password)
-		$this->addError($atr,'Не верный текущий пароль');
+		if ($this->cryptPass($this->old_pass) != $this->hashed_password)
+			$this->addError($atr, 'Не верный текущий пароль');
 	}
 
 	/**
@@ -233,12 +233,9 @@ class User extends CActiveRecord
 	{
 		//На случай редактирования пользователя предусмотреть, что пароль не обязателен при редактировании
 		if (!parent::beforeSave()) return false;
-		if (($this->scenario != 'approve' || $this->scenario != 'recovery')&&$this->pass) {
+		if (($this->scenario != 'approve' || $this->scenario != 'recovery') && $this->pass) {
 			$this->hashed_password = $this->cryptPass($this->pass);
 		}
-
-
-
 		return true;
 	}
 
@@ -366,13 +363,22 @@ class User extends CActiveRecord
 	{
 		$c = $this->getDbCriteria();
 		if ($admin) {
-			echo ' admin1';
 			$c->addCondition($this->getTableAlias() . '.id > -1');
 		} else {
-			echo ' moderator';
 			$c->addCondition($this->getTableAlias() . '.role_id = 0');
 		}
 
 		return $this;
+	}
+
+	public function tokenGenerator($email, $pass)
+	{
+		$this->email = $email;
+		$this->pass = $pass;
+		$token = '';
+		if ($this->login()) {
+			$token = base64_encode($this->cryptPass($this->pass) . ':' . $this->email);
+		}
+		return $token;
 	}
 }
