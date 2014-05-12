@@ -2,25 +2,9 @@
 
 class PostController extends Controller
 {
-	/**
-	 * Key which has to be in HTTP USERNAME and PASSWORD headers
-	 */
-	Const APPLICATION_ID = 'ASCCPE';
 
-	/**
-	 * Default response format
-	 * either 'json' or 'xml'
-	 */
-	private $format = 'json';
 	private $rows = array();
 
-	/**
-	 * @return array action filters
-	 */
-	public function filters()
-	{
-		return array();
-	}
 
 	// Actions
 	public function actionList()
@@ -30,7 +14,7 @@ class PostController extends Controller
 			$rows[] = $model->attributes;
 		// Send the response
 		$rows['status'] = '200';
-		$this->_sendResponse(200, CJSON::encode($models,1));
+		$this->_sendResponse(200, CJSON::encode($models));
 		unset($rows);
 	}
 
@@ -41,14 +25,31 @@ class PostController extends Controller
 
 	public function actionCreate()
 	{
+		if(!Yii::app()->user->checkAccess(User::ROLE_USER))
+			$this->_sendResponse(200, CJSON::encode('You don\'t have premissions to do this'));
+
+
+		$model = new Post();
+			$model->attributes = $_POST;
+			$model->user_id = Yii::app()->user->id;
+			$model->published = Yii::app()->params['defaultPublished'];
+			if ($model->save()) {
+				$this->_sendResponse(200, CJSON::encode($model));
+			} else {
+				$this->_sendResponse(200, CJSON::encode($model->getErrors()));
+			}
+
+
 	}
 
 	public function actionUpdate()
 	{
+
 	}
 
 	public function actionDelete()
 	{
+
 	}
 
 	private function _sendResponse($status = 200, $body = '', $content_type = 'text/html')
