@@ -381,4 +381,17 @@ class User extends CActiveRecord
 		}
 		return $token;
 	}
+
+	public function getData()
+	{
+		$user = array(
+			'email' => $this->email,
+			"id" => $this->id,
+			"facebook_id" => $this->facebook_id,
+			"phone" => $this->phone,
+			"first_name" => $this->first_name,
+			"last_name" => $this->last_name,
+		);
+		return $user;
+	}
 }
