@@ -73,10 +73,9 @@ class HierarchyBehavior extends CActiveRecordBehavior
 		$childs = 0;
 
 		// запрашиваем все записи
-		$tmpModels = Yii::app()->db->createCommand()
-			->select("id, {$parent_id}")
-			->from($model->tableName())
-			->queryAll();
+		$tmpModels = $model->resetScope()->findAll();
+
+		//dbug::stopArray($tmpModels);
 
 		foreach($tmpModels as $tmpModel)
 		{
@@ -85,6 +84,14 @@ class HierarchyBehavior extends CActiveRecordBehavior
 
 			if ($pid)
 			{
+				if (empty($paths[$pid]))
+				{
+					$paths[$pid] = array(
+						'childs' => 0,
+						'path' => ''
+					);
+				}
+
 				$paths[$pid]['childs']++;
 				$paths[$id]['childs'] = 0;
 				$paths[$id]['path'] = $paths[$pid]['path'] . '.' . str_pad($paths[$pid]['childs'], $pathIndexSize, 0, STR_PAD_LEFT);

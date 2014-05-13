@@ -52,9 +52,9 @@ $this->pageTitle = Yii::app()->name;
 					echo '<div align="left">';
 					if (isset($post->comments)) {
 						foreach ($post->comments as $comment) {
-							echo '<div style="padding-left:'.($comment->hierarchy->getLevel()*50).'px;">';
-							echo '<br/>' . $comment->created_at . ' ' . $comment->body;
-							echo '<a onclick="scroll_to_elem(\'addComment\',\'20\',\''.$comment->id.'\')">Ответ</a> ID: ' . $comment->id;
+							echo '<div style="padding-left:'.($comment->hierarchy->getLevel()*20).'px;">';
+							echo '<br/>' . $comment->created_at . ' ' . $comment->body.' (L'.$comment->getLevel().') ';
+							echo '<a onclick="scroll_to_elem(\'addComment\',\'20\',\''.$comment->id.'\')"> Ответ</a> ID: ' . $comment->id;
 							echo '</div>';
 
 						}
