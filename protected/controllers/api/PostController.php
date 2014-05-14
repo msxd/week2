@@ -3,21 +3,48 @@
 class PostController extends ApiController
 {
 
-	// Actions
 	public function actionList()
 	{
 		/** @var Post $models */
-		$models = Post::model()->with('user')->published()->findAll();
-		$this->_sendResponse(200, $models);
+		$models = Post::model()->published()->findAll();
+		if(empty($models)){
+			die(
+				$this->_sendEResponse(
+					404,
+					array(
+						'errors' =>
+							array(
+								array(
+									'New post is coming soon'
+								)
+							)
+					),
+					false
+				)
+			);
+		}
+		$this->_sendResponse(200, array($models),true);
 	}
 
 	public function actionView($id)
 	{
-
-		$model = Post::model()->getNew($id)->with('user', 'comments:orderHierarchy')->find();
-		if (!isset($model))
-			$this->_sendResponse(404, array('errors' => array('post with id ' . $id . ' is not found')), false);
-
+		$model = Post::model()->getNew($id)->published()->with('user', 'comments:orderHierarchy')->find();
+		if (!$model) {
+			die(
+				$this->_sendEResponse(
+					404,
+					array(
+						'errors' =>
+							array(
+								array(
+									'post with id ' . $id . ' is not found or not published'
+								)
+							)
+					),
+					false
+				)
+			);
+		}
 
 		$this->_sendResponse(
 			200,
@@ -25,7 +52,7 @@ class PostController extends ApiController
 				'post' => $model,
 				'author' => $model->user->getData(),
 				'comments' => $model->comments
-			),true
+			), true
 		);
 	}
 
@@ -40,7 +67,7 @@ class PostController extends ApiController
 		if ($model->save()) {
 			$this->_sendResponse(200, $model, true);
 		} else {
-			$this->_sendResponse(200, array('errors' => $model->getErrors()), false);
+			$this->_sendEResponse(400, array('errors' => $model->getErrors()), false);
 		}
 	}
 }
