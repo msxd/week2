@@ -182,6 +182,17 @@ class Post extends CActiveRecord
 		return $this;
 	}
 
+	public function toJSON()
+	{
+		$result = iterator_to_array($this);
+		if($this->hasRelated('user'))
+			$result['user'] = $this->user->getData();
+
+		if($this->hasRelated('comments'))
+			$result['comments'] = $this->comments;
+		return $result;
+	}
+
 	/**
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
