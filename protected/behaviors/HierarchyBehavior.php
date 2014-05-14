@@ -23,7 +23,7 @@ class HierarchyBehavior extends CActiveRecordBehavior
 
 	public function beforeSave($event)
 	{
-		if ($this->_oldParentId == $this->owner->{$this->parentAttribute}) return;
+		if ($this->_oldParentId == $this->owner->{$this->parentAttribute} && $this->owner->{$this->parentAttribute}) return;
 
 		$model = $this->owner;
 		$path = $this->pathAttribute;
@@ -37,6 +37,8 @@ class HierarchyBehavior extends CActiveRecordBehavior
 			array($parent_id => $model->{$parent_id}),
 			array('order' => "CONCAT({$path}, '0') DESC", 'limit' => 1)
 		);
+
+
 
 		if ($last && preg_match('/(\d+)$/', $last->{$path}, $matches))
 			$model->{$path} = preg_replace('/\d+$/', str_pad($matches[1] + 1, $pathIndexSize, 0, STR_PAD_LEFT), $last->{$path});

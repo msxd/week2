@@ -90,7 +90,7 @@ class UserController extends ApiController
 			}
 			if ($model->save()) {
 				$model->afterReg();
-				$this->_sendResponse(200, $model->getData());
+				$this->_sendResponse(200, $model->getData(), true);
 			} else {
 				die($this->_sendEResponse(200, array('errors' => $model->getErrors())));
 			}

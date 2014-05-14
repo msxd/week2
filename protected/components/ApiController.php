@@ -23,7 +23,7 @@ class ApiController extends CController
 	public $breadcrumbs=array();
 	protected $user;
 
-	public function _sendResponse($status = 200, $body = '', $content_type = 'text/html')
+	public function _sendResponse($status = 200, $body = '',$success=false, $content_type = 'text/html')
 	{
 		// set the status
 		$status_header = 'HTTP/1.1 ' . $status . ' ' . $this->_getStatusCodeMessage($status);
@@ -32,43 +32,24 @@ class ApiController extends CController
 		header('Content-type: ' . $content_type);
 
 		if ($body != '') {
-			echo CJSON::encode($body);
+			echo CJSON::encode(array('result'=>$body,'is_success'=>$success,'status'=>$status));
 		} else {
-			$message = '';
-			switch ($status) {
-				case 401:
-					$message = 'You must be authorized to view this page.';
-					break;
-				case 404:
-					$message = 'The requested URL ' . $_SERVER['REQUEST_URI'] . ' was not found.';
-					break;
-				case 500:
-					$message = 'The server encountered an error processing your request.';
-					break;
-				case 501:
-					$message = 'The requested method is not implemented.';
-					break;
-			}
-			$signature = ($_SERVER['SERVER_SIGNATURE'] == '') ? $_SERVER['SERVER_SOFTWARE'] . ' Server at ' . $_SERVER['SERVER_NAME'] . ' Port ' . $_SERVER['SERVER_PORT'] : $_SERVER['SERVER_SIGNATURE'];
-
-			$body = '
-					<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-					<html>
-					<head>
-						<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-						<title>' . $status . ' ' . $this->_getStatusCodeMessage($status) . '</title>
-					</head>
-					<body>
-						<h1>' . $this->_getStatusCodeMessage($status) . '</h1>
-						<p>' . $message . '</p>
-						<hr />
-						<address>' . $signature . '</address>
-					</body>
-				</html>';
-
-			echo $body;
+			echo CJSON::encode(array('errors'=>'smt went wrong, try again later.','is_success'=>$success,'status'=>$status));
 		}
 		Yii::app()->end();
+	}
+
+	public function _sendEResponse($status = 400, $body = '',$success=false, $content_type = 'text/html')
+	{
+		$status_header = 'HTTP/1.1 ' . $status . ' ' . $this->_getStatusCodeMessage($status);
+		header($status_header);
+		header('Content-type: ' . $content_type);
+		//print_r($body);
+		$errors = '';
+		foreach($body['errors'] as $val){
+			$errors.=$val[0].' ';
+		}
+		$this->_sendResponse(400, $errors, false);
 	}
 
 	private function _getStatusCodeMessage($status)
@@ -88,10 +69,13 @@ class ApiController extends CController
 
 	public function beforeAction($action)
 	{
+		$postData = json_decode(file_get_contents('php://input'), true);
+		if ($postData)
+			$_POST = array_merge_recursive($_POST, $postData);
+
 		$model = new User();
 		$headers = apache_request_headers();
 		$rows = array();
-		$rows['errors'] = 'smt went wrong';
 		$rows['code'] = 200;
 		if (Yii::app()->controller->action->id != 'signup')
 			if (isset($headers['Authorization'])) {
@@ -100,22 +84,21 @@ class ApiController extends CController
 					$pass = $_SERVER['PHP_AUTH_PW'];
 					$rows = array();
 					$rows['errors'] = '';
-					$rows['code'] = 200;
 					$rows['success'] = true;
 					$rows['token'] = $model->tokenGenerator($email, $pass);
 					if (empty($rows['token'])) {
 						unset($rows['token']);
-						$this->_sendResponse(200, CJSON::encode($model->getErrors()));
+						die($this->_sendEResponse(200, array('errors'=>$model->getErrors())));
 						return false;
 					} else {
 						if (Yii::app()->controller->action->id == 'auth')
-							$this->_sendResponse(200, CJSON::encode($rows));
+							die($this->_sendResponse(200, $rows,true));
 						return true;
 					}
 				} else {
 					$head = explode(':', base64_decode($headers['Authorization']));
 					if (count($head) < 2) {
-						$this->_sendResponse(200, 'Error ' . __LINE__);
+						die($this->_sendEResponse(200, array('errors'=>array(array('Error ' . __LINE__)))));
 						return false;
 					}
 					$h_pass = $head[0];
@@ -125,11 +108,11 @@ class ApiController extends CController
 					if ($model->login(true)) {
 						$this->user = $model->findByMail($mail)->find();
 						if (Yii::app()->controller->action->id == 'auth')
-							$this->_sendResponse(200, CJSON::encode($this->user));
+							die($this->_sendResponse(200,$this->user->getData()));
 						return true;
 					} else {
 
-						$this->_sendResponse(200, CJSON::encode($model->getErrors()));
+						die($this->_sendEResponse(200, ($model->getErrors())));
 					}
 				}
 
@@ -137,7 +120,18 @@ class ApiController extends CController
 
 
 		if (Yii::app()->controller->action->id != 'signup') {
-			$this->_sendResponse(200, CJSON::encode($rows));
+			$this->_sendEResponse(
+				404,
+				array(
+					'errors' =>
+						array(
+							array(
+								'Auth error, email and password is required'
+							)
+						)
+				),
+				false
+			);
 			return false;
 		} else {
 			return true;
