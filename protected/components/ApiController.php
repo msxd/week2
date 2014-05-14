@@ -45,11 +45,11 @@ class ApiController extends CController
 		header($status_header);
 		header('Content-type: ' . $content_type);
 		//print_r($body);
-		$errors = '';
+		$errors = array();
 		foreach($body['errors'] as $val){
-			$errors.=$val[0].' ';
+			$errors[]=$val[0];
 		}
-		$this->_sendResponse(400, $errors, false);
+		$this->_sendResponse(400, array('errors'=>$errors), false);
 	}
 
 	private function _getStatusCodeMessage($status)

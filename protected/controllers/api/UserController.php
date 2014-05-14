@@ -95,16 +95,16 @@ class UserController extends ApiController
 				die($this->_sendEResponse(200, array('errors' => $model->getErrors())));
 			}
 		}
-		$this->_sendEResponse(200, array('errors' => array(
+		$this->_sendEResponse(200, array('errors' =>
 				array
 				(
-					'E-mail cannot be blank. ' .
-					'Password cannot be blank. ' .
-					'Password again cannot be blank. ' .
-					'First Name cannot be blank. ' .
+					'E-mail cannot be blank. ',
+					'Password cannot be blank. ',
+					'Password again cannot be blank. ',
+					'First Name cannot be blank. ' ,
 					'Last Name cannot be blank. '
 				)
-			)
+
 			)
 		);
 	}
