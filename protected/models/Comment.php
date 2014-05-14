@@ -133,20 +133,14 @@ class Comment extends CActiveRecord
 	{
 		$model = new Comment('add');
 
-		// uncomment the following code to enable ajax-based validation
-		/*
-		if(isset($_POST['ajax']) && $_POST['ajax']==='comment-_addComment-form')
-		{
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
-		}
-		*/
 		if (isset($_POST['Comment'])) {
 			$model->attributes = $_POST['Comment'];
 			if ($model->validate()) {
 				// form inputs are valid, do something here
 				$model->save();
+				return true;
 			}
 		}
+		return false;
 	}
 }

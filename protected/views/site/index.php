@@ -65,7 +65,10 @@ $this->pageTitle = Yii::app()->name;
 					$model->post_id = $post->id;
 					$this->renderPartial('_addComment', array('model' => $model));
 					if (isset($_POST['Comment'])) {
-						$model->actionAddComment();
+						if($model->actionAddComment()){
+							$this->redirect(Yii::app()->createUrl('/site/view/'.$post->id));
+						}
+
 					}
 
 				}
