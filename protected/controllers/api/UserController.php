@@ -2,21 +2,38 @@
 
 class UserController extends ApiController
 {
-	/** @var  User $user */
+	/** @var  User[] $user */
 
-	public function actionList()
+	public function actionList($limit = 20, $offset = 0)
 	{
-		$models = User::model()->findAll();
+		$models = User::model()->findAll(array('limit' => $limit, 'offset' => $offset));
+		if (empty($models)) {
+			die(
+			$this->_sendEResponse(
+				404,
+				array(
+					'errors' =>
+						array(
+							array(
+								'You don\'t have premissions'
+							)
+						)
+				),
+				false
+			)
+			);
+		}
 		$rows = array();
 		foreach ($models as $model)
-			$rows[] = $model->attributes;
+			/** @var User $model */
+			$rows[] = $model->getData();
 		// Send the response
-		$this->_sendResponse(200, CJSON::encode($rows));
+		$this->_sendResponse(200, ($rows));
 	}
 
 	public function actionView()
 	{
-		$this->_sendResponse(200, CJSON::encode($this->user));
+		$this->_sendResponse(200, $this->user->getData(), true);
 	}
 
 	public function actionUpdate()
@@ -26,34 +43,42 @@ class UserController extends ApiController
 		unset($_POST['role_id']);
 		unset($_POST['pass']);
 		unset($_POST['r_pass']);
-		unset($_POST['role_id']);
+		unset($_POST['id']);
+		$this->user->scenario = 'editUserInfo';
 		$this->user->attributes = $_POST;
 		if ($this->user->save())
-			$this->_sendResponse(200, CJSON::encode($this->user));
+			$this->_sendResponse(200, ($this->user->getData()));
 		else
-			$this->_sendResponse(200, CJSON::encode($this->user->getErrors()));
+			$this->_sendEResponse(200, array('errors' => $this->user->getErrors()));
 	}
 
 	public function actionChange()
 	{
+		unset($_POST['approved']);
+		unset($_POST['deleted']);
+		unset($_POST['role_id']);
+
 		$model = $this->user;
 		$model->setScenario('change');
 
 		if (isset($_POST)) {
+			unset($_POST['approved']);
+			unset($_POST['deleted']);
+			unset($_POST['role_id']);
 			$model->attributes = $_POST;
 			if ($model->save())
-				$this->_sendResponse(200, CJSON::encode('ok'));
+				$this->_sendResponse(200, $this->user->getData());
 			else
-				$this->_sendResponse(200, CJSON::encode($model->getErrors()));
+				$this->_sendEResponse(200, array('errors' => $model->getErrors()));
 		} else {
-			$this->_sendResponse(200, CJSON::encode(array('error' => array('old_pass is incorrect', 'pass is required', 'r_pass is required'))));
+			$this->_sendEResponse(200, (array('errors' => array('old_pass is incorrect, pass is required, r_pass is required'))));
 		}
 
 	}
 
 	public function actionAuth()
 	{
-
+		$this->_sendResponse(200, $this->user);
 	}
 
 	public function actionSignup()
@@ -64,33 +89,29 @@ class UserController extends ApiController
 				$model->approved = 1;
 			}
 			if ($model->save()) {
-				// form inputs are valid, do something here
 				$model->afterReg();
-				$this->_sendResponse(200, CJSON::encode($model->getErrors()));
+				$this->_sendResponse(200, $model->getData());
+			} else {
+				die($this->_sendEResponse(200, array('errors' => $model->getErrors())));
 			}
-			$this->_sendResponse(200, CJSON::encode($model->getErrors()));
 		}
-		$this->_sendResponse(200, CJSON::encode(array('errors' =>
-					array(
-						'email' =>
-							'E-mail cannot be blank',
-						"pass" =>
-							"Password cannot be blank.",
-						"r_pass" =>
-							"Password again cannot be blank.",
-						"first_name" =>
-							"First Name cannot be blank.",
-						"last_name" =>
-							"Last Name cannot be blank."
-					)
+		$this->_sendEResponse(200, array('errors' => array(
+				array
+				(
+					'E-mail cannot be blank. ' .
+					'Password cannot be blank. ' .
+					'Password again cannot be blank. ' .
+					'First Name cannot be blank. ' .
+					'Last Name cannot be blank. '
 				)
 			)
+			)
 		);
-		echo(Yii::app()->user->id);
 	}
 
-	public function actionLogout(){
+	public function actionLogout()
+	{
 		Yii::app()->user->logout();
-		$this->_sendResponse();
+		$this->_sendResponse(200,'logged out',true);
 	}
 }

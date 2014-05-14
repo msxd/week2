@@ -3,10 +3,10 @@
 class PostController extends ApiController
 {
 
-	public function actionList()
+	public function actionList($limit = 20, $offset=0)
 	{
-		/** @var Post $models */
-		$models = Post::model()->published()->findAll();
+		/** @var Post[] $models */
+		$models = Post::model()->with('user')->published()->findAll(array('limit'=>$limit,'offset'=>$offset));
 		if(empty($models)){
 			die(
 				$this->_sendEResponse(
@@ -23,7 +23,11 @@ class PostController extends ApiController
 				)
 			);
 		}
-		$this->_sendResponse(200, array($models),true);
+		$results = array();
+		foreach($models as $post){
+			$results[] = $post->toJSON();
+		}
+		$this->_sendResponse(200, $results,true);
 	}
 
 	public function actionView($id)
@@ -46,14 +50,7 @@ class PostController extends ApiController
 			);
 		}
 
-		$this->_sendResponse(
-			200,
-			array(
-				'post' => $model,
-				'author' => $model->user->getData(),
-				'comments' => $model->comments
-			), true
-		);
+		$this->_sendResponse(200, $model->toJSON(), true		);
 	}
 
 	public function actionCreate()
@@ -69,5 +66,10 @@ class PostController extends ApiController
 		} else {
 			$this->_sendEResponse(400, array('errors' => $model->getErrors()), false);
 		}
+	}
+
+	public function actionRebuild()
+	{
+		Comment::model()->hierarchy->rebuildPaths();
 	}
 }
