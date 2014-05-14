@@ -63,6 +63,7 @@ class User extends CActiveRecord
 			array('pass', 'compare', 'compareAttribute' => 'r_pass', 'on' => 'change'),
 			array('old_pass', 'checkPassw', 'on' => 'change'),
 			//all
+			array('first_name, last_name', 'required', 'on'=>'editUserInfo'),
 			array('facebook_id', 'length', 'max' => 50, 'min' => 2),
 			array('email, hashed_password, phone, first_name, last_name', 'length', 'max' => 127),
 			array('first_name, last_name', 'length', 'min' => 2),

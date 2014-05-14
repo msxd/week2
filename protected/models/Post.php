@@ -85,16 +85,16 @@ class Post extends CActiveRecord
 		);
 	}
 
-	public function published($flag = true)
+	public function published(/*$flag = true*/)
 	{
 		$cr = $this->getDbCriteria();
 		$cr->addColumnCondition(array(
 			$this->getTableAlias() . '.published' => '1',
 		));
-		if ($flag)
+//		if ($flag)
 			return $this;
-		else
-			return $cr;
+//		else
+//			return $cr;
 	}
 
 	public function hotNews()
