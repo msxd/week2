@@ -73,10 +73,9 @@
 	</div>
 
 
-	<div class="form-group">
-		<div class="row buttons">
+	<div class="form-group" style="text-align: center;">
 			<?php echo CHtml::submitButton('Submit',array('class'=>'btn btn-primary btn-lg')); ?>
-		</div>
+
 	</div>
 
 	<?php $this->endWidget(); ?>

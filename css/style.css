@@ -3,11 +3,6 @@ body {
 }
 
 /* index */
-#top {
-	text-align: right;
-	padding-right: 30px;
-}
-
 #top li {
 	display: inline;
 	padding: 10px;
@@ -16,49 +11,86 @@ body {
 
 #top .active {
 	background: rgba(188, 218, 245, 1);
-
 }
 
 #top li:hover {
 	background: rgba(188, 218, 245, 0.4);
 }
 
-#logo {
-	margin-bottom: 30px;
+#top-xs li{
+	list-style: none;
+	padding: 10px;
+	background: rgba(164, 217, 245, 0.24);
 }
 
-#text {
-	padding: 30px;
+#top-xs .active {
+	background: rgba(188, 218, 245, 1);
 }
 
-#text p {
-	font-size: 20px;
+#top-xs li:hover {
+	background: rgba(188, 218, 245, 0.65);
 }
 
-/*main*/
-
-#menu {
-	float: left;
-	height: 50%;
-	width: 100%;
-	min-width: 200px;
+#top-xs li:first-child{
+	border-radius: 10px 10px 0 0px;
 }
 
-#content {
-	padding: 30px;
-	padding-top: 30px;
+#top-xs li:last-child{
+	border-radius: 0px 0px 10px 10px;
 }
 
-#content p {
-	font-size: 20px;
+#hmessage{
+	margin-top: 5%;
 }
 
+#hbuttons{
+	margin: 5% 0 5% 0;
+}
+
+#post{
+	margin-top: 3%;
+	border: 1px solid rgba(0, 0, 0, 0.11);
+	background: #f5f5f5;
+	border-radius: 10px;
+
+	box-shadow: 0 5px 150px rgba(0,0,0,0.3) inset;
+	word-wrap:break-word;
+}
+
+#post img{
+	max-width: 100%;
+	height: auto;
+}
+
+
+
+#post #title{
+	border-radius: 9px 9px 0 0;
+	border-bottom: 2px rgba(0, 0, 0, 0.07) solid;
+	background-color: rgba(39, 121, 209, 0.13);
+	padding: 2px;
+	margin-bottom: 5px;
+}
+
+#post #foo{
+	border-radius:0 0 9px 9px;
+	padding: 4px;
+	margin-top: 9px;
+	background-color: rgba(39, 121, 209, 0.13);
+}
+
+#comments blockquote{
+	margin:0;
+	/*border-bottom: 1px solid rgba(84, 84, 84, 0.1);*/
+
+}
 /* sign in */
 
 #form_sign, #form_signup {
 	border: 2px solid #85CCE9;
 	background: #f5f5f5;
 	margin-top: 10%;
+	min-width: 320px;
 }
 
 .profile_inp {

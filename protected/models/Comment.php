@@ -32,10 +32,12 @@ class Comment extends CActiveRecord
 	 */
 	public function rules()
 	{
+		$purifier =  new CHtmlPurifier();
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
 			array('body, email, post_id', 'required'),//parent_id
+			array('body, email', 'filter', 'filter' => array($purifier, 'purify')),
 			array('created_at, updated_at', 'default', 'setOnEmpty' => true, 'value' => null),
 			array('parent_id, post_id', 'numerical', 'integerOnly' => true),
 			array('email', 'length', 'max' => 255),
@@ -142,5 +144,16 @@ class Comment extends CActiveRecord
 			}
 		}
 		return false;
+	}
+
+	public function showComment()
+	{
+		echo '<div style="margin-left:'.($this->getLevel()*20).'px">
+		<blockquote>
+			<p>'.$this->body.'</p>
+			<div style="text-align:right"><button type="button" class="btn btn-xs" onclick="scroll_to_elem(\'addComment\',20,'.$this->id.')">Ответить</button></div>
+			<footer><cite title="Email">by '.$this->email.'</cite> at <cite title="Created at">'.$this->created_at.'</cite></footer>
+		</blockquote>
+	</div>';
 	}
 }

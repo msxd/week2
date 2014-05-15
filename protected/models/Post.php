@@ -34,10 +34,12 @@ class Post extends CActiveRecord
 	 */
 	public function rules()
 	{
+		$purifier = new CHtmlPurifier();
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
 			array('body, title, user_id', 'required'),
+			array('body, title', 'filter', 'filter' => array($purifier, 'purify')),
 			array('title, img_path', 'length', 'max' => 127),
 			array('created_at, updated_at', 'default', 'setOnEmpty' => true, 'value' => null),
 			array('published', 'default', 'setOnEmpty' => true, 'value' => Yii::app()->params['defaultPublished']),
@@ -85,16 +87,13 @@ class Post extends CActiveRecord
 		);
 	}
 
-	public function published(/*$flag = true*/)
+	public function published($pub = 1)
 	{
 		$cr = $this->getDbCriteria();
 		$cr->addColumnCondition(array(
-			$this->getTableAlias() . '.published' => '1',
+			$this->getTableAlias() . '.published' => $pub,
 		));
-//		if ($flag)
-			return $this;
-//		else
-//			return $cr;
+		return $this;
 	}
 
 	public function hotNews()
@@ -106,16 +105,6 @@ class Post extends CActiveRecord
 		return $this;
 	}
 
-	public function getNew($pid)
-	{
-		$c = $this->getDbCriteria();
-		$c->addColumnCondition(array(
-			$this->getTableAlias() . '.id' => $pid,
-		));
-
-		return $this;
-
-	}
 
 	public function edit($id, $arr)
 	{
@@ -185,10 +174,10 @@ class Post extends CActiveRecord
 	public function toJSON()
 	{
 		$result = iterator_to_array($this);
-		if($this->hasRelated('user'))
+		if ($this->hasRelated('user'))
 			$result['user'] = $this->user->getData();
 
-		if($this->hasRelated('comments'))
+		if ($this->hasRelated('comments'))
 			$result['comments'] = $this->comments;
 		return $result;
 	}
@@ -202,5 +191,60 @@ class Post extends CActiveRecord
 	public static function model($className = __CLASS__)
 	{
 		return parent::model($className);
+	}
+
+	public function shorten($body)
+	{
+		$res = substr(
+			strip_tags($body),
+			0,
+			strrpos(
+				substr(
+					strip_tags($body),
+					0,
+					500),
+				' '
+			)
+		);
+		if (strlen(strip_tags($res)) < 500)
+			return strip_tags($body);
+		else
+			return $res;
+	}
+
+	public function showPosts()
+	{
+		echo '<div id="post" class="col-xs-offset-2 col-xs-8">
+			<div class="row" id="title">
+				<h3 class="text-center">' . strip_tags($this->title) . '</h3>
+			</div>' .$this->shorten($this->body).
+			'<div class="text-right text-info">by '.$this->user->first_name.'<br/>'.CHtml::link('Read more', array('site/view/' . $this->id)).'</div>
+			<div id="foo" class="row">';
+		if (isset($this->created_at)) echo '<div class="col-xs-12">Created at: ' . $this->created_at . '</div>';
+		if (isset($this->updated_at)) echo '<div class="col-xs-12">Updated at: ' . $this->updated_at . '</div></div>';
+		echo '</div></div>';
+	}
+
+	public function showPost($view)
+	{
+		echo '<div id="post" class="col-xs-offset-2 col-xs-8">
+			<div class="row" id="title">
+				<h3 class="text-center">' . strip_tags($this->title) . '</h3>
+			</div><div id="content">' .$this->body.
+			'<div class="text-right text-info">by '.$this->user->first_name.'</div>'.
+			'</div><div id="foo" class="row">';
+		if (isset($this->created_at)) echo '<div class="col-xs-12">Created at: ' . $this->created_at . '</div>';
+		if (isset($this->updated_at)) echo '<div class="col-xs-12">Updated at: ' . $this->updated_at . '</div></div>';
+		echo '</div></div>';
+
+		$model = Comment::model();
+		$model->post_id = $this->id;
+		$view->renderPartial('_showComment', array('comments' => $this->comments));
+		$view->renderPartial('_addComment', array('model' => $model));
+		if (isset($_POST['Comment'])) {
+			if($model->actionAddComment()){
+				$view->redirect(Yii::app()->createUrl('/site/view/'.$this->id));
+			}
+		}
 	}
 }

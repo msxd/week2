@@ -10,3 +10,9 @@ function scroll_to_elem(elem,speed,pid) {
         jQuery("html,body").animate({scrollTop: destination}, speed);
     }
 }
+
+
+function closeIt(elem){
+    $(elem).parent().fadeOut(1000).end().remove ();
+//    $().parent().fadeOut(2000).after($(elem).parent().remove());
+}

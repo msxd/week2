@@ -20,36 +20,28 @@ class SiteController extends Controller
 	 * This is the default 'index' action that is invoked
 	 * when an action is not explicitly requested by users.
 	 */
-	public function actionIndex($pid = '-')
+	public function actionIndex()
 	{
-// renders the view file 'protected/views/site/index.php'
-// using the default layout 'protected/views/layouts/main.php'
-		if ($pid == '-') {
+		$criteria = Post::model()->published()->with('user')->getDbCriteria();
+		$pages = new CPagination(Post::model()->count($criteria));
+		$pages->pageSize = 5;
+		$pages->applyLimit($criteria);
+		$all_posts = Post::model()->findAll($criteria);
+		$this->render('index', array('posts' => $all_posts, 'pages' => $pages));
+	}
 
-
-			$criteria = Post::model()->published()->with('user')->getDbCriteria();
-
-			$pages = new CPagination(Post::model()->count($criteria));
-			$pages->pageSize = 5;
-			$pages->applyLimit($criteria);
-
-			$all_posts = Post::model()->findAll($criteria);
-
-
-			$this->render('index', array('posts' => $all_posts,'pages'=>$pages));
-		} else {
-			/** @var Post[] $post_with_pid */
-
-			//$post_with_pid = Post::model()->getNew($pid)->with(array('user', 'comments'))->findAll();
-			$post_with_pid = Post::model()->getNew($pid)->with('user', 'comments:orderHierarchy')->findAll();
-
-			if ($post_with_pid[0]->published != 0) {
-				$this->render('index', array('posts' => $post_with_pid));
+	public function actionView($id)
+	{
+		/** @var Post $post_with_pid */
+		$post_with_pid = Post::model()->with('user', 'comments:orderHierarchy')->findByPk($id);
+		if ($post_with_pid) {
+			if ($post_with_pid->published != 0) {
+				$this->render('post', array('post' => $post_with_pid));
 			} else {
-				//$this->redirect(Yii::app()->user->returnUrl);
-				$this->render('index', array('errors' => array('Post not found')));
-
+				$this->render('post', array('errors' => array('Post with id '.$id.' not published')));
 			}
+		}else{
+			$this->render('post', array('errors' => array('Post with id '.$id.' not found')));
 		}
 	}
 

@@ -15,10 +15,11 @@
 		// you need to use the performAjaxValidation()-method described there.
 		'enableAjaxValidation'=>false,
 	)); ?>
-
+	<div class="col-xs-8 col-xs-offset-2">
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
 	<p id="to"></p>
-	<?php echo $form->errorSummary($model); ?>
+	<?php echo $form->errorSummary($model);
+	?>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'body'); ?>
@@ -52,6 +53,7 @@
 	</div>
 
 	<?php $this->endWidget(); ?>
-
+		<a id="addComment"></a>
 </div><!-- form -->
-<a id="addComment">txt</a>
+
+</div>
