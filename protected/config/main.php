@@ -71,6 +71,12 @@ return array(
 			),
 		),
 
+		'image'=>array(
+			'class'=>'application.extensions.image.CImageComponent',
+			'driver'=>'GD',
+			'params'=>array('directory'=>'/opt/local/bin'),
+		),
+
 		/*
 		'db'=>array(
 			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
@@ -105,7 +111,7 @@ return array(
 	// using Yii::app()->params['paramName']
 	'params' => array(
 		'aproveUser'=>true,//true - не логинить не подтвержденных пользователей
-		'defaultPublished'=>0,//1-published or 0 moderation
+		'defaultPublished'=>1,//1-published or 0 moderation
 		'adminEmail' => 'valikov.ids@gmail.com',
 		'fromEmail' => 'no-reply@testproject.ru',
 	),

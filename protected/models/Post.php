@@ -22,7 +22,7 @@ class Post extends CActiveRecord
 	 */
 	const PUBLISHED_FALSE = 0;
 	const PUBLISHED_TRUE = 1;
-
+	public $image;
 
 	public function tableName()
 	{
@@ -40,9 +40,13 @@ class Post extends CActiveRecord
 		return array(
 			array('body, title, user_id', 'required'),
 			array('body, title', 'filter', 'filter' => array($purifier, 'purify')),
+
 			array('title, img_path', 'length', 'max' => 127),
 			array('created_at, updated_at', 'default', 'setOnEmpty' => true, 'value' => null),
 			array('published', 'default', 'setOnEmpty' => true, 'value' => Yii::app()->params['defaultPublished']),
+
+			array('image', 'file', 'types'=>'jpg, gif, png', 'allowEmpty' => true),
+			array('image', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, body, title, created_at, updated_at, user_id, published', 'safe', 'on' => 'search'),
@@ -149,6 +153,22 @@ class Post extends CActiveRecord
 	}
 
 
+	public function afterSave()
+	{
+
+		$image = Yii::app()->image->load($this->img_path);
+		$image->resize(400, 100)->quality(75)->sharpen(20);
+		$image->save($this->getPreviewPath($this->img_path)); // or $image->save('images/small.jpg');
+
+	}
+
+	public function getPreviewPath($path){
+		$imagePath = pathinfo($path,PATHINFO_DIRNAME);
+		$imageName = pathinfo($path,PATHINFO_BASENAME);
+		$imagePreviewPath = $imagePath.'/thumbs/'.$imageName;
+		return $imagePreviewPath;
+	}
+
 	public function behaviors()
 	{
 
@@ -211,6 +231,19 @@ class Post extends CActiveRecord
 		else
 			return $res;
 	}
+//	public function beforeValidate()
+//	{
+//		parent::beforeValidate();
+//
+//		if ($this->scenario == 'insert' && $image = CUploadedFile::getInstance($this, 'image'))
+//		{
+//			$image->saveAs(Yii::getPathOfAlias('webroot.images').DIRECTORY_SEPARATOR.'www.png');
+//			$this->img_path = $image->path;
+//			//CVarDumper::dump($image);
+//		}
+//		return true;
+//	}
+
 
 	public function showPosts()
 	{
