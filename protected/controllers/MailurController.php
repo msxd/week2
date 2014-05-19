@@ -13,11 +13,11 @@ class MailurController extends Controller
 		/** @var User $usr */
 		$usr = User::model();
 		if ($url == null) {
-			$this->render('aprove', array('model' => 'Somthing went wrong try agin, or contact with administrator ' .
+			$this->render('aprove', array('model' => 'Something went wrong try again or contact with administrator ' . //
 				'<a href="mailto:' . Yii::app()->params['adminEmail'] . '">' . Yii::app()->params['adminEmail'] . '</a>'));
 		} else {
 			if ($usr->aproveMe($url))
-				$this->render('aprove', array('model' => 'Thx u r aproved'));
+				$this->redirect(array('/site'));
 		}
 	}
 

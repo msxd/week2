@@ -66,9 +66,7 @@ class SiteController extends Controller
 		if ($model->attributes = Yii::app()->request->getPost('User')) {
 
 			if ($model->login()) {
-				// form inputs are valid, do something here
 				$this->redirect(Yii::app()->user->returnUrl);
-				return;
 			}
 		}
 		$this->render('login', array('model' => $model));
@@ -92,11 +90,8 @@ class SiteController extends Controller
 				$model->approved = 1;
 			}
 			if ($model->save()) {
-				// form inputs are valid, do something here
 				$model->afterReg();
 				$this->redirect(Yii::app()->user->returnUrl);
-
-
 			}
 		}
 

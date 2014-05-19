@@ -298,10 +298,7 @@ class User extends CActiveRecord
 		/** @var User $me */
 		$me->approved = 1;
 		$me->scenario = 'approve';
-		if ($me->save())
-			return true;
-		else
-			return false;
+		return $me->save();
 	}
 
 	public function afterReg()

@@ -45,7 +45,7 @@ class Post extends CActiveRecord
 			array('title, img_path', 'length', 'max' => 127),
 			array('created_at, updated_at', 'default', 'setOnEmpty' => true, 'value' => null),
 			array('published', 'default', 'setOnEmpty' => true, 'value' => Yii::app()->params['defaultPublished']),
-
+			array('published', Yii::app()->user->checkAccess('operation') ? 'safe' : 'unsafe'),
 			array('image', 'file', 'types' => 'jpg, gif, png', 'allowEmpty' => true),
 			array('image, remove_img', 'safe'),
 			// The following rule is used by search().
@@ -92,6 +92,10 @@ class Post extends CActiveRecord
 		);
 	}
 
+	public function init(){
+		$this->user_id = Yii::app()->user->id;
+		$this->published = Yii::app()->params['defaultPublished'];
+	}
 	public function published($pub = 1)
 	{
 		$cr = $this->getDbCriteria();
@@ -156,11 +160,11 @@ class Post extends CActiveRecord
 
 	public function afterSave()
 	{
-		if(!empty($this->img_path)){
-		$image = Yii::app()->image->load($this->img_path);
-		$image->resize(400, 100)->quality(75)->sharpen(20);
-		$image->save($this->getPreviewPath($this->img_path)); // or $image->save('images/small.jpg');
-		return true;
+		if (!empty($this->img_path)) {
+			$image = Yii::app()->image->load($this->img_path);
+			$image->resize(400, 100)->quality(75)->sharpen(20);
+			$image->save($this->getPreviewPath($this->img_path)); // or $image->save('images/small.jpg');
+			return true;
 		}
 	}
 
@@ -176,7 +180,7 @@ class Post extends CActiveRecord
 	public function getPreviewImgURL()
 	{
 		if (!empty($this->img_path)) {
-			$url = Yii::app()->baseUrl . '/images/thumbs/' .pathinfo($this->img_path, PATHINFO_BASENAME);
+			$url = Yii::app()->baseUrl . '/images/thumbs/' . pathinfo($this->img_path, PATHINFO_BASENAME);
 			return $url;
 		}
 	}
@@ -197,7 +201,7 @@ class Post extends CActiveRecord
 	{
 		$cr = $this->getDbCriteria();
 		$cr->addColumnCondition(array(
-			$this->getTableAlias() . '.user_id' => $id,
+			$this->getTableAlias() . '.user_id' => ($id == null) ? Yii::app()->user->id : $id,
 		));
 
 		return $this;
@@ -225,24 +229,7 @@ class Post extends CActiveRecord
 		return parent::model($className);
 	}
 
-	public function shorten($body)
-	{
-		$res = substr(
-			strip_tags($body),
-			0,
-			strrpos(
-				substr(
-					strip_tags($body),
-					0,
-					500),
-				' '
-			)
-		);
-		if (strlen(strip_tags($res)) < 500)
-			return strip_tags($body);
-		else
-			return $res;
-	}
+
 //	public function beforeValidate()
 //	{
 //		parent::beforeValidate();
@@ -262,7 +249,7 @@ class Post extends CActiveRecord
 		echo '<div id="post" class="col-xs-offset-2 col-xs-8">
 			<div class="row" id="title">
 				<h3 class="text-center">' . strip_tags($this->title) . '</h3>
-			</div>' . $this->getPreviewImgURL() . $this->shorten($this->body) .
+			</div>' . $this->getPreviewImgURL() . MCText::shorten($this->body) .
 			'<div class="text-right text-info">by ' . $this->user->first_name . '<br/>' . CHtml::link('Read more', array('site/view/' . $this->id)) . '</div>
 			<div id="foo" class="row">';
 		if (isset($this->created_at)) echo '<div class="col-xs-12">Created at: ' . $this->created_at . '</div>';

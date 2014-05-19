@@ -30,32 +30,45 @@ class PostController extends Controller
 
 	public function actionIndex()
 	{
+		$model = null;
 		/** @var Post $model */
 		if (Yii::app()->user->checkAccess(User::ROLE_USER)) {
-			$model = Post::model()->with('user')->ownPosts(Yii::app()->user->id)->findAll();
-			$this->render('shows', array('model' => $model));
+			$model = Post::model()->with('user')->ownPosts()->findAll();
 		}
 		if (Yii::app()->user->checkAccess(User::ROLE_MODER)) {
 			$model = Post::model()->with('user')->findAll();
-			$this->render('shows', array('model' => $model));
 		}
-
+		$this->render('shows', array('model' => $model));
 	}
 
 
 	public function actionEdit($id)
 	{
+		//todo перенести в модель
 		/** @var Post $model */
-		$model = $this->loadModel($id);
-		if (isset($_POST['Post'])) {
-			$model->attributes = $_POST['Post'];
+		$model = null;
+
+		if ((!Yii::app()->user->checkAccess(User::ROLE_MODER)) && Yii::app()->user->checkAccess(User::ROLE_USER)) {
+			$model = Post::model()->ownPosts()->findByPk($id);
+			if ($model === null) {
+				throw new CHttpException(404, 'post with id ' . $id . ' is not found');
+			}
+		}
+
+		if (Yii::app()->user->checkAccess(User::ROLE_MODER)) {
+			$model = Post::model()->findByPk($id);
+			if ($model === null) {
+				throw new CHttpException(404, 'post with id ' . $id . ' is not found');
+			}
+		}
+
+		if ($model->attributes = Yii::app()->request->getPost('Post')) {
 			if (CUploadedFile::getInstance($model, 'image') != null) {
 				$image = CUploadedFile::getInstance($model, 'image');
 				$name = time() . '.' . $image->getExtensionName();
 				$image->saveAs(Yii::getPathOfAlias('webroot.images') . DIRECTORY_SEPARATOR . $name);
 				$model->img_path = (Yii::getPathOfAlias('webroot.images') . DIRECTORY_SEPARATOR . $name);
 			}
-
 
 			if ((!empty($model->img_path)) && $model->remove_img == 1) {
 				if (file_exists($model->img_path))
@@ -70,7 +83,7 @@ class PostController extends Controller
 			if ($model->save()) {
 				$this->redirect(array('/site'));
 			} else {
-				dbug::dumpArray($model->getErrors());
+				$this->render('index', array('errors' => $model->getErrors()));
 			}
 		} else {
 			$this->render('index', array('model' => $model));
@@ -78,27 +91,6 @@ class PostController extends Controller
 
 	}
 
-	public function loadModel($id)
-	{
-		$model = null;
-
-		if ((!Yii::app()->user->checkAccess(User::ROLE_MODER)) && Yii::app()->user->checkAccess(User::ROLE_USER)) {
-			$model = Post::model()->ownPosts(Yii::app()->user->id)->findByPk($id);
-			if ($model === null) {
-				throw new CHttpException(404, 'post with id ' . $id . ' not found');
-			}
-		}
-
-		if (Yii::app()->user->checkAccess(User::ROLE_MODER)) {
-			$model = Post::model()->findByPk($id);
-			if ($model === null) {
-				throw new CHttpException(404, 'post with id ' . $id . ' not found');
-			}
-		}
-
-
-		return $model;
-	}
 
 	public function actionError()
 	{
@@ -111,13 +103,11 @@ class PostController extends Controller
 	}
 
 	public function actionAdd()
-	{
+	{//todo перенести в модель
 
 		$model = new Post();
-		if (isset($_POST['Post'])) {
-			$model->attributes = $_POST['Post'];
-			$model->user_id = Yii::app()->user->id;
-			$model->published = Yii::app()->params['defaultPublished'];
+		if ($model->attributes = Yii::app()->request->getPost('Post')) {
+
 
 			if ((CUploadedFile::getInstance($model, 'image') != null)) {
 				$image = CUploadedFile::getInstance($model, 'image');
@@ -128,7 +118,8 @@ class PostController extends Controller
 			if ($model->save()) {
 				$this->redirect(array('/site'));
 			} else {
-				dbug::dumpArray($model->getErrors());
+//				dbug::dumpArray($model->getErrors());
+				$this->render('add', array('errors' => $model->getErrors()));
 			}
 		} else {
 			$this->render('add', array('model' => $model));

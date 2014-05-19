@@ -26,4 +26,3 @@ $this->widget('zii.widgets.CMenu',array(
 	'items'=>getItems(),
 	'htmlOptions'=>array('id'=>'top-xs','class'=>'col-xs-12 text-center visible-xs')
 ));
-?>
