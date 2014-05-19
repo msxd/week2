@@ -7,41 +7,40 @@ $this->breadcrumbs=array(
 ?>
 
 <?
-$form = $this->beginWidget(
-	'bootstrap.widgets.TbActiveForm',
-	array(
-		'id' => 'verticalForm',
-	)
-);
+$form=$this->beginWidget('CActiveForm', array(
+	'id'=>'users-signin-form',
+	'htmlOptions' => array('class' => 'form-horizontal', 'enctype'=>'multipart/form-data'),
+	'enableAjaxValidation'=>false,
+));
 
-echo $form->textFieldRow($model, 'title', array('class' => 'span3'));
-
+echo $form->textField($model, 'title', array('class' => 'span3'));
 if(Yii::app()->user->checkAccess(User::ROLE_MODER))
-	echo $form->textFieldRow($model, 'published', array('class' => 'span3'));
-else
-	echo $form->textFieldRow($model, 'published', array('class' => 'span3','disabled'=>true));
+	echo $form->textField($model, 'published', array('class' => 'span3'));
 
 $this->widget(
 	'bootstrap.widgets.TbCKEditor',
 	array(
-		'model'=>$model,
-		'attribute'=>'body',
+		'model' => $model,
+		'attribute' => 'body',
 	)
 );
 
+echo $form->fileField($model, 'image');
 
+echo $form->checkBox($model,'remove_img');
+echo $form->label($model,'remove_img');
+echo '<br/>';
 $this->widget(
 	'bootstrap.widgets.TbButton',
-	array('buttonType' => 'submit', 'label' => 'Edit')
+	array('buttonType' => 'submit', 'label' => 'Add')
 );
 
 $this->endWidget();
 
 
 
-
-
 ?>
+
 
 
 

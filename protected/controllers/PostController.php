@@ -45,13 +45,37 @@ class PostController extends Controller
 
 	public function actionEdit($id)
 	{
+		/** @var Post $model */
 		$model = $this->loadModel($id);
-		if ($model->attributes = Yii::app()->request->getPost(get_class($model))) {
-			if (!$model->edit($id, $_REQUEST['Post'])) {
-				throw new CDbException('Error in request, try again later');
+		if (isset($_POST['Post'])) {
+			$model->attributes = $_POST['Post'];
+			if (CUploadedFile::getInstance($model, 'image') != null) {
+				$image = CUploadedFile::getInstance($model, 'image');
+				$name = time() . '.' . $image->getExtensionName();
+				$image->saveAs(Yii::getPathOfAlias('webroot.images') . DIRECTORY_SEPARATOR . $name);
+				$model->img_path = (Yii::getPathOfAlias('webroot.images') . DIRECTORY_SEPARATOR . $name);
 			}
+
+
+			if ((!empty($model->img_path)) && $model->remove_img == 1) {
+				if (file_exists($model->img_path))
+					unlink($model->img_path);
+				$prev = $model->getPreviewPath($model->img_path);
+
+				if (file_exists($prev))
+					unlink($model->getPreviewPath($model->img_path));
+				$model->img_path = '';
+			}
+
+			if ($model->save()) {
+				$this->redirect(array('/site'));
+			} else {
+				dbug::dumpArray($model->getErrors());
+			}
+		} else {
+			$this->render('index', array('model' => $model));
 		}
-		$this->render('index', array('model' => $model));
+
 	}
 
 	public function loadModel($id)
@@ -94,10 +118,13 @@ class PostController extends Controller
 			$model->attributes = $_POST['Post'];
 			$model->user_id = Yii::app()->user->id;
 			$model->published = Yii::app()->params['defaultPublished'];
-			$image = CUploadedFile::getInstance($model, 'image');
-			$name = time() . '.' . $image->getExtensionName();
-			$image->saveAs(Yii::getPathOfAlias('webroot.images') . DIRECTORY_SEPARATOR . $name);
-			$model->img_path = (Yii::getPathOfAlias('webroot.images') . DIRECTORY_SEPARATOR . $name);
+
+			if ((CUploadedFile::getInstance($model, 'image') != null)) {
+				$image = CUploadedFile::getInstance($model, 'image');
+				$name = time() . '.' . $image->getExtensionName();
+				$image->saveAs(Yii::getPathOfAlias('webroot.images') . DIRECTORY_SEPARATOR . $name);
+				$model->img_path = (Yii::getPathOfAlias('webroot.images') . DIRECTORY_SEPARATOR . $name);
+			}
 			if ($model->save()) {
 				$this->redirect(array('/site'));
 			} else {

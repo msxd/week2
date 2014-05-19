@@ -105,7 +105,8 @@ class UserController extends ApiController
 					'Last Name cannot be blank. '
 				)
 
-			)
+			),
+			false
 		);
 	}
 

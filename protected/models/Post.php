@@ -23,6 +23,7 @@ class Post extends CActiveRecord
 	const PUBLISHED_FALSE = 0;
 	const PUBLISHED_TRUE = 1;
 	public $image;
+	public $remove_img = 0;
 
 	public function tableName()
 	{
@@ -45,8 +46,8 @@ class Post extends CActiveRecord
 			array('created_at, updated_at', 'default', 'setOnEmpty' => true, 'value' => null),
 			array('published', 'default', 'setOnEmpty' => true, 'value' => Yii::app()->params['defaultPublished']),
 
-			array('image', 'file', 'types'=>'jpg, gif, png', 'allowEmpty' => true),
-			array('image', 'safe'),
+			array('image', 'file', 'types' => 'jpg, gif, png', 'allowEmpty' => true),
+			array('image, remove_img', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, body, title, created_at, updated_at, user_id, published', 'safe', 'on' => 'search'),
@@ -110,15 +111,15 @@ class Post extends CActiveRecord
 	}
 
 
-	public function edit($id, $arr)
-	{
-		$this->findByPk($id)->find();
-		$this->attributes = $arr;
-		if ($this->save())
-			return true;
-		else
-			return false;
-	}
+//	public function edit($id, $arr)
+//	{
+//		//$this->findByPk($id)->find();
+//		die('ok');
+//		$this->findByPk($id);
+//		$this->attributes = $arr;
+//		return $this->save();
+//
+//	}
 
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
@@ -155,18 +156,29 @@ class Post extends CActiveRecord
 
 	public function afterSave()
 	{
-
+		if(!empty($this->img_path)){
 		$image = Yii::app()->image->load($this->img_path);
 		$image->resize(400, 100)->quality(75)->sharpen(20);
 		$image->save($this->getPreviewPath($this->img_path)); // or $image->save('images/small.jpg');
-
+		return true;
+		}
 	}
 
-	public function getPreviewPath($path){
-		$imagePath = pathinfo($path,PATHINFO_DIRNAME);
-		$imageName = pathinfo($path,PATHINFO_BASENAME);
-		$imagePreviewPath = $imagePath.'/thumbs/'.$imageName;
+	public function getPreviewPath($path)
+	{
+		$imagePath = pathinfo($path, PATHINFO_DIRNAME);
+		$imageName = pathinfo($path, PATHINFO_BASENAME);
+		$imagePreviewPath = $imagePath . '/thumbs/' . $imageName;
 		return $imagePreviewPath;
+	}
+
+
+	public function getPreviewImgURL()
+	{
+		if (!empty($this->img_path)) {
+			$url = Yii::app()->baseUrl . '/images/thumbs/' .pathinfo($this->img_path, PATHINFO_BASENAME);
+			return $url;
+		}
 	}
 
 	public function behaviors()
@@ -250,8 +262,8 @@ class Post extends CActiveRecord
 		echo '<div id="post" class="col-xs-offset-2 col-xs-8">
 			<div class="row" id="title">
 				<h3 class="text-center">' . strip_tags($this->title) . '</h3>
-			</div>' .$this->shorten($this->body).
-			'<div class="text-right text-info">by '.$this->user->first_name.'<br/>'.CHtml::link('Read more', array('site/view/' . $this->id)).'</div>
+			</div>' . $this->getPreviewImgURL() . $this->shorten($this->body) .
+			'<div class="text-right text-info">by ' . $this->user->first_name . '<br/>' . CHtml::link('Read more', array('site/view/' . $this->id)) . '</div>
 			<div id="foo" class="row">';
 		if (isset($this->created_at)) echo '<div class="col-xs-12">Created at: ' . $this->created_at . '</div>';
 		if (isset($this->updated_at)) echo '<div class="col-xs-12">Updated at: ' . $this->updated_at . '</div></div>';
@@ -263,8 +275,8 @@ class Post extends CActiveRecord
 		echo '<div id="post" class="col-xs-offset-2 col-xs-8">
 			<div class="row" id="title">
 				<h3 class="text-center">' . strip_tags($this->title) . '</h3>
-			</div><div id="content">' .$this->body.
-			'<div class="text-right text-info">by '.$this->user->first_name.'</div>'.
+			</div><div id="content">' . $this->body .
+			'<div class="text-right text-info">by ' . $this->user->first_name . '</div>' .
 			'</div><div id="foo" class="row">';
 		if (isset($this->created_at)) echo '<div class="col-xs-12">Created at: ' . $this->created_at . '</div>';
 		if (isset($this->updated_at)) echo '<div class="col-xs-12">Updated at: ' . $this->updated_at . '</div></div>';
@@ -275,8 +287,8 @@ class Post extends CActiveRecord
 		$view->renderPartial('_showComment', array('comments' => $this->comments));
 		$view->renderPartial('_addComment', array('model' => $model));
 		if (isset($_POST['Comment'])) {
-			if($model->actionAddComment()){
-				$view->redirect(Yii::app()->createUrl('/site/view/'.$this->id));
+			if ($model->actionAddComment()) {
+				$view->redirect(Yii::app()->createUrl('/site/view/' . $this->id));
 			}
 		}
 	}
