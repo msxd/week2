@@ -141,16 +141,4 @@ class Comment extends CActiveRecord
 		}
 		return false;
 	}
-
-	public function showComment()
-	{//todo перенести в renderPartial
-		echo '<div style="margin-left:' . ($this->getLevel() * 20) . 'px">
-		<blockquote>
-			<p>' . $this->body . '</p>
-			<div style="text-align:right"><button type="button" class="btn btn-xs" onclick="scroll_to_elem(\'addComment\',20,' . $this->id . ')">Ответить</button></div>
-			<footer><cite title="Email">by ' . $this->email . '</cite> at <cite title="Created at">' . $this->created_at . '</cite></footer>
-		</blockquote>
-	</div>';
-		//
-	}
 }

@@ -41,7 +41,15 @@ if (Yii::app()->user->isGuest) {
 	if (isset($posts)) {
 		$i = 0;
 			foreach ($posts as $post) {
-				$post->showPosts();
+				echo '<div id="post" class="col-xs-offset-2 col-xs-8">
+			<div class="row" id="title">
+				<h3 class="text-center">' . strip_tags($post->title) . '</h3>
+			</div>' . $post->getPreviewImgURL() . MCText::shorten($post->body) .
+					'<div class="text-right text-info">by ' . $post->user->first_name . '<br/>' . CHtml::link('Read more', array('site/view/' . $post->id)) . '</div>
+			<div id="foo" class="row">';
+				if (isset($post->created_at)) echo '<div class="col-xs-12">Created at: ' . $post->created_at . '</div>';
+				if (isset($post->updated_at)) echo '<div class="col-xs-12">Updated at: ' . $post->updated_at . '</div></div>';
+				echo '</div></div>';
 			}
 	}
 	if (isset($pages)) {
