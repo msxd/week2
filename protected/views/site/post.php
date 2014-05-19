@@ -22,11 +22,6 @@ if (isset($post)) {
 	$model->post_id = $this->id;
 	$this->renderPartial('_showComment', array('comments' => $post->comments));
 	$this->renderPartial('_addComment', array('model' => $model));
-	if (isset($_POST['Comment'])) {
-		if ($model->actionAddComment()) {
-			$this->redirect(Yii::app()->createUrl('/site/view/' . $post->id));
-		}
-	}
 }
 
 

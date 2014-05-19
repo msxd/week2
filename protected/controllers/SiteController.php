@@ -32,16 +32,24 @@ class SiteController extends Controller
 
 	public function actionView($id)
 	{
+		$model = new Comment('add');
+		if ($model->attributes = Yii::app()->request->getPost('Comment')) {
+			$model->post_id = $id;
+			$model->save();
+
+
+		}
+
 		/** @var Post $post_with_pid */
 		$post_with_pid = Post::model()->with('user', 'comments:orderHierarchy')->findByPk($id);
 		if ($post_with_pid) {
 			if ($post_with_pid->published != 0) {
 				$this->render('post', array('post' => $post_with_pid));
 			} else {
-				$this->render('post', array('errors' => array('Post with id '.$id.' not published')));
+				$this->render('post', array('errors' => array('Post with id ' . $id . ' not published')));
 			}
-		}else{
-			$this->render('post', array('errors' => array('Post with id '.$id.' not found')));
+		} else {
+			$this->render('post', array('errors' => array('Post with id ' . $id . ' not found')));
 		}
 	}
 

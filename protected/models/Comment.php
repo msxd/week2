@@ -130,15 +130,4 @@ class Comment extends CActiveRecord
 	{
 		return parent::model($className);
 	}
-
-	public function actionAddComment()
-	{
-		$model = new Comment('add');
-// todo add to controller
-		if ($model->attributes = Yii::app()->request->getPost('Comment')) {
-			if ($model->save())
-				return true;
-		}
-		return false;
-	}
 }
