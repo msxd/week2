@@ -67,19 +67,6 @@ if (Yii::app()->user->isGuest) {
 		));
 		echo '</div>';
 	}
-
-	if (isset($errors)) {
-		foreach ($errors as $error) {
-			?>
-			<div class="alert alert-danger alert-dismissable text-center" style="margin-top: 20%">
-				<button type="button" class="close" data-dismiss="alert" aria-hidden="true"
-						onclick="closeIt(this)">&times;</button>
-				<?= $error; ?>
-			</div>
-		<?
-		}
-	}
-
 }
 ?>
 

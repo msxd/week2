@@ -25,17 +25,4 @@ if (isset($post)) {
 	$this->renderPartial('_showComment', array('comments' => $post->comments));
 	$this->renderPartial('_addComment', array('model' => $model));
 }
-
-
-if (isset($errors)) {
-	foreach ($errors as $error) {
-		?>
-		<div class="alert alert-danger alert-dismissable text-center" style="margin-top: 20%">
-			<button type="button" class="close" data-dismiss="alert" aria-hidden="true"
-					onclick="closeIt(this)">&times;</button>
-			<?= $error; ?>
-		</div>
-	<?
-	}
-}
 ?>

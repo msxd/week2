@@ -8,8 +8,6 @@ class SiteController extends Controller
 	public function actions()
 	{
 		return array(
-			// page action renders "static" pages stored under 'protected/views/site/pages'
-			// They can be accessed via: index.php?r=site/page&view=FileName
 			'page' => array(
 				'class' => 'CViewAction',
 			),
@@ -36,8 +34,6 @@ class SiteController extends Controller
 		if ($model->attributes = Yii::app()->request->getPost('Comment')) {
 			$model->post_id = $id;
 			$model->save();
-
-
 		}
 
 		/** @var Post $post_with_pid */
@@ -46,10 +42,10 @@ class SiteController extends Controller
 			if ($post_with_pid->published != 0) {
 				$this->render('post', array('post' => $post_with_pid));
 			} else {
-				$this->render('post', array('errors' => array('Post with id ' . $id . ' not published')));
+				$this->render('error', array('message'=>'Post with id ' . $id . ' not published','code'=>404));
 			}
 		} else {
-			$this->render('post', array('errors' => array('Post with id ' . $id . ' not found')));
+			$this->render('error', array('message'=>'Post with id ' . $id . ' not found','code'=>404));
 		}
 	}
 
