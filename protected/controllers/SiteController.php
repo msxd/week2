@@ -69,6 +69,9 @@ class SiteController extends Controller
 
 	public function actionLogin()
 	{
+		if(!Yii::app()->user->isGuest){
+			$this->redirect(Yii::app()->user->returnUrl);
+		}
 		$model = new User('login');
 
 		if ($model->attributes = Yii::app()->request->getPost('User')) {
@@ -91,6 +94,9 @@ class SiteController extends Controller
 
 	public function actionRegistration()
 	{
+		if(!Yii::app()->user->isGuest){
+			$this->redirect(Yii::app()->user->returnUrl);
+		}
 		$model = new User('registration');
 
 		if ($model->attributes = Yii::app()->request->getPost('User')) {

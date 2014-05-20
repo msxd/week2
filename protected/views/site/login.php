@@ -8,9 +8,6 @@
 	<h2 align="center">Log In</h2>
 <?php
 
-	if(!Yii::app()->user->isGuest){
-		$this->redirect(Yii::app()->user->returnUrl);
-	}
 	$form=$this->beginWidget('CActiveForm', array(
 	'id'=>'user-login-form',
 	// Please note: When you enable ajax validation, make sure the corresponding
