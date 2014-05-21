@@ -79,6 +79,82 @@ body {
 	background-color: rgba(39, 121, 209, 0.13);
 }
 
+#sidebarp{
+	position: fixed;
+	margin-top: 5%;
+	background-color: rgba(174, 174, 174, 0.06);
+	padding: 15px 0;
+	border-radius: 10px;
+}
+
+#sidebarp .active{
+background-color: #000;
+}
+#user-grid table td:last-child{
+	text-align: center;
+}
+#user-grid table td:last-child span{
+	padding: 3px;
+	margin: 5px;
+	border: 1px solid #aeaeae;
+	border-radius: 3px;
+
+	background-color: #c0c0c0;
+	color: rgba(52, 52, 52, 0.59);
+	box-shadow: 0 -2px rgba(25, 25, 25, 0.31) inset;
+}
+#user-grid table td:last-child span:hover{
+	box-shadow: 0 -1px rgba(25, 25, 25, 0.31) inset;
+}
+
+#user-grid table td:last-child span:active{
+	box-shadow: 0 0px rgba(25, 25, 25, 0.31) inset;
+}
+
+
+#user_edit{
+	margin-top: 3%;
+	background-color: rgba(160, 160, 160, 0.05);
+	border-width: 1px;
+	border-color: #ddd;
+	border-radius: 4px;
+	border-style: solid;
+}
+.form-horizontal div span{
+	width:130px;
+}
+
+.form-horizontal div{
+	margin-bottom: 5px;
+}
+
+.to-select{
+	padding: 6px 12px;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1;
+	color: #555;
+	text-align: center;
+	background-color: #eee;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	vertical-align: middle;
+	display: table-cell;
+	margin-bottom: 0;
+}
+.to-select div{
+	border-left:1px solid rgba(0, 0, 0, 0.15);
+	border-right:1px solid rgba(0, 0, 0, 0.15);
+}
+
+.to-select div:first-child{
+	border:none;
+}
+
+.to-select div:last-child{
+	border:none;
+}
+
 #comments blockquote{
 	margin:0;
 	/*border-bottom: 1px solid rgba(84, 84, 84, 0.1);*/

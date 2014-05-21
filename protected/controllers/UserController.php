@@ -15,7 +15,7 @@ class UserController extends Controller
 	{
 		return array(
 			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
+			//'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
 
@@ -28,7 +28,7 @@ class UserController extends Controller
 	{
 		return array(
 			array('allow', // allow all users to perform 'index' and 'view' actions
-				'actions' => array('index', 'view', 'create', 'admin', 'delete', 'update'),
+				'actions' => array('index', 'view', 'create', 'admin', 'delete', 'update','approve','dapprove'),
 				'roles' => array(User::ROLE_ADMIN),
 			),
 			array('deny', // deny all users
@@ -44,9 +44,7 @@ class UserController extends Controller
 	 */
 	public function actionView($id)
 	{
-		$this->render('view', array(
-			'model' => $this->loadModel($id),
-		));
+		$this->forward('user/update/'.$id);
 	}
 
 	/**
@@ -78,10 +76,9 @@ class UserController extends Controller
 		$old_role = $model->role_id;
 
 		if (isset($_POST['User'])) {
+			$model->scenario = 'adminUpdate';
 			$model->attributes = $_POST['User'];
-			$model->scenario = 'update';
-			if ($model->save(false)) {
-
+			if ($model->update()) {
 				$auth = Yii::app()->authManager;
 				$auth->revoke($old_role,$model->id);
 				if ($auth->assign($model->role_id, $model->id)) {
@@ -105,8 +102,30 @@ class UserController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->deleted = 1;
+		$model = $this->loadModel($id);
+		$model->deleted = 1;
+		$model->update();
+		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+		if (!isset($_GET['ajax']))
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+	}
 
+
+	public function actionApprove($id)
+	{
+		$model = $this->loadModel($id);
+		$model->approved = 1;
+		$model->update();
+		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+		if (!isset($_GET['ajax']))
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+	}
+
+	public function actionDapprove($id)
+	{
+		$model = $this->loadModel($id);
+		$model->approved = 0;
+		$model->update();
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if (!isset($_GET['ajax']))
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
