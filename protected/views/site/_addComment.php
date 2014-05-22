@@ -14,7 +14,7 @@
 	));
 ?>
 
-		<div class="col-xs-8 col-xs-offset-2" style="padding-top: 20px">
+		<div class="col-xs-8 col-xs-offset-2"  id="add-comment">
 			<?php echo $form->errorSummary($model);
 			?>
 
@@ -26,7 +26,6 @@
 				<div class="btn" style="padding-top: 7px; border-radius: 10px 10px 0 0; box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3) inset">
 					to <span id="to">post</span>
 				</div>
-<!--				--><?php //echo CHtml::submitButton('<span id="to"></span>', array('class' => 'btn btn-primary','style' => 'border-radius:10px 10px 0 0;border-top:none;')); ?>
 			</div>
 			<?
 			$this->widget(

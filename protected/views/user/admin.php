@@ -41,58 +41,60 @@ $('.search-form form').submit(function(){
 	</div>
 	<!-- search-form -->
 
-	<?php $this
-
-		->widget('bootstrap.widgets.TbGridView', array(
-			'id' => 'user-grid',
-			'type' => 'striped bordered condensed',
-			'dataProvider' => $model->search(),
-			'columns' => array(
-				'id',
-				'facebook_id',
-				'email',
-				'phone',
-				'first_name',
-				'last_name',
-				'role_id',
-				'deleted',
-				array(
-					'name' => 'approved',
-					'header' => 'Approve',
-					'htmlOptions' => array('style' => 'width:30px;text-align:center'),
-					'type'=>'html',
-					'value'=>'$data->approved==1?"<a href=\"dapprove/$data->id\"><span class=\"glyphicon glyphicon-ok\"></span></a>":"<a href=\"approve/$data->id\"><span class=\"glyphicon glyphicon-remove\"></span></a>"'
+	<?php $this->widget('bootstrap.widgets.TbGridView', array(
+		'id' => 'user-grid',
+		'type' => 'striped bordered condensed',
+		'pager' => array(
+			'header' => ' ', //'<b>Перейти к странице:</b><br><br>', // заголовок над листалкой
+			'firstPageLabel' => '<div style="height:17px;width:20px" class="glyphicon glyphicon-fast-backward"></div>',
+			'prevPageLabel' => '<div style="height:17px;width:20px"  class="glyphicon glyphicon-backward"></div>',
+			'nextPageLabel' => '<div style="height:17px;width:20px" class="glyphicon glyphicon-forward"></div>',
+			'lastPageLabel' => '<div style="height:17px;width:20px" class="glyphicon glyphicon-fast-forward"></div>',
+			'htmlOptions' => array('class' => 'pagination pagination-sm'),
+			'selectedPageCssClass' => 'active'
+		),
+		'dataProvider' => $model->search(),
+		'columns' => array(
+			'id',
+			'facebook_id',
+			'email',
+			'phone',
+			'first_name',
+			'last_name',
+			'role_id',
+			'deleted',
+			array(
+				'name' => 'approved',
+				'header' => 'Approve',
+				'htmlOptions' => array('style' => 'width:30px;text-align:center'),
+				'type' => 'html',
+				'value' => '$data->approved==1?"<a href=\"dapprove/$data->id\"><span class=\"glyphicon glyphicon-ok\"></span></a>":"<a href=\"approve/$data->id\"><span class=\"glyphicon glyphicon-remove\"></span></a>"'
 //					'value' => function ($data) {
 //							$title = $data->approved==User::APPROVE_TRUE ? '+' : '-';
 //							return $title;
 //						}
-				),
-				array(
-					'header' => 'Actions',
-					'class' => 'CButtonColumn',
-					'template' => '{update}{delete}',
-					'buttons' => array
+			),
+			array(
+				'header' => 'Actions',
+				'class' => 'CButtonColumn',
+				'template' => '{update}{delete}',
+				'buttons' => array
+				(
+					'update' => array
 					(
-//				'new' => array
-//				(
-//					'label'=>'<span class="glyphicon glyphicon-th-large"></span>',
-//					'url'=>'Yii::app()->createUrl("users/email", array("id"=>$data->id))',
-//				),
-						'update' => array
-						(
-							'imageUrl' => false,
-							'label' => '<span class="glyphicon glyphicon-pencil"></span>',
-							'options' => array('title' => 'View'),
-						),
-						'delete' => array
-						(
-							'imageUrl' => false,
-							'label' => '<span class="glyphicon glyphicon-trash"></span>',
-							'options' => array('title' => 'Delete'),
-						),
+						'imageUrl' => false,
+						'label' => '<span class="glyphicon glyphicon-pencil"></span>',
+						'options' => array('title' => 'View'),
+					),
+					'delete' => array
+					(
+						'imageUrl' => false,
+						'label' => '<span class="glyphicon glyphicon-trash"></span>',
+						'options' => array('title' => 'Delete'),
 					),
 				),
 			),
+		),
 
-		)); ?>
+	)); ?>
 </div>

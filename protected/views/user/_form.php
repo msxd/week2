@@ -24,34 +24,31 @@
 	<?php echo $form->errorSummary($model); ?>
 
 
-	<div class="input-group col-xs-12">
-		<span class="input-group-addon"><?php echo $form->labelEx($model,'email'); ?></span>
+	<div class="input-group col-xs-12 padingf">
+		<span class="input-group-addon ads"><?php echo $form->labelEx($model,'email'); ?></span>
 		<?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>255,'class'=>'form-control')); ?>
 		<?php echo $form->error($model,'email'); ?>
 	</div>
 
-
-	<div class="input-group col-xs-12">
+	<div class="input-group col-xs-12 padingf">
 		<span class="input-group-addon ads"><?php echo $form->labelEx($model,'phone'); ?></span>
 		<?php echo $form->textField($model,'phone',array('size'=>60,'maxlength'=>255,'class'=>'form-control')); ?>
 		<?php echo $form->error($model,'phone'); ?>
 	</div>
 
-
-
-	<div class="input-group col-xs-12">
+	<div class="input-group col-xs-12 padingf">
 		<span class="input-group-addon ads"><?php echo $form->labelEx($model,'first_name'); ?></span>
 		<?php echo $form->textField($model,'first_name',array('size'=>60,'maxlength'=>255,'class'=>'form-control')); ?>
 		<?php echo $form->error($model,'first_name'); ?>
 	</div>
 
-	<div class="input-group col-xs-12">
+	<div class="input-group col-xs-12 padingf">
 		<span class="input-group-addon ads"><?php echo $form->labelEx($model,'last_name'); ?></span>
 		<?php echo $form->textField($model,'last_name',array('size'=>60,'maxlength'=>255,'class'=>'form-control')); ?>
 		<?php echo $form->error($model,'last_name'); ?>
 	</div>
 
-<div class="inline to-select col-xs-12">
+<div class="inline to-select col-xs-12 padingf">
 	<div class="col-xs-4">
 		<?php echo $form->labelEx($model,'role_id',array('class'=>'col-xs-12')); ?>
 		<?php echo $form->dropDownList($model,'role_id',array(User::ROLE_USER => 'User', User::ROLE_MODER => 'Moderator', User::ROLE_ADMIN => 'Admin'),array('class'=>'form-control')); ?>
@@ -70,14 +67,15 @@
 		<?php echo $form->error($model,'approved'); ?>
 	</div>
 </div>
-	<div class="input-group col-xs-12">
+
+	<div class="input-group col-xs-12 padingf">
 		<span class="input-group-addon ads"><?php echo $form->labelEx($model,'facebook_id'); ?></span>
 		<?php echo $form->textField($model,'facebook_id',array('size'=>60,'maxlength'=>255,'class'=>'form-control')); ?>
 		<?php echo $form->error($model,'facebook_id'); ?>
 	</div>
 
 
-	<div class="buttons text-center">
+	<div class="buttons text-center padingf">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save',array('class'=>'btn btn-default btn-lg')); ?>
 	</div>
 
