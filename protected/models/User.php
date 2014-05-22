@@ -315,7 +315,8 @@ class User extends CActiveRecord
 	{
 		$str = '<a href="' . Yii::app()->controller->createAbsoluteUrl(
 				'/mailur/check?url=' . str_replace('=', '', base64_encode(base64_encode('recover') . ':' . base64_encode($this->hashed_password) . ':' . base64_encode(time()) . ':' . base64_encode($this->email) . ':' . base64_encode($this->last_name) . ':' . base64_encode($this->first_name)))) . '">url to recovery password</a>';
-		$alt = 'Copy and past this url in u browser and create new password';
+		$alt = 'Copy and past this url in u browser and create new password '. Yii::app()->controller->createAbsoluteUrl(
+				'/mailur/check?url=' . str_replace('=', '', base64_encode(base64_encode('recover') . ':' . base64_encode($this->hashed_password) . ':' . base64_encode(time()) . ':' . base64_encode($this->email) . ':' . base64_encode($this->last_name) . ':' . base64_encode($this->first_name))));
 		return self::sendMail($alt, $str);
 	}
 
