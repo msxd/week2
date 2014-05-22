@@ -314,9 +314,9 @@ class User extends CActiveRecord
 	public function passRecovery()
 	{
 		$str = '<a href="' . Yii::app()->controller->createAbsoluteUrl(
-				'/mailur/check?url=' . str_replace('=', '', base64_encode(base64_encode('recover') . ':' . base64_encode($this->hashed_password) . ':' . base64_encode(time()) . ':' . base64_encode($this->email) . ':' . base64_encode($this->last_name) . ':' . base64_encode($this->first_name)))) . '">url to recovery password</a>';
+				'/mailur/check?url=' . str_replace('=', '', base64_encode(base64_encode('recover') . ':' . base64_encode($this->hashed_password) . ':' . base64_encode(time()) . ':' . base64_encode($this->email) . ':' . base64_encode($this->last_name) . ':' . base64_encode($this->first_name)))) . '">url to recovery password</a><br/> After that your new password has send to this email';
 		$alt = 'Copy and past this url in u browser and create new password '. Yii::app()->controller->createAbsoluteUrl(
-				'/mailur/check?url=' . str_replace('=', '', base64_encode(base64_encode('recover') . ':' . base64_encode($this->hashed_password) . ':' . base64_encode(time()) . ':' . base64_encode($this->email) . ':' . base64_encode($this->last_name) . ':' . base64_encode($this->first_name))));
+				'/mailur/check?url=' . str_replace('=', '', base64_encode(base64_encode('recover') . ':' . base64_encode($this->hashed_password) . ':' . base64_encode(time()) . ':' . base64_encode($this->email) . ':' . base64_encode($this->last_name) . ':' . base64_encode($this->first_name)))).'\n After that your new password has send to this email';
 		return self::sendMail($alt, $str);
 	}
 

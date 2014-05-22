@@ -4,13 +4,9 @@
 $this->breadcrumbs = array(
 	'Mailur',
 );
-?>
 
-<?
-/** @var User $model */
-//$recover
 
-if (empty($_REQUEST)) {
+
 	?>
 	<div id="form_signup" class="col-sm-offset-3 col-sm-6">
 		<h2 align="center">Enter eMail</h2>
@@ -43,17 +39,5 @@ if (empty($_REQUEST)) {
 		<?php $this->endWidget(); ?>
 
 	</div><!-- form -->
-<?
-} else {
-	if ($model != null) {
-		if($model->passRecovery()){
-			echo 'check email to recovery u password';
-		}else{
-			echo 'smt went wrong. Please contact with administrator';
-		}
-	} else {
-		$this->redirect(array('/mailur/recovery/'));
-	}
-}
-?>
+
 

@@ -21,7 +21,7 @@
 			<div class="row">
 				<div class="col-xs-8">
 					<?php echo $form->error($model, 'email'); ?>
-					<?=$form->textField($model, 'email', array('class' => 'form-control', 'placeholder' => 'email', 'style' => 'border-radius:10px 10px 0 0;border-bottom:none;',(Yii::app()->user->isGuest)?'':'disabled'=>'disabled','value'=>(!Yii::app()->user->isGuest)?Yii::app()->user->email:'')); ?>
+					<?=$form->textField($model, 'email', array('class' => 'form-control', 'placeholder' => 'Name', 'style' => 'border-radius:10px 10px 0 0;border-bottom:none;',(Yii::app()->user->isGuest)?'':'disabled'=>'disabled','value'=>(!Yii::app()->user->isGuest)?Yii::app()->user->email:'')); ?>
 				</div>
 				<div class="btn" style="padding-top: 7px; border-radius: 10px 10px 0 0; box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3) inset">
 					to <span id="to">post</span>
