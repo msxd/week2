@@ -50,7 +50,7 @@ $('.search-form form').submit(function(){
 			'prevPageLabel' => '<div style="height:17px;width:20px"  class="glyphicon glyphicon-backward"></div>',
 			'nextPageLabel' => '<div style="height:17px;width:20px" class="glyphicon glyphicon-forward"></div>',
 			'lastPageLabel' => '<div style="height:17px;width:20px" class="glyphicon glyphicon-fast-forward"></div>',
-			'htmlOptions' => array('class' => 'pagination pagination-sm'),
+			'htmlOptions' => array('class' => 'pagination pagination-sm','id'=>'adminPaginator'),
 			'selectedPageCssClass' => 'active'
 		),
 		'dataProvider' => $model->search(),
@@ -61,14 +61,34 @@ $('.search-form form').submit(function(){
 			'phone',
 			'first_name',
 			'last_name',
-			'role_id',
-			'deleted',
+			array(
+				'name' => 'role_id',
+				'header' => 'Role',
+				'htmlOptions' => array('style' => 'width:30px;text-align:center;vertical-align: middle;'),
+				'type' => 'html',
+				'value' => function ($data){
+						if($data->role_id==0)
+							return '<span class="label label-success" style="padding: 5px">User</span>';
+						if($data->role_id==1)
+							return '<span class="label label-warning" style="padding: 5px">Moderator</span>';
+						if($data->role_id==2)
+							return '<span class="label label-danger" style="padding: 5px">Admin</span>';
+
+					},
+			),
+			array(
+				'name' => 'deleted',
+				'header' => 'Deleted',
+				'htmlOptions' => array('style' => 'width:30px;text-align:center'),
+				'type' => 'html',
+				'value' => '$data->deleted!=1?"<a href=\"delete/$data->id\"><span class=\"glyphicon glyphicon-remove\"></span><br/>Delete</a>":"<a href=\"udelete/$data->id\"><span class=\"glyphicon glyphicon-ok\"></span><br/>Restore</a>"',
+			),
 			array(
 				'name' => 'approved',
 				'header' => 'Approve',
 				'htmlOptions' => array('style' => 'width:30px;text-align:center'),
 				'type' => 'html',
-				'value' => '$data->approved==1?"<a href=\"dapprove/$data->id\"><span class=\"glyphicon glyphicon-ok\"></span></a>":"<a href=\"approve/$data->id\"><span class=\"glyphicon glyphicon-remove\"></span></a>"'
+				'value' => '$data->approved==1?"<a href=\"dapprove/$data->id\"><span class=\"glyphicon glyphicon-remove\"></span>Remove</a>":"<a href=\"approve/$data->id\"><span class=\"glyphicon glyphicon-ok\"></span>Approve</a>"'
 //					'value' => function ($data) {
 //							$title = $data->approved==User::APPROVE_TRUE ? '+' : '-';
 //							return $title;

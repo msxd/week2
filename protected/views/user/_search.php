@@ -11,9 +11,14 @@
 	'method'=>'get',
 )); ?>
 
-	<div class="row">
-		<?php echo $form->label($model,'id'); ?>
-		<?php echo $form->textField($model,'id'); ?>
+	<div class="input-group col-xs-12 padingf">
+		<span class="input-group-addon ads"><?php echo $form->labelEx($model,'id'); ?></span>
+		<?php echo $form->textField($model,'id',array('size'=>60,'maxlength'=>255,'class'=>'form-control')); ?>
+	</div>
+
+	<div class="input-group col-xs-12 padingf">
+		<span class="input-group-addon ads"><?php echo $form->labelEx($model,'id'); ?></span>
+		<?php echo $form->textField($model,'id',array('size'=>60,'maxlength'=>255,'class'=>'form-control')); ?>
 	</div>
 
 	<div class="row">

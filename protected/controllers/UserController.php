@@ -28,7 +28,7 @@ class UserController extends Controller
 	{
 		return array(
 			array('allow', // allow all users to perform 'index' and 'view' actions
-				'actions' => array('index', 'view', 'create', 'admin', 'delete', 'update','approve','dapprove'),
+				'actions' => array('index', 'view', 'create', 'admin', 'delete','udelete', 'update','approve','dapprove'),
 				'roles' => array(User::ROLE_ADMIN),
 			),
 			array('deny', // deny all users
@@ -104,6 +104,16 @@ class UserController extends Controller
 	{
 		$model = $this->loadModel($id);
 		$model->deleted = 1;
+		$model->update();
+		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+		if (!isset($_GET['ajax']))
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+	}
+
+	public function actionUdelete($id)
+	{
+		$model = $this->loadModel($id);
+		$model->deleted = 0;
 		$model->update();
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if (!isset($_GET['ajax']))

@@ -21,8 +21,7 @@
 
 	<?php echo $form->errorSummary($model); ?>
 
-
-
+		<center>admin:admin</center>
 	<div class="form-group">
 		<?php echo $form->labelEx($model,'email',array('class'=>'col-sm-2 col-xs-8 control-label')); ?>
 		<div class="col-sm-8">

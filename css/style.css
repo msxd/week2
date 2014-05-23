@@ -96,11 +96,11 @@ background-color: #000;
 #user-grid table td:last-child span{
 	padding: 3px;
 	margin: 5px;
-	border: 1px solid #aeaeae;
+	border: 1px solid #4da0c6;
 	border-radius: 3px;
 
-	background-color: #c0c0c0;
-	color: rgba(52, 52, 52, 0.59);
+	background-color: #50a9ed;
+	color: rgba(14, 65, 83, 0.59);
 	box-shadow: 0 -2px rgba(25, 25, 25, 0.31) inset;
 }
 #user-grid table td:last-child span:hover{
