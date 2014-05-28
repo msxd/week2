@@ -10,9 +10,9 @@
 		$this->cs->registerCssFile(Yii::app()->request->baseUrl . '/vendors/bootstrap/css/bootstrap.min.css');
 		$this->cs->registerCssFile(Yii::app()->request->baseUrl . '/vendors/bootstrap/css/bootstrap-theme.css');
 		$this->cs->registerScriptFile(Yii::app()->request->baseUrl . '/vendors/jquery/jquery-2.1.0.min.js', CClientScript::POS_END);
-		$this->cs->registerCssFile(Yii::app()->request->baseUrl . '/vendors/bootstrap/js/bootstrap.min.js', CClientScript::POS_END);
-		$this->cs->registerScriptFile(Yii::app()->request->baseUrl . '/js/app.js', CClientScript::POS_END);
-	?>
+    $this->cs->registerScriptFile(Yii::app()->request->baseUrl . '/vendors/bootstrap/js/bootstrap.min.js', CClientScript::POS_END);
+    $this->cs->registerScriptFile(Yii::app()->request->baseUrl . '/js/app.js', CClientScript::POS_END);
+    ?>
 
 	<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 </head>

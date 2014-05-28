@@ -64,6 +64,14 @@ class SiteController extends Controller
         }
     }
 
+    public function actionRemovecomment($id)
+    {
+
+        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+//        if (!isset($_GET['ajax']))
+//            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+        return Comment::model()->deleteByPk($id);
+    }
 
     public function actionLogin()
     {

@@ -26,3 +26,15 @@ $('body').on('click','#clear_parrent_comment',function(){
     $('#Comment_parent_id').val(null);
     $('#to').html('post');
 });
+
+$('#removeComment').click(function () {
+    $.ajax(
+        {
+            type: "GET",
+            url: $('#removeComment').data('url'),
+            success: function (msg) {
+                $('#removeComment').parent().parent().remove();
+            }
+        }
+    );
+});
