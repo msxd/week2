@@ -1,47 +1,16 @@
 <?php
 /* @var $this PostController */
 
-$this->breadcrumbs=array(
-	'Post',
+$this->breadcrumbs = array(
+    'Post',
 );
 ?>
 
-<?
-$form=$this->beginWidget('CActiveForm', array(
-	'id'=>'users-signin-form',
-	'htmlOptions' => array('class' => 'form-horizontal', 'enctype'=>'multipart/form-data'),
-	'enableAjaxValidation'=>false,
-));
-
-echo $form->textField($model, 'title', array('class' => 'span3'));
-if(Yii::app()->user->checkAccess(User::ROLE_MODER))
-	echo $form->textField($model, 'published', array('class' => 'span3'));
-
-$this->widget(
-	'bootstrap.widgets.TbCKEditor',
-	array(
-		'model' => $model,
-		'attribute' => 'body',
-	)
-);
-
-echo $form->fileField($model, 'image');
-
-echo $form->checkBox($model,'remove_img');
-echo $form->label($model,'remove_img');
-echo '<br/>';
-$this->widget(
-	'bootstrap.widgets.TbButton',
-	array('buttonType' => 'submit', 'label' => 'Add')
-);
-
-$this->endWidget();
+<div class="form-horizontal col-xs-8 col-xs-offset-2" id="user_post">
+    <?
+    $this->renderPartial('_form', array('model' => $model));
+    ?>
 
 
-
-?>
-
-
-
-
+</div>
 
