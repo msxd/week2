@@ -1,6 +1,6 @@
 <?php
-/* @var $this ProfileController */
-/* @var $dataProvider CActiveDataProvider */
+/* @var ProfileController $this */
+/* @var CActiveDataProvider $dataProvider */
 
 $this->breadcrumbs = array(
     'Users',

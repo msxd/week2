@@ -1,6 +1,6 @@
 <?php
-/* @var $this UserController */
-/* @var $model User */
+/* @var UserController $this */
+/* @var User $model */
 
 $this->breadcrumbs = array(
     'Users' => array('index'),
@@ -33,7 +33,7 @@ $('.search-form form').submit(function(){
         or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
     </p>
 
-    <?php echo CHtml::link('Advanced Search', '#', array('class' => 'search-button')); ?>
+    <?= CHtml::link('Advanced Search', '#', array('class' => 'search-button')); ?>
     <div class="search-form" style="display:none">
         <?php $this->renderPartial('_search', array(
             'model' => $model,
@@ -81,14 +81,14 @@ $('.search-form form').submit(function(){
                 'header' => 'Deleted',
                 'htmlOptions' => array('style' => 'width:30px;text-align:center'),
                 'type' => 'html',
-                'value' => '$data->deleted!=1?"<a href=\"delete/$data->id\"><span class=\"glyphicon glyphicon-remove\"></span><br/>Delete</a>":"<a href=\"udelete/$data->id\"><span class=\"glyphicon glyphicon-ok\"></span><br/>Restore</a>"',
+                'value' => '$data->deleted!=1?"<a href=\"delete/$data->id/1\"><span class=\"glyphicon glyphicon-remove\"></span><br/>Delete</a>":"<a href=\"delete/$data->id/0\"><span class=\"glyphicon glyphicon-ok\"></span><br/>Restore</a>"',
             ),
             array(
                 'name' => 'approved',
                 'header' => 'Approve',
                 'htmlOptions' => array('style' => 'width:30px;text-align:center'),
                 'type' => 'html',
-                'value' => '$data->approved==1?"<a href=\"dapprove/$data->id\"><span class=\"glyphicon glyphicon-remove\"></span>Remove</a>":"<a href=\"approve/$data->id\"><span class=\"glyphicon glyphicon-ok\"></span>Approve</a>"'
+                'value' => '$data->approved==1?"<a href=\"approve/$data->id/0\"><span class=\"glyphicon glyphicon-remove\"></span>Remove</a>":"<a href=\"approve/$data->id/1\"><span class=\"glyphicon glyphicon-ok\"></span>Approve</a>"'
 //					'value' => function ($data) {
 //							$title = $data->approved==User::APPROVE_TRUE ? '+' : '-';
 //							return $title;

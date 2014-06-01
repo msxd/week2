@@ -99,9 +99,7 @@ class PostController extends Controller
     public function actionError()
     {
         if ($error = Yii::app()->errorHandler->error) {
-            if (Yii::app()->request->isAjaxRequest)
-                echo $error['message'];
-            else
+            if (!Yii::app()->request->isAjaxRequest)
                 $this->render('error', $error);
         }
     }
@@ -130,20 +128,14 @@ class PostController extends Controller
         }
     }
 
-    public function actionHide($id)
+    public function actionHide($id, $val)
     {
         $model = $this->loadModel($id);
-        $model->published = 0;
-        $model->update();
-        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-        if (!isset($_GET['ajax']))
-            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
-    }
+        if ($val == 'f')
+            $model->published = 1;
+        else
+            $model->published = 0;
 
-    public function actionUnhide($id)
-    {
-        $model = $this->loadModel($id);
-        $model->published = 1;
         $model->update();
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax']))

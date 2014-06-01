@@ -100,41 +100,29 @@ class UserController extends Controller
      * If deletion is successful, the browser will be redirected to the 'admin' page.
      * @param integer $id the ID of the model to be deleted
      */
-    public function actionDelete($id)
+    public function actionDelete($id, $del)
     {
+
         $model = $this->loadModel($id);
-        $model->deleted = 1;
+        if ($del)
+            $model->deleted = 1;
+        else
+            $model->deleted = 0;
         $model->update();
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax']))
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }
 
-    public function actionUdelete($id)
+
+    public function actionApprove($id, $approve)
     {
         $model = $this->loadModel($id);
-        $model->deleted = 0;
-        $model->update();
-        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-        if (!isset($_GET['ajax']))
-            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-    }
+        if ($approve)
+            $model->approved = 1;
+        else
+            $model->approved = 0;
 
-
-    public function actionApprove($id)
-    {
-        $model = $this->loadModel($id);
-        $model->approved = 1;
-        $model->update();
-        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-        if (!isset($_GET['ajax']))
-            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-    }
-
-    public function actionDapprove($id)
-    {
-        $model = $this->loadModel($id);
-        $model->approved = 0;
         $model->update();
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax']))

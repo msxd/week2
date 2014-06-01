@@ -19,37 +19,37 @@
 
     <div class="input-group col-xs-12 padingf">
         <span class="input-group-addon ads"><?php echo $form->labelEx($model, 'email'); ?></span>
-        <?php echo $form->textField($model, 'email', array('size' => 60, 'maxlength' => 255, 'class' => 'form-control')); ?>
+        <?php echo $form->textField($model, 'email', array('class' => 'form-control')); ?>
         <?php echo $form->error($model, 'email'); ?>
     </div>
 
     <div class="input-group col-xs-12 padingf">
         <span class="input-group-addon ads"><?php echo $form->labelEx($model, 'phone'); ?></span>
-        <?php echo $form->textField($model, 'phone', array('size' => 60, 'maxlength' => 255, 'class' => 'form-control')); ?>
+        <?php echo $form->textField($model, 'phone', array('class' => 'form-control')); ?>
         <?php echo $form->error($model, 'phone'); ?>
     </div>
 
     <div class="input-group col-xs-12 padingf">
         <span class="input-group-addon ads"><?php echo $form->labelEx($model, 'first_name'); ?></span>
-        <?php echo $form->textField($model, 'first_name', array('size' => 60, 'maxlength' => 255, 'class' => 'form-control')); ?>
+        <?php echo $form->textField($model, 'first_name', array('class' => 'form-control')); ?>
         <?php echo $form->error($model, 'first_name'); ?>
     </div>
 
     <div class="input-group col-xs-12 padingf">
         <span class="input-group-addon ads"><?php echo $form->labelEx($model, 'last_name'); ?></span>
-        <?php echo $form->textField($model, 'last_name', array('size' => 60, 'maxlength' => 255, 'class' => 'form-control')); ?>
+        <?php echo $form->textField($model, 'last_name', array('class' => 'form-control')); ?>
         <?php echo $form->error($model, 'last_name'); ?>
     </div>
 
     <div class="input-group col-xs-12 padingf">
         <span class="input-group-addon ads"><?php echo $form->labelEx($model, 'facebook_id'); ?></span>
-        <?php echo $form->textField($model, 'facebook_id', array('size' => 60, 'maxlength' => 255, 'class' => 'form-control')); ?>
-        <?php echo $form->error($model, 'facebook_id'); ?>
+        <?php echo $form->textField($model, 'facebook_id', array('class' => 'form-control')); ?>
+        <?= $form->error($model, 'facebook_id'); ?>
     </div>
 
 
     <div class="buttons text-center padingf">
-        <?php echo CHtml::submitButton('Save', array('class' => 'btn btn-default btn-lg')); ?>
+        <?= CHtml::submitButton('Save', array('class' => 'btn btn-default btn-lg')); ?>
     </div>
 
     <?php $this->endWidget(); ?>

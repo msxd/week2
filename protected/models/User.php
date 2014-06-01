@@ -70,7 +70,9 @@ class User extends CActiveRecord
             array('first_name, last_name', 'length', 'min' => 2),
             array('email', 'length', 'min' => 2),
             array('role_id', 'numerical', 'integerOnly' => true),
+            array('pass, r_pass, old_pass', 'unsafe', 'on' => 'editUserInfo'),
             array('deleted, approved', 'safe', 'on' => 'adminUpdate'),
+            array('approved, deleted, role_id, id', 'unsafe', 'except' => 'adminUpdate'),
             // The following rule is used by search().
             array('hashed_password', 'unsafe'),
             // @todo Please remove those attributes that should not be searched.
@@ -303,9 +305,11 @@ class User extends CActiveRecord
         return $me->save();
     }
 
-    public function afterReg()
+    public function afterSave()
     {
-        $this->genAproveUrl();
+        if ($this->getIsNewRecord()) {
+            $this->genAproveUrl();
+        }
     }
 
     /**
@@ -351,7 +355,7 @@ class User extends CActiveRecord
                 $me->save();
                 $me->sendMail('Your new password is: ' . $me->pass, 'Your new password is: ' . $me->pass);
             } else {
-                echo 'smt went wrong';
+                return 'smt went wrong';
             }
         } else {
             return 'Просрочено';

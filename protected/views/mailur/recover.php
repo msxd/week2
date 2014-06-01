@@ -1,5 +1,5 @@
 <?php
-/* @var $this MailurController */
+/* @var MailurController $this */
 
 $this->breadcrumbs = array(
     'Mailur',
@@ -16,18 +16,18 @@ $this->breadcrumbs = array(
     )); ?>
 
 
-    <?php echo $form->errorSummary($model); ?>
+    <?= $form->errorSummary($model); ?>
 
     <div class="form-group col-sm-12" style="text-align: right;">
-        <?php echo $form->label($model, 'email', array('class' => 'col-sm-2 control-label')); ?>
+        <?= $form->label($model, 'email', array('class' => 'col-sm-2 control-label')); ?>
         <div class="col-sm-8">
-            <?php echo $form->textField($model, 'email', array('class' => 'form-control', 'placeholder' => 'Enter e-mail*', 'type' => 'email', 'required' => 'required')); ?>
+            <?= $form->textField($model, 'email', array('class' => 'form-control', 'placeholder' => 'Enter e-mail*', 'type' => 'email', 'required' => 'required')); ?>
         </div>
     </div>
 
     <div class="form-group">
         <div class="buttons text-center">
-            <?php echo CHtml::submitButton('Submit', array('class' => 'btn btn-primary btn-lg')); ?>
+            <?= CHtml::submitButton('Submit', array('class' => 'btn btn-primary btn-lg')); ?>
         </div>
     </div>
 

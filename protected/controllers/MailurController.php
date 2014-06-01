@@ -49,15 +49,12 @@ class MailurController extends Controller
         }
     }
 
-    /** @var User $usr */
     public function actionCheck($url)
     {
-        $datas = explode(':', base64_decode($url));
-        if (count($datas) == 6) {
-            /** @var User $usr */
-            $usr = User::model();
-            $usr->changePass(true, $url);
-        }
+        /** @var User $usr */
+        $usr = User::model();
+        $usr->changePass(true, $url);
+
         $this->redirect(array('/site'));
     }
 }

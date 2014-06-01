@@ -33,9 +33,7 @@ class SiteController extends Controller
         $model = new Comment('add');
         if ($model->attributes = Yii::app()->request->getPost('Comment')) {
             $model->post_id = $id;
-            if (!$model->save()) {
-                dbug::stopArray($model->getErrors());
-            }
+            $model->save();
         }
 
         /** @var Post $post_with_pid */
@@ -57,9 +55,7 @@ class SiteController extends Controller
     public function actionError()
     {
         if ($error = Yii::app()->errorHandler->error) {
-            if (Yii::app()->request->isAjaxRequest)
-                echo $error['message'];
-            else
+            if (!Yii::app()->request->isAjaxRequest)
                 $this->render('error', $error);
         }
     }
@@ -109,7 +105,7 @@ class SiteController extends Controller
                 $model->approved = 1;
             }
             if ($model->save()) {
-                $model->afterReg();
+//                $model->afterReg();
                 $this->redirect(Yii::app()->user->returnUrl);
             }
         }

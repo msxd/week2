@@ -1,5 +1,5 @@
 <?php
-/* @var $this PostController */
+/* @var PostController $this */
 
 $this->breadcrumbs = array(
     'Post',

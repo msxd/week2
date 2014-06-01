@@ -1,5 +1,5 @@
 <?php
-/* @var $this PostController */
+/* @var PostController $this */
 
 $this->breadcrumbs = array(
     'Post',
@@ -59,7 +59,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
             'header' => 'Published',
             'htmlOptions' => array('style' => 'width:30px;text-align:center'),
             'type' => 'html',
-            'value' => '$data->published==1?"<a href=\"hide/$data->id\"><span class=\"glyphicon glyphicon-remove\"></span><br/>Delete</a>":"<a href=\"unhide/$data->id\"><span class=\"glyphicon glyphicon-ok\"></span><br/>Restore</a>"',
+            'value' => '$data->published==1?"<a href=\"hide/$data->id/t\"><span class=\"glyphicon glyphicon-remove\"></span><br/>Delete</a>":"<a href=\"hide/$data->id/f\"><span class=\"glyphicon glyphicon-ok\"></span><br/>Restore</a>"',
         ),
         array('name' => 'img_path',
             'header' => 'Image'

@@ -5,7 +5,7 @@
 
 ?>
 <div class="col-xs-8 col-xs-offset-2" id="comments">
-    <?
+    <?php
     foreach ($comments as $comment) {
         echo '<div style="margin-left:' . ($comment->getLevel() * 20) . 'px">
 		<blockquote>

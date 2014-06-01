@@ -1,6 +1,6 @@
 <?php
-/* @var $this ProfileController */
-/* @var $model User */
+/* @var ProfileController $this */
+/* @var User $model */
 
 $this->breadcrumbs = array(
     'Users' => array('index'),
