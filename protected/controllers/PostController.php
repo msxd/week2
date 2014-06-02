@@ -53,7 +53,7 @@ class PostController extends Controller
 
 	//add post(set)
 	public function actionAdd()
-	{ //todo перенести в модель
+	{
 
 		$model = new Post();
 		if ($model->attributes = Yii::app()->request->getPost('Post')) {
@@ -79,10 +79,8 @@ class PostController extends Controller
 	//edit post(set)
 	public function actionEdit($id)
 	{
-		//todo перенести в модель
 		/** @var Post $model */
 		$model = null;
-
 
 		$model = $this->loadModel($id);
 		if ($model === null) {
