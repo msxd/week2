@@ -15,14 +15,10 @@ class PostController extends Controller
     public function accessRules()
     {
         return array(
-            array('allow', // allow all users to perform 'index' and 'view' actions
-                'actions' => array('hide', 'unhide'),
-                'roles' => array(User::ROLE_ADMIN),
-            ),
             array('allow',
                 'actions' => array('index'),
-                'roles' => array(User::ROLE_ADMIN, User::ROLE_MODER, User::ROLE_USER),
-            ),
+				'roles' => array(User::ROLE_USER),
+			),
             array('deny',
                 'actions' => array('index'),
                 'users' => array('*'),
@@ -34,17 +30,8 @@ class PostController extends Controller
 
     public function actionIndex()
     {
-        $model = null;
-        /** @var Post $model */
-        if (Yii::app()->user->checkAccess(User::ROLE_USER)) {
-            $model = Post::model()->with('user')->ownPosts()->findAll();
-        }
-        if (Yii::app()->user->checkAccess(User::ROLE_MODER)) {
-            $model = Post::model()->with('user')->findAll();
-        }
-        $this->render('shows', array('model' => $model));
-    }
-
+		$this->render('shows');
+	}
 
     public function actionEdit($id)
     {
@@ -52,21 +39,12 @@ class PostController extends Controller
         /** @var Post $model */
         $model = null;
 
-        if ((!Yii::app()->user->checkAccess(User::ROLE_MODER)) && Yii::app()->user->checkAccess(User::ROLE_USER)) {
-            $model = Post::model()->ownPosts()->findByPk($id);
-            if ($model === null) {
-                throw new CHttpException(404, 'post with id ' . $id . ' is not found');
-            }
-        }
 
-        if (Yii::app()->user->checkAccess(User::ROLE_MODER)) {
-            $model = Post::model()->findByPk($id);
-            if ($model === null) {
-                throw new CHttpException(404, 'post with id ' . $id . ' is not found');
-            }
-        }
-
-        if ($model->attributes = Yii::app()->request->getPost('Post')) {
+		$model = $this->loadModel($id);
+		if ($model === null) {
+			throw new CHttpException(404, 'post with id ' . $id . ' is not found');
+		}
+		if ($model->attributes = Yii::app()->request->getPost('Post')) {
             if (CUploadedFile::getInstance($model, 'image') != null) {
                 $image = CUploadedFile::getInstance($model, 'image');
                 $name = time() . '.' . $image->getExtensionName();
@@ -144,8 +122,8 @@ class PostController extends Controller
 
     public function loadModel($id)
     {
-        $model = Post::model()->findByPk($id);
-        if ($model === null)
+		$model = (Yii::app()->user->checkAccess('editPost')) ? Post::model()->findByPk($id) : Post::model()->ownPosts()->findByPk($id);
+		if ($model === null)
             throw new CHttpException(404, 'The requested page does not exist.');
         return $model;
     }

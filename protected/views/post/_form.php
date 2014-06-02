@@ -12,8 +12,8 @@
     </div>
     <div class="col-xs-2">
         <?
-        if (Yii::app()->user->checkAccess(User::ROLE_MODER)) {
-            echo $form->dropDownList($model, 'published', array(Post::PUBLISHED_FALSE => 'Hidden', Post::PUBLISHED_TRUE => 'Published'), array('class' => 'form-control  post-up-adds'));
+		if (Yii::app()->user->checkAccess('editPost')) {
+			echo $form->dropDownList($model, 'published', array(Post::PUBLISHED_FALSE => 'Hidden', Post::PUBLISHED_TRUE => 'Published'), array('class' => 'form-control  post-up-adds'));
         }
         ?>
     </div>

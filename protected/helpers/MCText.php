@@ -1,6 +1,7 @@
 <?php
 
-class MCText {
+class MCText
+{
 
 	public static function shorten($body)
 	{
@@ -19,5 +20,11 @@ class MCText {
 			return strip_tags($body);
 		else
 			return $res;
+	}
+
+	public static function preview($text)
+	{
+		return substr($text, 0, 100);
+
 	}
 } 

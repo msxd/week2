@@ -45,8 +45,8 @@ class Post extends CActiveRecord
             array('title, img_path', 'length', 'max' => 127),
             array('created_at, updated_at', 'default', 'setOnEmpty' => true, 'value' => null),
             array('published', 'default', 'setOnEmpty' => true, 'value' => Yii::app()->params['defaultPublished']),
-            array('published', Yii::app()->user->checkAccess('operation') ? 'safe' : 'unsafe'),
-            array('image', 'file', 'types' => 'jpg, gif, png', 'allowEmpty' => true),
+			array('published', Yii::app()->user->checkAccess('editPost') ? 'safe' : 'unsafe'),
+			array('image', 'file', 'types' => 'jpg, gif, png', 'allowEmpty' => true),
             array('image, remove_img', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
@@ -211,8 +211,8 @@ class Post extends CActiveRecord
     {
         $cr = $this->getDbCriteria();
         $cr->addColumnCondition(array(
-            $this->getTableAlias() . '.user_id' => ($id == null) ? Yii::app()->user->id : $id,
-        ));
+			$this->getTableAlias() . '.user_id' => (($id == null) ? Yii::app()->user->id : $id),
+		));
 
         return $this;
     }
