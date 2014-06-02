@@ -54,7 +54,6 @@ class Post extends CActiveRecord
 		);
 	}
 
-
 	/**
 	 * @return array relational rules.
 	 */
@@ -98,34 +97,28 @@ class Post extends CActiveRecord
 		$this->published = Yii::app()->params['defaultPublished'];
 	}
 
-	public function published($pub = 1)
+	public function behaviors()
 	{
-		$cr = $this->getDbCriteria();
-		$cr->addColumnCondition(array(
-			$this->getTableAlias() . '.published' => $pub,
-		));
-		return $this;
+
+		return array(
+			'CTimestampBehavior' => array(
+				'class' => 'zii.behaviors.CTimestampBehavior',
+				'createAttribute' => 'created_at',
+				'updateAttribute' => 'updated_at',
+			)
+		);
 	}
 
-	public function hotNews()
+	/**
+	 * Returns the static model of the specified AR class.
+	 * Please note that you should have this exact method in all your CActiveRecord descendants!
+	 * @param string $className active record class name.
+	 * @return Post the static model class
+	 */
+	public static function model($className = __CLASS__)
 	{
-		$c = $this->getDbCriteria();
-		//SELECT * FROM `posts` WHERE created_at BETWEEN Now()-interval 5 hour AND Now()
-		//$c->addCondition($this->getTableAlias() . '.created_-at', new CDbExpression('Now()-interval 5 hour'),new CDbExpression('Now()'));
-		$c->addCondition($this->getTableAlias() . '.created_at BETWEEN Now()-interval 8 hour AND Now()');
-		return $this;
+		return parent::model($className);
 	}
-
-
-//	public function edit($id, $arr)
-//	{
-//		//$this->findByPk($id)->find();
-//		die('ok');
-//		$this->findByPk($id);
-//		$this->attributes = $arr;
-//		return $this->save();
-//
-//	}
 
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
@@ -159,7 +152,7 @@ class Post extends CActiveRecord
 		));
 	}
 
-
+	//set
 	public function afterSave()
 	{
 		if (!empty($this->img_path)) {
@@ -170,6 +163,27 @@ class Post extends CActiveRecord
 		}
 	}
 
+	//get
+	public function published($pub = 1)
+	{
+		$cr = $this->getDbCriteria();
+		$cr->addColumnCondition(array(
+			$this->getTableAlias() . '.published' => $pub,
+		));
+		return $this;
+	}
+
+	//get
+	public function hotNews()
+	{
+		$c = $this->getDbCriteria();
+		//SELECT * FROM `posts` WHERE created_at BETWEEN Now()-interval 5 hour AND Now()
+		//$c->addCondition($this->getTableAlias() . '.created_-at', new CDbExpression('Now()-interval 5 hour'),new CDbExpression('Now()'));
+		$c->addCondition($this->getTableAlias() . '.created_at BETWEEN Now()-interval 8 hour AND Now()');
+		return $this;
+	}
+
+	//get
 	public function getPreviewPath($path)
 	{
 		$imagePath = pathinfo($path, PATHINFO_DIRNAME);
@@ -178,7 +192,7 @@ class Post extends CActiveRecord
 		return $imagePreviewPath;
 	}
 
-
+	//get
 	public function getPreviewImgURL()
 	{
 		if (!empty($this->img_path)) {
@@ -187,6 +201,7 @@ class Post extends CActiveRecord
 		}
 	}
 
+	//get
 	public function getImgURL()
 	{
 		if (!empty($this->img_path)) {
@@ -195,18 +210,7 @@ class Post extends CActiveRecord
 		}
 	}
 
-	public function behaviors()
-	{
-
-		return array(
-			'CTimestampBehavior' => array(
-				'class' => 'zii.behaviors.CTimestampBehavior',
-				'createAttribute' => 'created_at',
-				'updateAttribute' => 'updated_at',
-			)
-		);
-	}
-
+	//get
 	public function ownPosts($id = null)
 	{
 		$cr = $this->getDbCriteria();
@@ -217,6 +221,7 @@ class Post extends CActiveRecord
 		return $this;
 	}
 
+	//get
 	public function toJSON()
 	{
 		$result = iterator_to_array($this);
@@ -227,17 +232,5 @@ class Post extends CActiveRecord
 			$result['comments'] = $this->comments;
 		return $result;
 	}
-
-	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return Post the static model class
-	 */
-	public static function model($className = __CLASS__)
-	{
-		return parent::model($className);
-	}
-
 
 }
