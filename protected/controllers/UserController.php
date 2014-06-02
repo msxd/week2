@@ -37,11 +37,52 @@ class UserController extends Controller
 		);
 	}
 
+	/**
+	 * Returns the data model based on the primary key given in the GET variable.
+	 * If the data model is not found, an HTTP exception will be raised.
+	 * @param integer $id the ID of the model to be loaded
+	 * @return User the loaded model
+	 * @throws CHttpException
+	 */
+	//get
+	public function loadModel($id)
+	{
+		$model = User::model()->findByPk($id);
+		if ($model === null)
+			throw new CHttpException(404, 'The requested page does not exist.');
+		return $model;
+	}
+
+	/**
+	 * Lists all models.
+	 */
+	//get
+	public function actionIndex()
+	{
+		$this->forward('user/admin');
+	}
+
+	/**
+	 * Manages all models.
+	 */
+	//get
+	public function actionAdmin()
+	{
+		$model = new User('search');
+		$model->unsetAttributes(); // clear any default values
+		if (isset($_GET['User']))
+			$model->attributes = $_GET['User'];
+
+		$this->render('admin', array(
+			'model' => $model,
+		));
+	}
 
 	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
+	//get
 	public function actionView($id)
 	{
 		$this->forward('user/update/' . $id);
@@ -51,6 +92,7 @@ class UserController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
+	//set
 	public function actionCreate()
 	{
 		$model = new User;
@@ -70,6 +112,7 @@ class UserController extends Controller
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
+	//set
 	public function actionUpdate($id)
 	{
 		$model = $this->loadModel($id);
@@ -100,6 +143,7 @@ class UserController extends Controller
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
 	 */
+	//set
 	public function actionDelete($id, $del)
 	{
 
@@ -114,7 +158,7 @@ class UserController extends Controller
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
 
-
+	//set
 	public function actionApprove($id, $approve)
 	{
 		$model = $this->loadModel($id);
@@ -127,44 +171,6 @@ class UserController extends Controller
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if (!isset($_GET['ajax']))
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-	}
-
-	/**
-	 * Lists all models.
-	 */
-	public function actionIndex()
-	{
-		$this->forward('user/admin');
-	}
-
-	/**
-	 * Manages all models.
-	 */
-	public function actionAdmin()
-	{
-		$model = new User('search');
-		$model->unsetAttributes(); // clear any default values
-		if (isset($_GET['User']))
-			$model->attributes = $_GET['User'];
-
-		$this->render('admin', array(
-			'model' => $model,
-		));
-	}
-
-	/**
-	 * Returns the data model based on the primary key given in the GET variable.
-	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param integer $id the ID of the model to be loaded
-	 * @return User the loaded model
-	 * @throws CHttpException
-	 */
-	public function loadModel($id)
-	{
-		$model = User::model()->findByPk($id);
-		if ($model === null)
-			throw new CHttpException(404, 'The requested page does not exist.');
-		return $model;
 	}
 
 }

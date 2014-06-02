@@ -18,6 +18,7 @@ class SiteController extends Controller
 	 * This is the default 'index' action that is invoked
 	 * when an action is not explicitly requested by users.
 	 */
+	//get
 	public function actionIndex()
 	{
 		$criteria = Post::model()->published()->with('user')->getDbCriteria();
@@ -28,6 +29,7 @@ class SiteController extends Controller
 		$this->render('index', array('posts' => $all_posts, 'pages' => $pages));
 	}
 
+	//get
 	public function actionView($id)
 	{
 		$model = new Comment('add');
@@ -52,6 +54,7 @@ class SiteController extends Controller
 	/**
 	 * This is the action to handle external exceptions.
 	 */
+	//get
 	public function actionError()
 	{
 		if ($error = Yii::app()->errorHandler->error) {
@@ -60,14 +63,7 @@ class SiteController extends Controller
 		}
 	}
 
-	public function actionRemovecomment($id)
-	{
-		if (Yii::app()->user->checkAccess('editComment'))
-			Comment::model()->deleteByPk($id);
-
-		return $id;
-	}
-
+	//set
 	public function actionLogin()
 	{
 		if (!Yii::app()->user->isGuest) {
@@ -84,15 +80,7 @@ class SiteController extends Controller
 		$this->render('login', array('model' => $model));
 	}
 
-	/**
-	 * Logs out the current user and redirect to homepage.
-	 */
-	public function actionLogout()
-	{
-		Yii::app()->user->logout();
-		$this->redirect(Yii::app()->homeUrl);
-	}
-
+	//set
 	public function actionRegistration()
 	{
 		if (!Yii::app()->user->isGuest) {
@@ -111,5 +99,24 @@ class SiteController extends Controller
 		}
 
 		$this->render('registration', array('model' => $model));
+	}
+
+	/**
+	 * Logs out the current user and redirect to homepage.
+	 */
+	//set
+	public function actionLogout()
+	{
+		Yii::app()->user->logout();
+		$this->redirect(Yii::app()->homeUrl);
+	}
+
+	//set
+	public function actionRemovecomment($id)
+	{
+		if (Yii::app()->user->checkAccess('editComment'))
+			Comment::model()->deleteByPk($id);
+
+		return $id;
 	}
 }

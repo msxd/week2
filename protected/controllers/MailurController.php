@@ -2,11 +2,13 @@
 
 class MailurController extends Controller
 {
+	//return to main page(get)
 	public function actionIndex()
 	{
 		$this->redirect(array('/site'));
 	}
 
+	//approve email (set)
 	public function actionAprove($url = null)
 	{
 
@@ -21,6 +23,17 @@ class MailurController extends Controller
 		}
 	}
 
+	//pass recovery (set)
+	public function actionCheck($url)
+	{
+		/** @var User $usr */
+		$usr = User::model();
+		$usr->changePass(true, $url);
+
+		$this->redirect(array('/site'));
+	}
+
+	//password recovery(get)
 	public function actionRecovery()
 	{
 
@@ -49,12 +62,4 @@ class MailurController extends Controller
 		}
 	}
 
-	public function actionCheck($url)
-	{
-		/** @var User $usr */
-		$usr = User::model();
-		$usr->changePass(true, $url);
-
-		$this->redirect(array('/site'));
-	}
 }

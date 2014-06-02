@@ -3,6 +3,7 @@
 class PostController extends ApiController
 {
 
+	//All posts(get)
 	public function actionList($limit = 20, $offset = 0)
 	{
 		/** @var Post[] $models */
@@ -27,6 +28,7 @@ class PostController extends ApiController
 		$this->_sendResponse(200, $results, true);
 	}
 
+	//concrete post(get)
 	public function actionView($id)
 	{
 		$model = Post::model()->getNew($id)->published()->with('user', 'comments:orderHierarchy')->find();
@@ -50,6 +52,7 @@ class PostController extends ApiController
 		$this->_sendResponse(200, $model->toJSON(), true);
 	}
 
+	//create post(set)
 	public function actionCreate()
 	{
 		if (!Yii::app()->user->checkAccess(User::ROLE_USER))
@@ -63,6 +66,7 @@ class PostController extends ApiController
 		}
 	}
 
+	//rebuild path(set)
 	public function actionRebuild()
 	{
 

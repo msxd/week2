@@ -37,9 +37,35 @@ class ProfileController extends Controller
 	}
 
 	/**
+	 * Returns the data model based on the primary key given in the GET variable.
+	 * If the data model is not found, an HTTP exception will be raised.
+	 * @param integer $id the ID of the model to be loaded
+	 * @return User the loaded model
+	 * @throws CHttpException
+	 */
+	//get
+	public function loadModel()
+	{
+		$model = User::model()->findByPk(Yii::app()->user->id);
+		if ($model === null)
+			throw new CHttpException(404, 'The requested page does not exist.');
+		return $model;
+	}
+
+	//get
+	public function actionIndex()
+	{
+		$dataProvider = new CActiveDataProvider('User', array('criteria' => array('condition' => 'id = ' . Yii::app()->user->id)));
+		$this->render('index', array(
+			'dataProvider' => $dataProvider,
+		));
+	}
+
+	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
+	//get
 	public function actionView($id)
 	{
 		$this->render('view', array(
@@ -52,6 +78,7 @@ class ProfileController extends Controller
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
+	//set
 	public function actionEdit()
 	{
 		$model = $this->loadModel();
@@ -68,7 +95,7 @@ class ProfileController extends Controller
 		));
 	}
 
-
+	//set
 	public function actionChange()
 	{
 		$model = $this->loadModel();
@@ -83,31 +110,5 @@ class ProfileController extends Controller
 		$this->render('change', array(
 			'model' => $model,
 		));
-	}
-
-	/**
-	 * Lists all models.
-	 */
-	public function actionIndex()
-	{
-		$dataProvider = new CActiveDataProvider('User', array('criteria' => array('condition' => 'id = ' . Yii::app()->user->id)));
-		$this->render('index', array(
-			'dataProvider' => $dataProvider,
-		));
-	}
-
-	/**
-	 * Returns the data model based on the primary key given in the GET variable.
-	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param integer $id the ID of the model to be loaded
-	 * @return User the loaded model
-	 * @throws CHttpException
-	 */
-	public function loadModel()
-	{
-		$model = User::model()->findByPk(Yii::app()->user->id);
-		if ($model === null)
-			throw new CHttpException(404, 'The requested page does not exist.');
-		return $model;
 	}
 }

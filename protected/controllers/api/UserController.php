@@ -2,8 +2,32 @@
 
 class UserController extends ApiController
 {
-	/** @var  User[] $user */
 
+	//user auth(set)
+	public function actionAuth()
+	{
+		$this->_sendResponse(200, $this->user);
+	}
+
+	//user signup(set)
+	public function actionSignup()
+	{
+		$model = new User('registration');
+		if ($model->attributes = $_POST) {
+			if (!Yii::app()->params['aproveUser']) {
+				$model->approved = 1;
+			}
+			if ($model->save()) {
+				$this->_sendResponse(200, $model->getData(), true);
+			} else {
+				die($this->_sendEResponse(400, array('errors' => $model->getErrors())));
+			}
+		}
+		$model->validate();
+		$this->_sendEResponse(400, array('errors' => $model->getErrors()));
+	}
+
+	//user list(get)
 	public function actionList($limit = 20, $offset = 0)
 	{
 		$models = User::model()->findAll(array('limit' => $limit, 'offset' => $offset));
@@ -31,11 +55,13 @@ class UserController extends ApiController
 		$this->_sendResponse(200, $rows);
 	}
 
+	//user concrete(get)
 	public function actionView()
 	{
 		$this->_sendResponse(200, $this->user->getData(), true);
 	}
 
+	//user update data(set)
 	public function actionUpdate()
 	{
 		$this->user->scenario = 'editUserInfo';
@@ -46,6 +72,7 @@ class UserController extends ApiController
 			$this->_sendEResponse(400, array('errors' => $this->user->getErrors()));
 	}
 
+	//user change password(set)
 	public function actionChange()
 	{
 		$model = $this->user;
@@ -63,26 +90,6 @@ class UserController extends ApiController
 
 	}
 
-	public function actionAuth()
-	{
-		$this->_sendResponse(200, $this->user);
-	}
 
-	public function actionSignup()
-	{
-		$model = new User('registration');
-		if ($model->attributes = $_POST) {
-			if (!Yii::app()->params['aproveUser']) {
-				$model->approved = 1;
-			}
-			if ($model->save()) {
-				$this->_sendResponse(200, $model->getData(), true);
-			} else {
-				die($this->_sendEResponse(400, array('errors' => $model->getErrors())));
-			}
-		}
-		$model->validate();
-		$this->_sendEResponse(400, array('errors' => $model->getErrors()));
-	}
 
 }
