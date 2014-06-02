@@ -47,17 +47,17 @@ class TbSelect2 extends CInputWidget
 	 */
 	public $options;
 
-    /**
-     * @var bool
-     * @since 2.1.0
-     */
-    public $readonly = false;
+	/**
+	 * @var bool
+	 * @since 2.1.0
+	 */
+	public $readonly = false;
 
-    /**
-     * @var bool
-     * @since 2.1.0
-     */
-    public $disabled = false;
+	/**
+	 * @var bool
+	 * @since 2.1.0
+	 */
+	public $disabled = false;
 
 	/**
 	 *### .init()
@@ -74,13 +74,13 @@ class TbSelect2 extends CInputWidget
 
 		$this->setDefaultWidthIfEmpty();
 
-        // disabled & readonly
-        if (!empty($this->htmlOptions['readonly'])) {
-            $this->readonly = true;
-        }
-        if (!empty($this->htmlOptions['disabled'])) {
-            $this->disabled = true;
-        }
+		// disabled & readonly
+		if (!empty($this->htmlOptions['readonly'])) {
+			$this->readonly = true;
+		}
+		if (!empty($this->htmlOptions['disabled'])) {
+			$this->disabled = true;
+		}
 	}
 
 	/**
@@ -126,28 +126,26 @@ class TbSelect2 extends CInputWidget
 	 */
 	public function registerClientScript($id)
 	{
-        Bootstrap::getBooster()->registerPackage('select2');
+		Bootstrap::getBooster()->registerPackage('select2');
 
 		$options = !empty($this->options) ? CJavaScript::encode($this->options) : '';
 
-		if(! empty($this->val)) {
-			if(is_array($this->val)) {
+		if (!empty($this->val)) {
+			if (is_array($this->val)) {
 				$data = CJSON::encode($this->val);
 			} else {
 				$data = $this->val;
 			}
 
 			$defValue = ".select2('val', $data)";
-		}
-		else
+		} else
 			$defValue = '';
 
-        if ($this->readonly) {
-            $defValue .= ".select2('readonly', true)";
-        }
-        elseif ($this->disabled) {
-            $defValue .= ".select2('enable', false)";
-        }
+		if ($this->readonly) {
+			$defValue .= ".select2('readonly', true)";
+		} elseif ($this->disabled) {
+			$defValue .= ".select2('enable', false)";
+		}
 
 		ob_start();
 		echo "jQuery('#{$id}').select2({$options})$defValue";

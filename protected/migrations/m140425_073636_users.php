@@ -12,8 +12,8 @@ class m140425_073636_users extends CDbMigration
 			'phone' => "varchar(255) DEFAULT NULL",
 			'first_name' => "varchar(255) NOT NULL",
 			'last_name' => "varchar(255) NOT NULL",
-			'role_id' => "tinyint DEFAULT 0",//COMMENT '0 - user 1-moderator 2-admin'
-			'deleted' => "tinyint DEFAULT 0",//COMMENT '0- work 1-del'
+			'role_id' => "tinyint DEFAULT 0", //COMMENT '0 - user 1-moderator 2-admin'
+			'deleted' => "tinyint DEFAULT 0", //COMMENT '0- work 1-del'
 			'approved' => "tinyint DEFAULT 0",
 		), 'ENGINE=InnoDB DEFAULT CHARSET=utf8');
 	}

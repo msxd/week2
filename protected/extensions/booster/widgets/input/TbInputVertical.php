@@ -461,7 +461,7 @@ class TbInputVertical extends TbInput
 		);
 		echo $this->getError() . $this->getHint();
 		echo '<div id="wmd-preview" class="wmd-panel wmd-preview" style="width:' . (isset($width) ? $width
-			: '100%') . '"></div>';
+				: '100%') . '"></div>';
 		echo '</div>'; // wmd-panel
 	}
 
@@ -615,8 +615,7 @@ class TbInputVertical extends TbInput
 			unset($this->htmlOptions['asDropDownList']);
 		}
 
-		if (isset($this->htmlOptions['val']))
-		{
+		if (isset($this->htmlOptions['val'])) {
 			$val = $this->htmlOptions['val'];
 			unset($this->htmlOptions['val']);
 		}

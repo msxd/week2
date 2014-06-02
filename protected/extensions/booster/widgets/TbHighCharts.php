@@ -34,7 +34,7 @@
  * To find out more about the possible {@link $options} attribute please refer to
  * {@link http://www.hightcharts.com/ Highcharts site}
  *
-* @package booster.widgets.charts
+ * @package booster.widgets.charts
  */
 class TbHighCharts extends CWidget
 {

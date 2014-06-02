@@ -9,7 +9,7 @@ return array(
 	// preloading 'log' component
 	'preload' => array('log'),
 
-	'import'=>array(
+	'import' => array(
 		'application.models.*',
 		'application.components.*',
 		'application.helpers.*',
@@ -22,7 +22,7 @@ return array(
 			'class' => 'CPhpAuthManager',
 		),
 
-		'db'=>require('db.php'),
+		'db' => require('db.php'),
 
 		'log' => array(
 			'class' => 'CLogRouter',

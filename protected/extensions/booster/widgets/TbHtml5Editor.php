@@ -13,7 +13,7 @@
  * Implements the bootstrap-wysihtml5 editor
  * @see https://github.com/jhollingworth/bootstrap-wysihtml5
  *
-* @package booster.widgets.forms.inputs.wysiwyg
+ * @package booster.widgets.forms.inputs.wysiwyg
  */
 class TbHtml5Editor extends CInputWidget
 {
@@ -73,17 +73,17 @@ class TbHtml5Editor extends CInputWidget
 	 */
 	public function registerClientScript($id)
 	{
-        $booster = Bootstrap::getBooster();
-        $booster->registerAssetCss('bootstrap-wysihtml5.css');
-        $booster->registerAssetJs('wysihtml5-0.3.0.js');
-        $booster->registerAssetJs('bootstrap-wysihtml5.js');
+		$booster = Bootstrap::getBooster();
+		$booster->registerAssetCss('bootstrap-wysihtml5.css');
+		$booster->registerAssetJs('wysihtml5-0.3.0.js');
+		$booster->registerAssetJs('bootstrap-wysihtml5.js');
 
 		if (isset($this->editorOptions['locale'])) {
-            $booster->registerAssetJs(
+			$booster->registerAssetJs(
 				'locales/bootstrap-wysihtml5.' . $this->editorOptions['locale'] . '.js'
 			);
 		} elseif (in_array($this->lang, array('de-DE', 'es-ES', 'fr', 'fr-NL', 'pt-BR', 'sv-SE', 'it-IT'))) {
-            $booster->registerAssetJs('locales/bootstrap-wysihtml5.' . $this->lang . '.js');
+			$booster->registerAssetJs('locales/bootstrap-wysihtml5.' . $this->lang . '.js');
 			$this->editorOptions['locale'] = $this->lang;
 		}
 
@@ -104,12 +104,9 @@ class TbHtml5Editor extends CInputWidget
 		/**
 		 * Check if we need a deep copy for the configuration.
 		 */
-		if (isset($this->editorOptions['deepExtend']) && $this->editorOptions['deepExtend'] === true)
-		{
+		if (isset($this->editorOptions['deepExtend']) && $this->editorOptions['deepExtend'] === true) {
 			$script[] = "$('#{$id}').wysihtml5('deepExtend', {$options});";
-		}
-		else
-		{
+		} else {
 			$script[] = "$('#{$id}').wysihtml5({$options});";
 		}
 

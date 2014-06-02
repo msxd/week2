@@ -51,8 +51,8 @@ class TbSortableAction extends CAction
 	private function isValidRequest()
 	{
 		return Yii::app()->request->isPostRequest
-			&& Yii::app()->request->isAjaxRequest
-			&& isset($_POST['sortOrder']);
+		&& Yii::app()->request->isAjaxRequest
+		&& isset($_POST['sortOrder']);
 	}
 
 	/**

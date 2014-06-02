@@ -11,7 +11,7 @@
  */
 return array(
 	'font-awesome' => array(
-		'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/font-awesome/4.0.3/' : $this->getAssetsUrl().'/font-awesome/',
+		'baseUrl' => $this->enableCdn ? '//netdna.bootstrapcdn.com/font-awesome/4.0.3/' : $this->getAssetsUrl() . '/font-awesome/',
 		'css' => array($this->minify ? 'css/font-awesome.min.css' : 'css/font-awesome.css'),
 	),
 	'bootstrap.js' => array(
@@ -35,19 +35,19 @@ return array(
 		'baseUrl' => $this->getAssetsUrl() . '/notify/',
 		'js' => array($this->minify ? 'notify.min.js' : 'notify.js')
 	),
-    'bootstrap-noconflict' => array(
-        'baseUrl' => $this->getAssetsUrl(),
-        'js' => array('js/bootstrap-noconflict.js'),
-        'depends' => array('jquery'),
-    ),
+	'bootstrap-noconflict' => array(
+		'baseUrl' => $this->getAssetsUrl(),
+		'js' => array('js/bootstrap-noconflict.js'),
+		'depends' => array('jquery'),
+	),
 
 	//widgets start
-    'ui-layout' => array(
-        'baseUrl' => $this->getAssetsUrl() . '/ui-layout/',
-        'css' => array('css/layout-default.css'),
-        'js' => array($this->minify ? 'js/jquery.layout.min.js' : 'js/jquery.layout.js'),
-        'depends' => array('jquery', 'jquery.ui'),
-    ),
+	'ui-layout' => array(
+		'baseUrl' => $this->getAssetsUrl() . '/ui-layout/',
+		'css' => array('css/layout-default.css'),
+		'js' => array($this->minify ? 'js/jquery.layout.min.js' : 'js/jquery.layout.js'),
+		'depends' => array('jquery', 'jquery.ui'),
+	),
 	'datepicker' => array(
 		'depends' => array('jquery'),
 		'baseUrl' => $this->enableCdn ? '//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/' : $this->getAssetsUrl() . '/bootstrap-datepicker/',

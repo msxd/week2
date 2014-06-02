@@ -87,10 +87,10 @@ class TbRedactorJS extends CInputWidget
 				$url = $baseUrl . '/plugins/' . $name . '/' . $name;
 
 				if (file_exists($filepath . '.css'))
-					$assets->registerCssFile($url.'.css');
+					$assets->registerCssFile($url . '.css');
 
 				if (file_exists($filepath . '.js'))
-					$assets->registerScriptFile($url.'.js');
+					$assets->registerScriptFile($url . '.js');
 			}
 		}
 

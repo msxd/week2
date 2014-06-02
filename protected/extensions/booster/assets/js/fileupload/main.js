@@ -62,7 +62,7 @@ $(function () {
             }).fail(function () {
                 $('<span class="alert alert-error"/>')
                     .text('Upload server currently unavailable - ' +
-                            new Date())
+                        new Date())
                     .appendTo('#fileupload');
             });
         }

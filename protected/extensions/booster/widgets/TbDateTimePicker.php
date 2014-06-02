@@ -90,20 +90,20 @@ class TbDateTimePicker extends CInputWidget
 	 */
 	public function registerClientScript()
 	{
-        Bootstrap::getBooster()->registerPackage('datetimepicker');
+		Bootstrap::getBooster()->registerPackage('datetimepicker');
 	}
 
 	public function registerLanguageScript()
 	{
 		if (isset($this->options['language']) && $this->options['language'] != 'en') {
 			$file = 'locales/bootstrap-datetimepicker.' . $this->options['language'] . '.js';
-            $booster = Bootstrap::getBooster();
+			$booster = Bootstrap::getBooster();
 			if (@file_exists(Yii::getPathOfAlias('bootstrap.assets.bootstrap-datetimepicker') . '/js/' . $file)) {
 				if ($booster->enableCdn) {
 					// Not in CDN yet
-                    $booster->registerAssetJs('../bootstrap-datetimepicker/' . '/js/' . $file);
+					$booster->registerAssetJs('../bootstrap-datetimepicker/' . '/js/' . $file);
 				} else {
-                    $booster->registerAssetJs('../bootstrap-datetimepicker/' . '/js/' . $file);
+					$booster->registerAssetJs('../bootstrap-datetimepicker/' . '/js/' . $file);
 				}
 			}
 		}

@@ -2,6 +2,7 @@ html {
 	margin: 0;
 	padding: 0;
 }
+
 body {
 	margin: 0;
 	padding: 10px;
@@ -24,13 +25,16 @@ pre {
 	font-size: 15px;
 	line-height: 1.5rem;
 }
+
 div {
 	border: 1px dashed #bbb !important;
 }
+
 a {
 	color: #15c;
 	text-decoration: underline;
 }
+
 .redactor_placeholder {
 	color: #999 !important;
 	display: block !important;
@@ -44,6 +48,7 @@ img {
 	max-width: 100%;
 	width: auto;
 }
+
 video,
 img {
 	height: auto;
@@ -63,20 +68,24 @@ pre {
 	background: none;
 	box-shadow: none;
 }
+
 iframe,
 object,
 hr {
 	margin-bottom: 15px;
 }
+
 blockquote {
 	margin-left: 3em;
 	color: #777;
 	font-style: italic;
 }
+
 ul,
 ol {
 	padding-left: 2em;
 }
+
 ul ul,
 ol ol,
 ul ol,
@@ -86,25 +95,35 @@ ol ul {
 	padding-left: 2em;
 	border: none;
 }
-dl dt { font-weight: bold; }
-dd { margin-left: 1em;}
+
+dl dt {
+	font-weight: bold;
+}
+
+dd {
+	margin-left: 1em;
+}
 
 table {
 	border-collapse: collapse;
 	font-size: 1em;
 }
+
 table td {
 	padding: 5px;
 	border: 1px solid #ddd;
 	vertical-align: top;
 }
+
 table thead td {
 	border-bottom: 2px solid #000;
 	font-weight: bold;
 }
+
 code {
 	background-color: #d8d7d7;
 }
+
 pre {
 	overflow: auto;
 	padding: 1em;
@@ -114,11 +133,12 @@ pre {
 	white-space: pre;
 	font-size: 90%;
 }
+
 hr {
-  display: block;
-  height: 1px;
-  border: 0;
-  border-top: 1px solid #ccc;
+	display: block;
+	height: 1px;
+	border: 0;
+	border-top: 1px solid #ccc;
 }
 
 h1,
@@ -138,21 +158,25 @@ h1 {
 	font-size: 36px;
 	line-height: 40px;
 }
+
 h2 {
 	margin-bottom: 15px;
 	font-size: 30px;
 	line-height: 38px;
 }
+
 h3 {
 	margin-bottom: 10px;
 	font-size: 24px;
 	line-height: 30px;
 }
+
 h4 {
 	margin-bottom: 10px;
 	font-size: 18px;
 	line-height: 24px;
 }
+
 h5 {
 	margin-bottom: 10px;
 	font-size: 1em;
@@ -161,6 +185,7 @@ h5 {
 body.redactor_editor_wym {
 	background: #f4f4f4;
 }
+
 .redactor_editor_wym div,
 .redactor_editor_wym p,
 .redactor_editor_wym ul,
@@ -179,20 +204,25 @@ body.redactor_editor_wym {
 	border: 1px solid #e4e4e4;
 	background-color: #fff;
 }
+
 .redactor_editor_wym div {
 	border: 1px dashed #bbb !important;
 }
+
 .redactor_editor_wym pre {
 	border: 2px dashed #e4e4e4 !important;
 	background-color: #fafafa !important;
 }
+
 .redactor_editor_wym code {
 	background-color: #f4f4f4 !important;
 }
+
 .redactor_editor_wym ul,
 .redactor_editor_wym ol {
 	padding-left: 2em !important;
 }
+
 .redactor_editor_wym ul li ul,
 .redactor_editor_wym ul li ol,
 .redactor_editor_wym ol li ol,

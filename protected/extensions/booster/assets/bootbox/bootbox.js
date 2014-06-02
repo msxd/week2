@@ -3,35 +3,35 @@
  *
  * http://bootboxjs.com/license.txt
  */
-var bootbox = window.bootbox || (function(document, $) {
+var bootbox = window.bootbox || (function (document, $) {
     /*jshint scripturl:true sub:true */
 
-    var _locale        = 'en',
+    var _locale = 'en',
         _defaultLocale = 'en',
-        _animate       = true,
-        _backdrop      = 'static',
-        _defaultHref   = 'javascript:;',
-        _classes       = '',
-        _btnClasses    = {},
-        _icons         = {},
-        /* last var should always be the public object we'll return */
-        that           = {};
+        _animate = true,
+        _backdrop = 'static',
+        _defaultHref = 'javascript:;',
+        _classes = '',
+        _btnClasses = {},
+        _icons = {},
+    /* last var should always be the public object we'll return */
+        that = {};
 
 
     /**
      * public API
      */
-    that.setLocale = function(locale) {
+    that.setLocale = function (locale) {
         for (var i in _locales) {
             if (i == locale) {
                 _locale = locale;
                 return;
             }
         }
-        throw new Error('Invalid locale: '+locale);
+        throw new Error('Invalid locale: ' + locale);
     };
 
-    that.addLocale = function(locale, translations) {
+    that.addLocale = function (locale, translations) {
         if (typeof _locales[locale] === 'undefined') {
             _locales[locale] = {};
         }
@@ -40,24 +40,24 @@ var bootbox = window.bootbox || (function(document, $) {
         }
     };
 
-    that.setIcons = function(icons) {
+    that.setIcons = function (icons) {
         _icons = icons;
         if (typeof _icons !== 'object' || _icons === null) {
             _icons = {};
         }
     };
 
-    that.setBtnClasses = function(btnClasses) {
+    that.setBtnClasses = function (btnClasses) {
         _btnClasses = btnClasses;
         if (typeof _btnClasses !== 'object' || _btnClasses === null) {
             _btnClasses = {};
         }
     };
 
-    that.alert = function(/*str, label, cb*/) {
-        var str   = "",
+    that.alert = function (/*str, label, cb*/) {
+        var str = "",
             label = _translate('OK'),
-            cb    = null;
+            cb = null;
 
         switch (arguments.length) {
             case 1:
@@ -75,9 +75,9 @@ var bootbox = window.bootbox || (function(document, $) {
                 break;
             case 3:
                 // callback and custom button label
-                str   = arguments[0];
+                str = arguments[0];
                 label = arguments[1];
-                cb    = arguments[2];
+                cb = arguments[2];
                 break;
             default:
                 throw new Error("Incorrect number of arguments: expected 1-3");
@@ -85,9 +85,9 @@ var bootbox = window.bootbox || (function(document, $) {
 
         return that.dialog(str, {
             // only button (ok)
-            "label"   : label,
-            "icon"    : _icons.OK,
-            "class"   : _btnClasses.OK,
+            "label": label,
+            "icon": _icons.OK,
+            "class": _btnClasses.OK,
             "callback": cb
         }, {
             // ensure that the escape key works; either invoking the user's
@@ -96,11 +96,11 @@ var bootbox = window.bootbox || (function(document, $) {
         });
     };
 
-    that.confirm = function(/*str, labelCancel, labelOk, cb*/) {
-        var str         = "",
+    that.confirm = function (/*str, labelCancel, labelOk, cb*/) {
+        var str = "",
             labelCancel = _translate('CANCEL'),
-            labelOk     = _translate('CONFIRM'),
-            cb          = null;
+            labelOk = _translate('CONFIRM'),
+            cb = null;
 
         switch (arguments.length) {
             case 1:
@@ -115,7 +115,7 @@ var bootbox = window.bootbox || (function(document, $) {
                 }
                 break;
             case 3:
-                str         = arguments[0];
+                str = arguments[0];
                 labelCancel = arguments[1];
                 if (typeof arguments[2] == 'function') {
                     cb = arguments[2];
@@ -124,51 +124,54 @@ var bootbox = window.bootbox || (function(document, $) {
                 }
                 break;
             case 4:
-                str         = arguments[0];
+                str = arguments[0];
                 labelCancel = arguments[1];
-                labelOk     = arguments[2];
-                cb          = arguments[3];
+                labelOk = arguments[2];
+                cb = arguments[3];
                 break;
             default:
                 throw new Error("Incorrect number of arguments: expected 1-4");
         }
 
-        var cancelCallback = function() {
+        var cancelCallback = function () {
             if (typeof cb === 'function') {
                 return cb(false);
             }
         };
 
-        var confirmCallback = function() {
+        var confirmCallback = function () {
             if (typeof cb === 'function') {
                 return cb(true);
             }
         };
 
-        return that.dialog(str, [{
-            // first button (cancel)
-            "label"   : labelCancel,
-            "icon"    : _icons.CANCEL,
-            "class"   : _btnClasses.CANCEL,
-            "callback": cancelCallback
-        }, {
-            // second button (confirm)
-            "label"   : labelOk,
-            "icon"    : _icons.CONFIRM,
-            "class"   : _btnClasses.CONFIRM,
-            "callback": confirmCallback
-        }], {
+        return that.dialog(str, [
+            {
+                // first button (cancel)
+                "label": labelCancel,
+                "icon": _icons.CANCEL,
+                "class": _btnClasses.CANCEL,
+                "callback": cancelCallback
+            },
+            {
+                // second button (confirm)
+                "label": labelOk,
+                "icon": _icons.CONFIRM,
+                "class": _btnClasses.CONFIRM,
+                "callback": confirmCallback
+            }
+        ], {
             // escape key bindings
             "onEscape": cancelCallback
         });
     };
 
-    that.prompt = function(/*str, labelCancel, labelOk, cb, defaultVal*/) {
-        var str         = "",
+    that.prompt = function (/*str, labelCancel, labelOk, cb, defaultVal*/) {
+        var str = "",
             labelCancel = _translate('CANCEL'),
-            labelOk     = _translate('CONFIRM'),
-            cb          = null,
-            defaultVal  = "";
+            labelOk = _translate('CONFIRM'),
+            cb = null,
+            defaultVal = "";
 
         switch (arguments.length) {
             case 1:
@@ -183,7 +186,7 @@ var bootbox = window.bootbox || (function(document, $) {
                 }
                 break;
             case 3:
-                str         = arguments[0];
+                str = arguments[0];
                 labelCancel = arguments[1];
                 if (typeof arguments[2] == 'function') {
                     cb = arguments[2];
@@ -192,17 +195,17 @@ var bootbox = window.bootbox || (function(document, $) {
                 }
                 break;
             case 4:
-                str         = arguments[0];
+                str = arguments[0];
                 labelCancel = arguments[1];
-                labelOk     = arguments[2];
-                cb          = arguments[3];
+                labelOk = arguments[2];
+                cb = arguments[3];
                 break;
             case 5:
-                str         = arguments[0];
+                str = arguments[0];
                 labelCancel = arguments[1];
-                labelOk     = arguments[2];
-                cb          = arguments[3];
-                defaultVal  = arguments[4];
+                labelOk = arguments[2];
+                cb = arguments[3];
+                defaultVal = arguments[4];
                 break;
             default:
                 throw new Error("Incorrect number of arguments: expected 1-5");
@@ -214,7 +217,7 @@ var bootbox = window.bootbox || (function(document, $) {
         var form = $("<form></form>");
         form.append("<input class='input-block-level' autocomplete=off type=text value='" + defaultVal + "' />");
 
-        var cancelCallback = function() {
+        var cancelCallback = function () {
             if (typeof cb === 'function') {
                 // yep, native prompts dismiss with null, whereas native
                 // confirms dismiss with false...
@@ -222,29 +225,32 @@ var bootbox = window.bootbox || (function(document, $) {
             }
         };
 
-        var confirmCallback = function() {
+        var confirmCallback = function () {
             if (typeof cb === 'function') {
                 return cb(form.find("input[type=text]").val());
             }
         };
 
-        var div = that.dialog(form, [{
-            // first button (cancel)
-            "label"   : labelCancel,
-            "icon"    : _icons.CANCEL,
-            "class"   : _btnClasses.CANCEL,
-            "callback":  cancelCallback
-        }, {
-            // second button (confirm)
-            "label"   : labelOk,
-            "icon"    : _icons.CONFIRM,
-            "class"   : _btnClasses.CONFIRM,
-            "callback": confirmCallback
-        }], {
+        var div = that.dialog(form, [
+            {
+                // first button (cancel)
+                "label": labelCancel,
+                "icon": _icons.CANCEL,
+                "class": _btnClasses.CANCEL,
+                "callback": cancelCallback
+            },
+            {
+                // second button (confirm)
+                "label": labelOk,
+                "icon": _icons.CONFIRM,
+                "class": _btnClasses.CONFIRM,
+                "callback": confirmCallback
+            }
+        ], {
             // prompts need a few extra options
-            "header"  : header,
+            "header": header,
             // explicitly tell dialog NOT to show the dialog...
-            "show"    : false,
+            "show": false,
             "onEscape": cancelCallback
         });
 
@@ -253,12 +259,12 @@ var bootbox = window.bootbox || (function(document, $) {
         // before any show(n) events are triggered
         // @see https://github.com/makeusabrew/bootbox/issues/69
 
-        div.on("shown", function() {
+        div.on("shown", function () {
             form.find("input[type=text]").focus();
 
             // ensure that submitting the form (e.g. with the enter key)
             // replicates the behaviour of a normal prompt()
-            form.on("submit", function(e) {
+            form.on("submit", function (e) {
                 e.preventDefault();
                 div.find(".btn-primary").click();
             });
@@ -269,9 +275,9 @@ var bootbox = window.bootbox || (function(document, $) {
         return div;
     };
 
-    that.dialog = function(str, handlers, options) {
-        var buttons    = "",
-            callbacks  = [];
+    that.dialog = function (str, handlers, options) {
+        var buttons = "",
+            callbacks = [];
 
         if (!options) {
             options = {};
@@ -286,19 +292,19 @@ var bootbox = window.bootbox || (function(document, $) {
 
         var i = handlers.length;
         while (i--) {
-            var label    = null,
-                href     = null,
-                _class   = null,
-                icon     = '',
+            var label = null,
+                href = null,
+                _class = null,
+                icon = '',
                 callback = null;
 
-            if (typeof handlers[i]['label']    == 'undefined' &&
-                typeof handlers[i]['class']    == 'undefined' &&
+            if (typeof handlers[i]['label'] == 'undefined' &&
+                typeof handlers[i]['class'] == 'undefined' &&
                 typeof handlers[i]['callback'] == 'undefined') {
                 // if we've got nothing we expect, check for condensed format
 
                 var propCount = 0,      // condensed will only match if this == 1
-                    property  = null;   // save the last property we found
+                    property = null;   // save the last property we found
 
                 // be nicer to count the properties without this, but don't think it's possible...
                 for (var j in handlers[i]) {
@@ -311,18 +317,18 @@ var bootbox = window.bootbox || (function(document, $) {
 
                 if (propCount == 1 && typeof handlers[i][j] == 'function') {
                     // matches condensed format of label -> function
-                    handlers[i]['label']    = property;
+                    handlers[i]['label'] = property;
                     handlers[i]['callback'] = handlers[i][j];
                 }
             }
 
-            if (typeof handlers[i]['callback']== 'function') {
+            if (typeof handlers[i]['callback'] == 'function') {
                 callback = handlers[i]['callback'];
             }
 
             if (handlers[i]['class']) {
                 _class = handlers[i]['class'];
-            } else if (i == handlers.length -1 && handlers.length <= 2) {
+            } else if (i == handlers.length - 1 && handlers.length <= 2) {
                 // always add a primary to the main option in a two-button dialog
                 _class = 'btn-primary';
             }
@@ -334,11 +340,11 @@ var bootbox = window.bootbox || (function(document, $) {
             if (handlers[i]['label']) {
                 label = handlers[i]['label'];
             } else {
-                label = "Option "+(i+1);
+                label = "Option " + (i + 1);
             }
 
             if (handlers[i]['icon']) {
-                icon = "<i class='"+handlers[i]['icon']+"'></i> ";
+                icon = "<i class='" + handlers[i]['icon'] + "'></i> ";
             }
 
             if (handlers[i]['href']) {
@@ -348,7 +354,7 @@ var bootbox = window.bootbox || (function(document, $) {
                 href = _defaultHref;
             }
 
-            buttons = "<a data-handler='"+i+"' class='"+_class+"' href='" + href + "'>"+icon+""+label+"</a>" + buttons;
+            buttons = "<a data-handler='" + i + "' class='" + _class + "' href='" + href + "'>" + icon + "" + label + "</a>" + buttons;
 
             callbacks[i] = callback;
         }
@@ -364,17 +370,17 @@ var bootbox = window.bootbox || (function(document, $) {
         if (options['header']) {
             var closeButton = '';
             if (typeof options['headerCloseButton'] == 'undefined' || options['headerCloseButton']) {
-                closeButton = "<a href='"+_defaultHref+"' class='close'>&times;</a>";
+                closeButton = "<a href='" + _defaultHref + "' class='close'>&times;</a>";
             }
 
-            parts.push("<div class='modal-header'>"+closeButton+"<h3>"+options['header']+"</h3></div>");
+            parts.push("<div class='modal-header'>" + closeButton + "<h3>" + options['header'] + "</h3></div>");
         }
 
         // push an empty body into which we'll inject the proper content later
         parts.push("<div class='modal-body'></div>");
 
         if (buttons) {
-            parts.push("<div class='modal-footer'>"+buttons+"</div>");
+            parts.push("<div class='modal-footer'>" + buttons + "</div>");
         }
 
         parts.push("</div>");
@@ -410,7 +416,7 @@ var bootbox = window.bootbox || (function(document, $) {
         }
 
         // hook into the modal's keyup trigger to check for the escape key
-        div.on('keyup.dismiss.modal', function(e) {
+        div.on('keyup.dismiss.modal', function (e) {
             // any truthy value passed to onEscape will dismiss the dialog
             // as long as the onEscape function (if defined) doesn't prevent it
             if (e.which === 27 && options.onEscape) {
@@ -419,17 +425,17 @@ var bootbox = window.bootbox || (function(document, $) {
         });
 
         // handle close buttons too
-        div.on('click', 'a.close', function(e) {
+        div.on('click', 'a.close', function (e) {
             e.preventDefault();
             onCancel('close');
         });
 
         // well, *if* we have a primary - give the first dom element focus
-        div.on('shown', function() {
+        div.on('shown', function () {
             div.find("a.btn-primary:first").focus();
         });
 
-        div.on('hidden', function(e) {
+        div.on('hidden', function (e) {
             // @see https://github.com/makeusabrew/bootbox/issues/115
             // allow for the fact hidden events can propagate up from
             // child elements like tooltips
@@ -439,15 +445,15 @@ var bootbox = window.bootbox || (function(document, $) {
         });
 
         // wire up button handlers
-        div.on('click', '.modal-footer a', function(e) {
+        div.on('click', '.modal-footer a', function (e) {
 
-            var handler   = $(this).data("handler"),
-                cb        = callbacks[handler],
+            var handler = $(this).data("handler"),
+                cb = callbacks[handler],
                 hideModal = null;
 
             // sort of @see https://github.com/makeusabrew/bootbox/pull/68 - heavily adapted
             // if we've got a custom href attribute, all bets are off
-            if (typeof handler                   !== 'undefined' &&
+            if (typeof handler !== 'undefined' &&
                 typeof handlers[handler]['href'] !== 'undefined') {
 
                 return;
@@ -472,21 +478,21 @@ var bootbox = window.bootbox || (function(document, $) {
 
         div.modal({
             // unless explicitly overridden take whatever our default backdrop value is
-            backdrop : (typeof options.backdrop  === 'undefined') ? _backdrop : options.backdrop,
+            backdrop: (typeof options.backdrop === 'undefined') ? _backdrop : options.backdrop,
             // ignore bootstrap's keyboard options; we'll handle this ourselves (more fine-grained control)
-            keyboard : false,
+            keyboard: false,
             // @ see https://github.com/makeusabrew/bootbox/issues/69
             // we *never* want the modal to be shown before we can bind stuff to it
             // this method can also take a 'show' option, but we'll only use that
             // later if we need to
-            show     : false
+            show: false
         });
 
         // @see https://github.com/makeusabrew/bootbox/issues/64
         // @see https://github.com/makeusabrew/bootbox/issues/60
         // ...caused by...
         // @see https://github.com/twitter/bootstrap/issues/4781
-        div.on("show", function(e) {
+        div.on("show", function (e) {
             $(document).off("focusin.modal");
         });
 
@@ -502,7 +508,7 @@ var bootbox = window.bootbox || (function(document, $) {
      * made - have never been truly convinced of its merit but perhaps just
      * needs a tidyup and some TLC
      */
-    that.modal = function(/*str, label, options*/) {
+    that.modal = function (/*str, label, options*/) {
         var str;
         var label;
         var options;
@@ -526,8 +532,8 @@ var bootbox = window.bootbox || (function(document, $) {
                 }
                 break;
             case 3:
-                str     = arguments[0];
-                label   = arguments[1];
+                str = arguments[0];
+                label = arguments[1];
                 options = arguments[2];
                 break;
             default:
@@ -546,19 +552,19 @@ var bootbox = window.bootbox || (function(document, $) {
     };
 
 
-    that.hideAll = function() {
+    that.hideAll = function () {
         $(".bootbox").modal("hide");
     };
 
-    that.animate = function(animate) {
+    that.animate = function (animate) {
         _animate = animate;
     };
 
-    that.backdrop = function(backdrop) {
+    that.backdrop = function (backdrop) {
         _backdrop = backdrop;
     };
 
-    that.classes = function(classes) {
+    that.classes = function (classes) {
         _classes = classes;
     };
 
@@ -571,65 +577,65 @@ var bootbox = window.bootbox || (function(document, $) {
      * unlikely to be required. If this gets too large it can be split out into separate JS files.
      */
     var _locales = {
-        'br' : {
-            OK      : 'OK',
-            CANCEL  : 'Cancelar',
-            CONFIRM : 'Sim'
+        'br': {
+            OK: 'OK',
+            CANCEL: 'Cancelar',
+            CONFIRM: 'Sim'
         },
-        'da' : {
-            OK      : 'OK',
-            CANCEL  : 'Annuller',
-            CONFIRM : 'Accepter'
+        'da': {
+            OK: 'OK',
+            CANCEL: 'Annuller',
+            CONFIRM: 'Accepter'
         },
-        'de' : {
-            OK      : 'OK',
-            CANCEL  : 'Abbrechen',
-            CONFIRM : 'Akzeptieren'
+        'de': {
+            OK: 'OK',
+            CANCEL: 'Abbrechen',
+            CONFIRM: 'Akzeptieren'
         },
-        'en' : {
-            OK      : 'OK',
-            CANCEL  : 'Cancel',
-            CONFIRM : 'OK'
+        'en': {
+            OK: 'OK',
+            CANCEL: 'Cancel',
+            CONFIRM: 'OK'
         },
-        'es' : {
-            OK      : 'OK',
-            CANCEL  : 'Cancelar',
-            CONFIRM : 'Aceptar'
+        'es': {
+            OK: 'OK',
+            CANCEL: 'Cancelar',
+            CONFIRM: 'Aceptar'
         },
-        'fr' : {
-            OK      : 'OK',
-            CANCEL  : 'Annuler',
-            CONFIRM : 'D\'accord'
+        'fr': {
+            OK: 'OK',
+            CANCEL: 'Annuler',
+            CONFIRM: 'D\'accord'
         },
-        'it' : {
-            OK      : 'OK',
-            CANCEL  : 'Annulla',
-            CONFIRM : 'Conferma'
+        'it': {
+            OK: 'OK',
+            CANCEL: 'Annulla',
+            CONFIRM: 'Conferma'
         },
-        'nl' : {
-            OK      : 'OK',
-            CANCEL  : 'Annuleren',
-            CONFIRM : 'Accepteren'
+        'nl': {
+            OK: 'OK',
+            CANCEL: 'Annuleren',
+            CONFIRM: 'Accepteren'
         },
-        'pl' : {
-            OK      : 'OK',
-            CANCEL  : 'Anuluj',
-            CONFIRM : 'Potwierdź'
+        'pl': {
+            OK: 'OK',
+            CANCEL: 'Anuluj',
+            CONFIRM: 'Potwierdź'
         },
-        'ru' : {
-            OK      : 'OK',
-            CANCEL  : 'Отмена',
-            CONFIRM : 'Применить'
+        'ru': {
+            OK: 'OK',
+            CANCEL: 'Отмена',
+            CONFIRM: 'Применить'
         },
-        'zh_CN' : {
-            OK      : 'OK',
-            CANCEL  : '取消',
-            CONFIRM : '确认'
+        'zh_CN': {
+            OK: 'OK',
+            CANCEL: '取消',
+            CONFIRM: '确认'
         },
-        'zh_TW' : {
-            OK      : 'OK',
-            CANCEL  : '取消',
-            CONFIRM : '確認'
+        'zh_TW': {
+            OK: 'OK',
+            CANCEL: '取消',
+            CONFIRM: '確認'
         }
     };
 

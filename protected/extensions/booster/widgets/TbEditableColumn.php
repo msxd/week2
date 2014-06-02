@@ -15,7 +15,7 @@ Yii::import('bootstrap.widgets.TbDataColumn');
  *## EditableColumn widget makes editable one column in CGridView.
  *
  * @package booster.widgets.grids.columns
-*/
+ */
 class TbEditableColumn extends TbDataColumn
 {
 	/**
@@ -85,7 +85,7 @@ class TbEditableColumn extends TbDataColumn
 		}
 
 		//manually make selector non unique to match all cells in column
-		$selector = str_replace('\\', '_',get_class($widget->model)) . '_' . $widget->attribute;
+		$selector = str_replace('\\', '_', get_class($widget->model)) . '_' . $widget->attribute;
 		$widget->htmlOptions['rel'] = $selector;
 
 		//can't call run() as it registers clientScript

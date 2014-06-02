@@ -165,14 +165,12 @@ class TbJsonGridView extends TbGridView
 
 	public function renderSummary()
 	{
-		if (!$this->json)
-		{
+		if (!$this->json) {
 			parent::renderSummary();
 			return true;
 		}
 
-		if (!$this->_showSummary)
-		{
+		if (!$this->_showSummary) {
 			return null;
 		}
 
@@ -185,6 +183,7 @@ class TbJsonGridView extends TbGridView
 		);
 
 	}
+
 	/**
 	 * Renders the required templates for the client engine (jqote2 used)
 	 */
@@ -309,9 +308,9 @@ class TbJsonGridView extends TbGridView
 		if ($this->rowCssClassExpression !== null) {
 			$data = $this->dataProvider->data[$row];
 			echo '<tr class="' . $this->evaluateExpression(
-				$this->rowCssClassExpression,
-				array('row' => $row, 'data' => $data)
-			) . '">';
+					$this->rowCssClassExpression,
+					array('row' => $row, 'data' => $data)
+				) . '">';
 		} else if (is_array($this->rowCssClass) && ($n = count($this->rowCssClass)) > 0) {
 			echo '<tr class="' . $this->rowCssClass[$row % $n] . '">';
 		} else {

@@ -4,7 +4,7 @@
  *
  * @author Antonio Ramirez <antonio@clevertech.biz>
  * @copyright Copyright &copy; Clevertech 2012-
- * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  */
 
 Yii::import('bootstrap.widgets.TbGridView');
@@ -32,7 +32,7 @@ class TbExtendedGridView extends TbGridView
 	public $fixedHeader = false;
 
 	/**
-	 * @var integer $headerOffset, when $fixedHeader is set to true, headerOffset will position table header top position
+	 * @var integer $headerOffset , when $fixedHeader is set to true, headerOffset will position table header top position
 	 * at $headerOffset. If you are using bootstrap and has navigation top fixed, its height is 40px, so it is recommended
 	 * to use $headerOffset=40;
 	 */
@@ -106,7 +106,7 @@ class TbExtendedGridView extends TbGridView
 	public $chartOptions = array();
 
 	/**
-	 * @var bool $sortableRows. If true the rows at the table will be sortable.
+	 * @var bool $sortableRows . If true the rows at the table will be sortable.
 	 */
 	public $sortableRows = false;
 
@@ -209,9 +209,9 @@ class TbExtendedGridView extends TbGridView
 	{
 
 		if (preg_match(
-			'/extendedsummary/i',
-			$this->template
-		) && !empty($this->extendedSummary) && isset($this->extendedSummary['columns'])
+				'/extendedsummary/i',
+				$this->template
+			) && !empty($this->extendedSummary) && isset($this->extendedSummary['columns'])
 		) {
 			$this->template .= "\n{extendedSummaryContent}";
 			$this->displayExtendedSummary = true;
@@ -249,7 +249,7 @@ class TbExtendedGridView extends TbGridView
 	public function renderKeys()
 	{
 		$data = $this->dataProvider->getData();
-		
+
 		if (!$this->sortableRows || (isset($data[0]) && !isset($data[0]->attributes[(string)$this->sortableAttribute]))) {
 			parent::renderKeys();
 		}
@@ -500,8 +500,8 @@ class TbExtendedGridView extends TbGridView
 			}
 
 			echo "<div id='{$chartId}' " . CHtml::renderAttributes(
-				$this->chartOptions['htmlOptions']
-			) . " data-config='{$jsOptions}'></div>";
+					$this->chartOptions['htmlOptions']
+				) . " data-config='{$jsOptions}'></div>";
 
 			$this->componentsAfterAjaxUpdate[] = "highchart{$chartId} = new Highcharts.Chart($('#{$chartId}').data('config'));";
 		}
@@ -619,7 +619,7 @@ class TbExtendedGridView extends TbGridView
 
 		$fixedHeaderJs = '';
 		if ($this->fixedHeader) {
-            Bootstrap::getBooster()->registerAssetJs('jquery.stickytableheaders' . (!YII_DEBUG ? '.min' : '') . '.js');
+			Bootstrap::getBooster()->registerAssetJs('jquery.stickytableheaders' . (!YII_DEBUG ? '.min' : '') . '.js');
 			$fixedHeaderJs = "$('#{$this->id} table.items').stickyTableHeaders({fixedOffset:{$this->headerOffset}});";
 			$this->componentsAfterAjaxUpdate[] = $fixedHeaderJs;
 		}
@@ -628,9 +628,9 @@ class TbExtendedGridView extends TbGridView
 			$afterSortableUpdate = '';
 			if ($this->afterSortableUpdate !== null) {
 				if (!($this->afterSortableUpdate instanceof CJavaScriptExpression) && strpos(
-					$this->afterSortableUpdate,
-					'js:'
-				) !== 0
+						$this->afterSortableUpdate,
+						'js:'
+					) !== 0
 				) {
 					$afterSortableUpdate = new CJavaScriptExpression($this->afterSortableUpdate);
 				} else {
@@ -640,7 +640,7 @@ class TbExtendedGridView extends TbGridView
 
 			$this->selectableRows = 1;
 			$cs->registerCoreScript('jquery.ui');
-            Bootstrap::getBooster()->registerAssetJs('jquery.sortable.gridview.js');
+			Bootstrap::getBooster()->registerAssetJs('jquery.sortable.gridview.js');
 
 			if ($this->sortableAjaxSave && $this->sortableAction !== null) {
 				$sortableAction = Yii::app()->createUrl(
@@ -652,8 +652,7 @@ class TbExtendedGridView extends TbGridView
 			}
 
 			$afterSortableUpdate = CJavaScript::encode($afterSortableUpdate);
-			if (Yii::app()->request->enableCsrfValidation)
-			{
+			if (Yii::app()->request->enableCsrfValidation) {
 				$csrfTokenName = Yii::app()->request->csrfTokenName;
 				$csrfToken = Yii::app()->request->csrfToken;
 				$csrf = "{'$csrfTokenName':'$csrfToken' }";
@@ -669,9 +668,9 @@ class TbExtendedGridView extends TbGridView
 			if ($this->afterSelectableCells !== null) {
 				echo strpos($this->afterSelectableCells, 'js:');
 				if (!($this->afterSelectableCells instanceof CJavaScriptExpression) && strpos(
-					$this->afterSelectableCells,
-					'js:'
-				) !== 0
+						$this->afterSelectableCells,
+						'js:'
+					) !== 0
 				) {
 					$afterSelectableCells = new CJavaScriptExpression($this->afterSelectableCells);
 				} else {
@@ -679,7 +678,7 @@ class TbExtendedGridView extends TbGridView
 				}
 			}
 			$cs->registerCoreScript('jquery.ui');
-            Bootstrap::getBooster()->registerAssetJs('jquery.selectable.gridview.js');
+			Bootstrap::getBooster()->registerAssetJs('jquery.selectable.gridview.js');
 			$afterSelectableCells = CJavaScript::encode($afterSelectableCells);
 			$this->componentsReadyScripts[] = "$.fn.yiiGridView.selectable('{$this->id}','{$this->selectableCellsFilter}',{$afterSelectableCells});";
 			$this->componentsAfterAjaxUpdate[] = "$.fn.yiiGridView.selectable('{$this->id}','{$this->selectableCellsFilter}', {$afterSelectableCells});";
@@ -713,9 +712,9 @@ class TbExtendedGridView extends TbGridView
                                     $(".' . $this->extendedSummaryCssClass . '", $("#' . $this->id . '")).html($("#' . $this->id . '-extended-summary", $data).html());
                                 }
                                 ' . (count($this->componentsAfterAjaxUpdate) ? implode(
-                    PHP_EOL,
-                    $this->componentsAfterAjaxUpdate
-                ) : '') . '
+				PHP_EOL,
+				$this->componentsAfterAjaxUpdate
+			) : '') . '
                             }
                         }
 				    }
@@ -1269,9 +1268,9 @@ class TbPercentOfTypeEasyPieOperation extends TbPercentOfTypeOperation
 	 */
 	protected function registerClientScripts()
 	{
-        $booster = Bootstrap::getBooster();
-        $booster->registerAssetCss('easy-pie-chart.css');
-        $booster->registerAssetJs('jquery.easy.pie.chart.js');
+		$booster = Bootstrap::getBooster();
+		$booster->registerAssetCss('easy-pie-chart.css');
+		$booster->registerAssetJs('jquery.easy.pie.chart.js');
 
 		$options = CJavaScript::encode($this->chartOptions);
 		Yii::app()->getClientScript()->registerScript(

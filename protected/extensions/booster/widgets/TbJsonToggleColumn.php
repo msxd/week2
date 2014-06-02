@@ -15,7 +15,7 @@ Yii::import('bootstrap.widgets.TbToggleColumn');
  */
 class TbJsonToggleColumn extends TbToggleColumn
 {
-	
+
 	/**
 	 * Renders the data cell content.
 	 * This method renders the view, update and toggle buttons in the data cell.
@@ -54,5 +54,5 @@ class TbJsonToggleColumn extends TbToggleColumn
 			array('yiiGridView' => 'yiiJsonGridView')
 		);
 	}
-	
+
 }

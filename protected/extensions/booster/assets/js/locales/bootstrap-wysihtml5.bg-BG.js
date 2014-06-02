@@ -1,7 +1,7 @@
 /**
  * Bulgarian translation for bootstrap-wysihtml5
  */
-(function($){
+(function ($) {
     $.fn.wysihtml5.locale["bg-BG"] = {
         font_styles: {
             normal: "Нормален текст",
@@ -35,14 +35,14 @@
             black: "Черно",
             silver: "Сребърно",
             gray: "Сиво",
-			maroon: "Кестеняво",
-			red: "Червено",
-			purple: "Пурпурно",
-			green: "Зелено",
-			olive: "Маслинено",
-			navy: "Морско синьо",
-			blue: "Синьо",
-			orange: "Оранжево"
+            maroon: "Кестеняво",
+            red: "Червено",
+            purple: "Пурпурно",
+            green: "Зелено",
+            olive: "Маслинено",
+            navy: "Морско синьо",
+            blue: "Синьо",
+            orange: "Оранжево"
         }
     };
 }(jQuery));

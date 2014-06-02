@@ -4,7 +4,7 @@
  *
  * @author Joe Blocher <yii@myticket.at>
  * @copyright Copyright &copy; Joe Blocher 2012
- * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  */
 
 Yii::import('bootstrap.widgets.TbTabs');

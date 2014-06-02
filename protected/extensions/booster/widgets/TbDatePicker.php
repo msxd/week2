@@ -90,7 +90,7 @@ class TbDatePicker extends CInputWidget
 	 */
 	public function registerClientScript()
 	{
-        Bootstrap::getBooster()->registerPackage('datepicker');
+		Bootstrap::getBooster()->registerPackage('datepicker');
 	}
 
 	/**
@@ -100,21 +100,16 @@ class TbDatePicker extends CInputWidget
 	{
 		$booster = Bootstrap::getBooster();
 
-		if (isset($this->options['language']) && $this->options['language'] != 'en')
-		{
+		if (isset($this->options['language']) && $this->options['language'] != 'en') {
 			$filename = '/bootstrap-datepicker/js/locales/bootstrap-datepicker.' . $this->options['language'] . '.js';
 
-			if (file_exists(Yii::getPathOfAlias('bootstrap.assets') . $filename))
-			{
-				if ($booster->enableCdn)
-				{
+			if (file_exists(Yii::getPathOfAlias('bootstrap.assets') . $filename)) {
+				if ($booster->enableCdn) {
 					Yii::app()->clientScript->registerScriptFile(
 						'//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.2.0/js/locales/bootstrap-datepicker.' . $this->options['language'] . '.js',
 						CClientScript::POS_HEAD
 					);
-				}
-				else
-				{
+				} else {
 					$booster->assetsRegistry->registerScriptFile($booster->getAssetsUrl() . $filename, CClientScript::POS_HEAD);
 				}
 			}

@@ -12,7 +12,7 @@
  * EditableSaver helps to update model by editable widget submit request.
  *
  * @package booster.widgets.supplementary
-*/
+ */
 class TbEditableSaver extends CComponent
 {
 	/**

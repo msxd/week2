@@ -67,9 +67,9 @@ class TbButtonColumn extends CButtonColumn
 	protected function renderButton($id, $button, $row, $data)
 	{
 		if (isset($button['visible']) && !$this->evaluateExpression(
-			$button['visible'],
-			array('row' => $row, 'data' => $data)
-		)
+				$button['visible'],
+				array('row' => $row, 'data' => $data)
+			)
 		) {
 			return;
 		}

@@ -4,7 +4,7 @@
  *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright Copyright &copy; Christoffer Niska 2011-
- * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  */
 
 Yii::import('zii.widgets.grid.CGridView');
@@ -93,7 +93,7 @@ class TbGridView extends CGridView
 			}
 		}
 
-        $booster = Bootstrap::getBooster();
+		$booster = Bootstrap::getBooster();
 		$popover = $booster->popoverSelector;
 		$tooltip = $booster->tooltipSelector;
 

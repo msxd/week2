@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Image API driver.
  *
@@ -9,7 +10,8 @@
  * @copyright  (c) 2007-2008 Kohana Team
  * @license    http://kohanaphp.com/license.html
  */
-abstract class Image_Driver {
+abstract class Image_Driver
+{
 
 	// Reference to the current image
 	protected $image;
@@ -28,9 +30,8 @@ abstract class Image_Driver {
 	 */
 	public function execute($actions)
 	{
-		foreach ($actions as $func => $args)
-		{
-			if ( ! $this->$func($args))
+		foreach ($actions as $func => $args) {
+			if (!$this->$func($args))
 				return FALSE;
 		}
 
@@ -44,7 +45,7 @@ abstract class Image_Driver {
 	 * @param   array  geometry properties
 	 * @return  void
 	 */
-	protected function sanitize_geometry( & $geometry)
+	protected function sanitize_geometry(& $geometry)
 	{
 		list($width, $height) = $this->properties();
 
@@ -52,34 +53,24 @@ abstract class Image_Driver {
 		$reporting = error_reporting(0);
 
 		// Width and height cannot exceed current image size
-		$geometry['width']  = min($geometry['width'], $width);
+		$geometry['width'] = min($geometry['width'], $width);
 		$geometry['height'] = min($geometry['height'], $height);
 
 		// Set standard coordinates if given, otherwise use pixel values
-		if ($geometry['top'] === 'center')
-		{
+		if ($geometry['top'] === 'center') {
 			$geometry['top'] = floor(($height / 2) - ($geometry['height'] / 2));
-		}
-		elseif ($geometry['top'] === 'top')
-		{
+		} elseif ($geometry['top'] === 'top') {
 			$geometry['top'] = 0;
-		}
-		elseif ($geometry['top'] === 'bottom')
-		{
+		} elseif ($geometry['top'] === 'bottom') {
 			$geometry['top'] = $height - $geometry['height'];
 		}
 
 		// Set standard coordinates if given, otherwise use pixel values
-		if ($geometry['left'] === 'center')
-		{
+		if ($geometry['left'] === 'center') {
 			$geometry['left'] = floor(($width / 2) - ($geometry['width'] / 2));
-		}
-		elseif ($geometry['left'] === 'left')
-		{
+		} elseif ($geometry['left'] === 'left') {
 			$geometry['left'] = 0;
-		}
-		elseif ($geometry['left'] === 'right')
-		{
+		} elseif ($geometry['left'] === 'right') {
 			$geometry['left'] = $width - $geometry['height'];
 		}
 
@@ -106,7 +97,7 @@ abstract class Image_Driver {
 	 */
 	abstract public function process($image, $actions, $dir, $file);
 
-    /**
+	/**
 	 * Flip an image. Valid directions are horizontal and vertical.
 	 *
 	 * @param   integer   direction to flip
@@ -130,7 +121,7 @@ abstract class Image_Driver {
 	 */
 	abstract public function resize($properties);
 
-    /**
+	/**
 	 * Rotate an image. Valid amounts are -180 to 180.
 	 *
 	 * @param   integer   amount to rotate

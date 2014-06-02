@@ -36,17 +36,17 @@ class TbDataColumn extends CDataColumn
 			$sort = $this->grid->dataProvider->getSort();
 			$label = isset($this->header) ? $this->header : $sort->resolveLabel($this->name);
 
-            $booster = Bootstrap::getBooster();
+			$booster = Bootstrap::getBooster();
 
-			if ($sort->resolveAttribute($this->name) !== false){
-                            if($sort->getDirection($this->name) === CSort::SORT_ASC){
-                                $label .= ' <span class="'.($booster->fontAwesomeCss ? 'fa fa-sort-asc' : 'icon-chevron-down').'"></span>';
-                            } elseif($sort->getDirection($this->name) === CSort::SORT_DESC){
-                                $label .= ' <span class="'.($booster->fontAwesomeCss ? 'fa fa-sort-desc' : 'icon-chevron-up').'"></span>';
-                            } else {
-                                $label .= ' ';
-                            }
-                        }
+			if ($sort->resolveAttribute($this->name) !== false) {
+				if ($sort->getDirection($this->name) === CSort::SORT_ASC) {
+					$label .= ' <span class="' . ($booster->fontAwesomeCss ? 'fa fa-sort-asc' : 'icon-chevron-down') . '"></span>';
+				} elseif ($sort->getDirection($this->name) === CSort::SORT_DESC) {
+					$label .= ' <span class="' . ($booster->fontAwesomeCss ? 'fa fa-sort-desc' : 'icon-chevron-up') . '"></span>';
+				} else {
+					$label .= ' ';
+				}
+			}
 
 			echo $sort->link($this->name, $label, array('class' => 'sort-link'));
 		} else {
@@ -90,9 +90,9 @@ class TbDataColumn extends CDataColumn
 		if (is_string($this->filter)) {
 			echo $this->filter;
 		} else if ($this->filter !== false && $this->grid->filter !== null && $this->name !== null && strpos(
-			$this->name,
-			'.'
-		) === false
+				$this->name,
+				'.'
+			) === false
 		) {
 			if ($this->filterInputOptions) {
 				$filterInputOptions = $this->filterInputOptions;

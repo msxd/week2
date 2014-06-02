@@ -91,7 +91,7 @@ class TbPassfield extends CInputWidget
 	 */
 	public function registerClientScript()
 	{
-        Bootstrap::getBooster()->registerPackage('passfield');
+		Bootstrap::getBooster()->registerPackage('passfield');
 	}
 
 }

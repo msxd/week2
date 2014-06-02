@@ -9,7 +9,8 @@ try {
     fail = storage.getItem(uid) != uid;
     storage.removeItem(uid);
     fail && (storage = false);
-} catch(e) {}
+} catch (e) {
+}
 
 $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
 
@@ -28,12 +29,12 @@ $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
     var cacheKey = options.cacheKey ||
         options.url.replace(/jQuery.*/, '') + options.type + (options.data || '');
 
-    if(options.url.match('/delete/i'))
+    if (options.url.match('/delete/i'))
 
     // isCacheValid is a function to validate cache
-    if (options.isCacheValid && !options.isCacheValid()) {
-        window.localStorage.removeItem(cacheKey);
-    }
+        if (options.isCacheValid && !options.isCacheValid()) {
+            window.localStorage.removeItem(cacheKey);
+        }
     // if there's a TTL that's expired, flush this item
     var ttl = window.localStorage.getItem(cacheKey + 'cachettl');
     if (ttl && ttl < +new Date()) {
@@ -67,10 +68,9 @@ $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
         // store timestamp
         if (!ttl || ttl === 'expired') {
 
-            lifespan = options.cacheTTLType || 's';
+            lifespan = options.cacheTTLType || 's';
 
-            switch (lifespan)
-            {
+            switch (lifespan) {
                 case 'm':
                     lifetl *= 60; // minutes
                     break;
@@ -82,37 +82,37 @@ $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
         }
     }
 });
-function cleanOldStorage(){
-    if(window.localStorage.toString()=='[object Storage]')
-    {
-        for(i=window.localStorage.length-1; i >=0; i--)
-        {
+function cleanOldStorage() {
+    if (window.localStorage.toString() == '[object Storage]') {
+        for (i = window.localStorage.length - 1; i >= 0; i--) {
             key = window.localStorage.key(i);
-            if(key && key.match(/cachettl/i)){
+            if (key && key.match(/cachettl/i)) {
                 value = window.localStorage.getItem(key);
-                if(value < +new Date())
-                {
-                    window.localStorage.removeItem(key);    console.log(key + '  removed');
-                    window.localStorage.removeItem(key.replace('cachettl',''));   console.log(key + 'cachettl  removed');
+                if (value < +new Date()) {
+                    window.localStorage.removeItem(key);
+                    console.log(key + '  removed');
+                    window.localStorage.removeItem(key.replace('cachettl', ''));
+                    console.log(key + 'cachettl  removed');
                 }
             }
         }
     }
-    else if(window.localStorage.items) {
-        for(var key in window.localStorage.items){
-            if(key && key.match(/cachettl/i)){
+    else if (window.localStorage.items) {
+        for (var key in window.localStorage.items) {
+            if (key && key.match(/cachettl/i)) {
                 value = window.localStorage.items[key];
-                if(value < +new Date())
-                {
-                    window.localStorage.removeItem(key);     console.log(key + '  removed');
-                    window.localStorage.removeItem(key.replace('cachettl',''));
+                if (value < +new Date()) {
+                    window.localStorage.removeItem(key);
+                    console.log(key + '  removed');
+                    window.localStorage.removeItem(key.replace('cachettl', ''));
                 }
             }
         }
     }
 }
 
-function customStorage() {}
+function customStorage() {
+}
 
 customStorage.prototype.items = Object();
 
@@ -121,10 +121,8 @@ customStorage.prototype.setItem = function (key, response) {
     this.items[key].response = response;
     return true;
 }
-customStorage.prototype.removeItem = function (key)
-{
-    if(this.items[key])
-    {
+customStorage.prototype.removeItem = function (key) {
+    if (this.items[key]) {
         this.items[key] = null;
     }
 }

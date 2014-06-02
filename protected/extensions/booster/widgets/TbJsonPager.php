@@ -4,7 +4,7 @@
  *
  * @author: antonio ramirez <antonio@clevertech.biz>
  * @copyright Copyright &copy; Clevertech 2012-
- * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  */
 
 Yii::import('bootstrap.widgets.TbPager');

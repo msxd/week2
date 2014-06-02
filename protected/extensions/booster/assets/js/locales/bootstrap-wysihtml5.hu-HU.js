@@ -1,7 +1,7 @@
 /**
  * Hungarian translation for bootstrap-wysihtml5
  */
-(function($){
+(function ($) {
     $.fn.wysihtml5.locale["hu-HU"] = {
         font_styles: {
             normal: "Normál szöveg",

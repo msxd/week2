@@ -529,7 +529,7 @@ class TbInputHorizontal extends TbInput
 		);
 		echo $this->getError() . $this->getHint();
 		echo '<div id="wmd-preview" class="wmd-panel wmd-preview" style="width:' . (isset($width) ? $width
-			: '100%') . '"></div>';
+				: '100%') . '"></div>';
 		echo '</div>'; // wmd-panel
 		echo '</div>'; // controls
 	}

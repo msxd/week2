@@ -12,7 +12,7 @@
  *## EditableField widget makes editable single attribute of model.
  *
  * @package booster.widgets.editable
-*/
+ */
 class TbEditableField extends CWidget
 {
 	/**
@@ -51,7 +51,7 @@ class TbEditableField extends CWidget
 
 	/**
 	 * @var string placement of popup. Can be `left`, `top`, `right`, `bottom`.
-     * If `null` - default X-editable value is used: `top`
+	 * If `null` - default X-editable value is used: `top`
 	 * @see x-editable
 	 */
 	public $placement = 'top';
@@ -72,7 +72,7 @@ class TbEditableField extends CWidget
 
 	/**
 	 * @var string text shown on empty field.
-     * If `null` - default X-editable value is used: `Empty`
+	 * If `null` - default X-editable value is used: `Empty`
 	 * @see x-editable
 	 */
 	public $emptytext = 'Empty';
@@ -95,7 +95,7 @@ class TbEditableField extends CWidget
 
 	/**
 	 * @var array all config options of x-editable.
-     * See full list <a href="http://vitalets.github.com/x-editable/docs.html#editable">here</a>.
+	 * See full list <a href="http://vitalets.github.com/x-editable/docs.html#editable">here</a>.
 	 */
 	public $options = array();
 
@@ -113,7 +113,7 @@ class TbEditableField extends CWidget
 	/**
 	 * @var mixed source data for **select**, **checklist**. Can be string (url) or array in format:
 	 * array( array("value" => 1, "text" => "abc"), ...)
-     *
+	 *
 	 * @package list
 	 * @see x-editable
 	 */
@@ -121,7 +121,7 @@ class TbEditableField extends CWidget
 
 	/**
 	 * @var string format to send date on server. If `null` - default X-editable value is used: `yyyy-mm-dd`.
-     *
+	 *
 	 * @package date
 	 * @see x-editable
 	 */
@@ -129,7 +129,7 @@ class TbEditableField extends CWidget
 
 	/**
 	 * @var string format to display date in element. If `null` - equals to **format** option.
-     *
+	 *
 	 * @package date
 	 * @see x-editable
 	 */
@@ -137,7 +137,7 @@ class TbEditableField extends CWidget
 
 	/**
 	 * @var string template for **combodate** input. For details see http://vitalets.github.com/x-editable/docs.html#combodate.
-     *
+	 *
 	 * @package combodate
 	 * @see x-editable
 	 */
@@ -145,7 +145,7 @@ class TbEditableField extends CWidget
 
 	/**
 	 * @var array full config for **combodate** input. For details see http://vitalets.github.com/combodate/#docs
-     *
+	 *
 	 * @package combodate
 	 * @see x-editable
 	 */
@@ -153,7 +153,7 @@ class TbEditableField extends CWidget
 
 	/**
 	 * @var string separator used to display tags.
-     *
+	 *
 	 * @package select2
 	 * @see x-editable
 	 */
@@ -161,7 +161,7 @@ class TbEditableField extends CWidget
 
 	/**
 	 * @var array full config for **select2** input. For details see http://ivaynberg.github.com/select2
-     *
+	 *
 	 * @package select2
 	 * @see x-editable
 	 */
@@ -169,10 +169,10 @@ class TbEditableField extends CWidget
 
 	/**
 	 * @var string HTML ID of the parent element, to restrict application of the plugin
-     *
-     * @deprecated 3.0.0 Why it is even exists? This widget is to make a singular editable field anyway,
-     * we should generate direct ID selectors, not a[rel=:rel] ones! This property will be removed
-     * from the next backwards-incompatible release.
+	 *
+	 * @deprecated 3.0.0 Why it is even exists? This widget is to make a singular editable field anyway,
+	 * we should generate direct ID selectors, not a[rel=:rel] ones! This property will be removed
+	 * from the next backwards-incompatible release.
 	 */
 	public $parentid = null;
 
@@ -233,7 +233,7 @@ class TbEditableField extends CWidget
 	// --- X-editable events ---
 	/**
 	 * A javascript function that will be invoked when editable element is initialized.
-     *
+	 *
 	 * @var string
 	 * @package event
 	 * @see x-editable
@@ -450,18 +450,18 @@ class TbEditableField extends CWidget
 
 		//simple options set directly from config
 		foreach (array(
-			         'mode',
-			         'placement',
-			         'emptytext',
-			         'params',
-			         'inputclass',
-			         'format',
-			         'viewformat',
-			         'template',
-			         'combodate',
-			         'select2',
-			         'viewseparator'
-		         ) as $option) {
+					 'mode',
+					 'placement',
+					 'emptytext',
+					 'params',
+					 'inputclass',
+					 'format',
+					 'viewformat',
+					 'template',
+					 'combodate',
+					 'select2',
+					 'viewseparator'
+				 ) as $option) {
 			if ($this->$option) {
 				$options[$option] = $this->$option;
 			}
@@ -567,10 +567,9 @@ class TbEditableField extends CWidget
 				array('options' => $this->options['datepicker'])
 			);
 			$widget->registerLanguageScript();
-		}
-		elseif ($this->type == 'datetime') {
+		} elseif ($this->type == 'datetime') {
 			$this->packageRegistry->registerPackage('datetimepicker');
-			
+
 			/** @var $widget TbDateTimePicker */
 			$widget = Yii::app()->widgetFactory->createWidget(
 				$this->getOwner(),

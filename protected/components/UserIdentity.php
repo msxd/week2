@@ -22,8 +22,7 @@ class UserIdentity extends CUserIdentity
 	public function authenticate()
 	{
 		// если есть модель, авторизуемся
-		if ($this->_user)
-		{
+		if ($this->_user) {
 			$user = $this->_user;
 			$this->_id = $user->id;
 			$this->email = $user->email;
@@ -31,10 +30,8 @@ class UserIdentity extends CUserIdentity
 			// RBAC
 
 			$auth = Yii::app()->authManager;
-			if (!$auth->isAssigned($user->role_id, $user->id))
-			{
-				if ($auth->assign($user->role_id, $user->id))
-				{
+			if (!$auth->isAssigned($user->role_id, $user->id)) {
+				if ($auth->assign($user->role_id, $user->id)) {
 					Yii::app()->authManager->save();
 				}
 			}

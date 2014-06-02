@@ -114,7 +114,7 @@ class TbTimePicker extends CInputWidget
 	 */
 	public function registerClientScript($id)
 	{
-        Bootstrap::getBooster()->assetsRegistry->registerPackage('timepicker');
+		Bootstrap::getBooster()->assetsRegistry->registerPackage('timepicker');
 
 		$options = !empty($this->options) ? CJavaScript::encode($this->options) : '';
 

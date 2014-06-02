@@ -874,8 +874,7 @@ abstract class TbInput extends CInputWidget
 	 */
 	protected function getSeparatedSelectableInput()
 	{
-		switch ($this->type)
-		{
+		switch ($this->type) {
 			case self::TYPE_CHECKBOX:
 				$method = 'checkBox';
 				break;
@@ -887,14 +886,13 @@ abstract class TbInput extends CInputWidget
 		}
 
 		$control = $this->form->{$method}($this->model, $this->attribute, $this->htmlOptions);
-		$hidden  = '';
+		$hidden = '';
 
 		$hasHiddenField = (array_key_exists('uncheckValue', $this->htmlOptions) && $this->htmlOptions['uncheckValue'] === null)
 			? false
 			: true;
 
-		if ($hasHiddenField && preg_match('/\<input .*?type="hidden".*?\/\>/', $control, $matches))
-		{
+		if ($hasHiddenField && preg_match('/\<input .*?type="hidden".*?\/\>/', $control, $matches)) {
 			$hidden = $matches[0];
 			$control = str_replace($hidden, '', $control);
 		}

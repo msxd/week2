@@ -25,7 +25,7 @@ class TbLabel extends CWidget
 	/**
 	 * @var string the label type.
 	 *
-     * See `TYPE_*` constants for list of allowed types.
+	 * See `TYPE_*` constants for list of allowed types.
 	 */
 	public $type;
 
@@ -47,7 +47,7 @@ class TbLabel extends CWidget
 	/**
 	 *### .init()
 	 *
-     * At the start of widget we collect the attributes for badge tag.
+	 * At the start of widget we collect the attributes for badge tag.
 	 */
 	public function init()
 	{
@@ -82,7 +82,7 @@ class TbLabel extends CWidget
 	/**
 	 *### .run()
 	 *
-     * Upon completing the badge we write the span tag with collected attributes to document.
+	 * Upon completing the badge we write the span tag with collected attributes to document.
 	 */
 	public function run()
 	{

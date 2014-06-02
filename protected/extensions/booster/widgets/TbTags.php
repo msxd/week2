@@ -4,7 +4,7 @@
  *
  * @author Antonio Ramirez <antonio@clevertech.biz>
  * @copyright Copyright &copy; Clevertech 2012-
- * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  */
 
 /**
@@ -181,9 +181,9 @@ class TbTags extends CInputWidget
 	 */
 	public function registerClientScript($id)
 	{
-        $booster = Bootstrap::getBooster();
-        $booster->registerAssetCss('bootstrap-tags.css');
-        $booster->registerAssetJs('bootstrap.tags.js');
+		$booster = Bootstrap::getBooster();
+		$booster->registerAssetCss('bootstrap-tags.css');
+		$booster->registerAssetJs('bootstrap.tags.js');
 
 		$options = !empty($this->options) ? CJavaScript::encode($this->options) : '';
 

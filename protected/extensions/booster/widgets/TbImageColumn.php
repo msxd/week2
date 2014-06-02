@@ -70,9 +70,9 @@ class TbImageColumn extends CGridColumn
 	{
 		$content = $this->emptyText;
 		if ($this->imagePathExpression && $imagePath = $this->evaluateExpression(
-			$this->imagePathExpression,
-			array('row' => $row, 'data' => $data)
-		)
+				$this->imagePathExpression,
+				array('row' => $row, 'data' => $data)
+			)
 		) {
 			$this->imageOptions['src'] = $imagePath;
 			$content = CHtml::tag('img', $this->imageOptions);

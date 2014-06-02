@@ -246,9 +246,9 @@ function() {
 
 		if (!$this->displayText) {
 			$button['htmlOptions']['title'] = $this->getButtonLabel($checked);
-            if (!isset($button['htmlOptions']['data-toggle'])) {
-                $button['htmlOptions']['data-toggle'] = 'tooltip';
-            }
+			if (!isset($button['htmlOptions']['data-toggle'])) {
+				$button['htmlOptions']['data-toggle'] = 'tooltip';
+			}
 			echo CHtml::link('<i class="' . $button['icon'] . '"></i>', $button['url'], $button['htmlOptions']);
 		} else {
 			$button['label'] = $this->getButtonLabel($checked);

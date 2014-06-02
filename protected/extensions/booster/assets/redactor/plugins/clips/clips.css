@@ -10,16 +10,20 @@
 	padding-left: 0;
 	list-style: none;
 }
+
 .redactor_clips_box li {
 	border-top: 1px solid #fff;
 	border-bottom: 1px solid #ddd;
 }
+
 .redactor_clips_box li:first-child {
 	border-top: none;
 }
+
 .redactor_clips_box li:last-child {
 	border-bottom: none;
 }
+
 .redactor_clips_box li a {
 	padding: 10px 5px;
 	color: #000;
@@ -27,6 +31,7 @@
 	font-size: 13px;
 	display: block;
 }
-.redactor_clips_box li a:hover {	
+
+.redactor_clips_box li a:hover {
 	background-color: #fff;
 }

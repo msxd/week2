@@ -161,8 +161,8 @@ class TbExtendedFilter extends CWidget
 		echo "<div id='{$this->getId()}'>\n";
 		if (count($this->filteredBy)) {
 			echo '<p><span class="label label-success">Filtered by</span> ' . $this->displayExtendedFilterValues(
-				$this->filteredBy
-			) . '</p>';
+					$this->filteredBy
+				) . '</p>';
 		}
 
 		$this->displaySaveButton($registryKey);

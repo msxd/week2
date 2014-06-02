@@ -4,7 +4,7 @@
  *
  * @author Christoffer Niska <ChristofferNiska@gmail.com>
  * @copyright Copyright &copy; Christoffer Niska 2011-
- * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php) 
+ * @license [New BSD License](http://www.opensource.org/licenses/bsd-license.php)
  * @since 0.9.10
  */
 
@@ -138,8 +138,8 @@ class TbButtonGroup extends CWidget
 					'htmlOptions' => isset($button['htmlOptions']) ? $button['htmlOptions'] : array(),
 					'dropdownOptions' => isset($button['dropdownOptions']) ? $button['dropdownOptions'] : array(),
 					'encodeLabel' => isset($button['encodeLabel']) ? $button['encodeLabel'] : $this->encodeLabel,
-                    'tooltip' => isset($button['tooltip']) ? $button['tooltip'] : false,
-                    'tooltipOptions' => isset($button['tooltipOptions']) ? $button['tooltipOptions'] : array(),
+					'tooltip' => isset($button['tooltip']) ? $button['tooltip'] : false,
+					'tooltipOptions' => isset($button['tooltipOptions']) ? $button['tooltipOptions'] : array(),
 				)
 			);
 		}

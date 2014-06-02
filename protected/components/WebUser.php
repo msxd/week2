@@ -1,4 +1,5 @@
-<?
+<?php
+
 class WebUser extends CWebUser
 {
 	private $model = null;

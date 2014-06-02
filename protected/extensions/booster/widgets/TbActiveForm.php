@@ -38,7 +38,6 @@
  *     'hint' => 'Check keyboard layout'
  * )); ?>
  * <?php echo $form->checkBoxRow($model, 'rememberMe'); ?>
-
  * <div class="form-actions">
  *     <?php echo CHtml::submitButton('Login', array('class'=>'btn')); ?>
  * </div>
@@ -1217,7 +1216,7 @@ class TbActiveForm extends CActiveForm
 	 */
 	protected function inlineFieldRow(&$fieldData, &$model, &$attribute, &$rowOptions)
 	{
-        echo '<div class="controls-inline">';
+		echo '<div class="controls-inline">';
 
 		if (!empty($rowOptions['prepend']) || !empty($rowOptions['append']))
 			$this->renderAddOnBegin($rowOptions['prepend'], $rowOptions['append'], $rowOptions['prependOptions']);
@@ -1231,11 +1230,11 @@ class TbActiveForm extends CActiveForm
 		if (!empty($rowOptions['prepend']) || !empty($rowOptions['append']))
 			$this->renderAddOnEnd($rowOptions['append'], $rowOptions['appendOptions']);
 
-        if ($this->showErrors && $rowOptions['errorOptions'] !== false) {
-            echo $this->error($model, $attribute, $rowOptions['errorOptions'], $rowOptions['enableAjaxValidation'], $rowOptions['enableClientValidation']);
-        }
+		if ($this->showErrors && $rowOptions['errorOptions'] !== false) {
+			echo $this->error($model, $attribute, $rowOptions['errorOptions'], $rowOptions['enableAjaxValidation'], $rowOptions['enableClientValidation']);
+		}
 
-        echo '</div>';
+		echo '</div>';
 	}
 
 	/**
@@ -1307,10 +1306,10 @@ class TbActiveForm extends CActiveForm
 		if (!isset($options['append']))
 			$options['append'] = null;
 
-		if(!isset($options['enableAjaxValidation']))
+		if (!isset($options['enableAjaxValidation']))
 			$options['enableAjaxValidation'] = true;
 
-		if(!isset($options['enableClientValidation']))
+		if (!isset($options['enableClientValidation']))
 			$options['enableClientValidation'] = true;
 	}
 

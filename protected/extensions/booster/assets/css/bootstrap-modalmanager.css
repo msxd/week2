@@ -12,7 +12,6 @@
 	overflow: hidden;
 }
 
-
 /* add a scroll bar to stop page from jerking around */
 .modal-open.page-overflow .page-container,
 .modal-open.page-overflow .page-container .navbar-fixed-top,
@@ -23,11 +22,10 @@
 
 @media (max-width: 979px) {
 	.modal-open.page-overflow .page-container .navbar-fixed-top,
-	.modal-open.page-overflow .page-container .navbar-fixed-bottom  {
+	.modal-open.page-overflow .page-container .navbar-fixed-bottom {
 		overflow-y: visible;
 	}
 }
-
 
 .modal-scrollable {
 	position: fixed;
@@ -48,10 +46,10 @@
 
 .modal.fade {
 	top: -100%;
-	-webkit-transition: opacity 0.3s linear, top 0.3s ease-out, bottom 0.3s ease-out, margin-top 0.3s ease-out;	
-	   -moz-transition: opacity 0.3s linear, top 0.3s ease-out, bottom 0.3s ease-out, margin-top 0.3s ease-out;
-	     -o-transition: opacity 0.3s linear, top 0.3s ease-out, bottom 0.3s ease-out, margin-top 0.3s ease-out;
-	        transition: opacity 0.3s linear, top 0.3s ease-out, bottom 0.3s ease-out, margin-top 0.3s ease-out;
+	-webkit-transition: opacity 0.3s linear, top 0.3s ease-out, bottom 0.3s ease-out, margin-top 0.3s ease-out;
+	-moz-transition: opacity 0.3s linear, top 0.3s ease-out, bottom 0.3s ease-out, margin-top 0.3s ease-out;
+	-o-transition: opacity 0.3s linear, top 0.3s ease-out, bottom 0.3s ease-out, margin-top 0.3s ease-out;
+	transition: opacity 0.3s linear, top 0.3s ease-out, bottom 0.3s ease-out, margin-top 0.3s ease-out;
 }
 
 .modal.fade.in {
@@ -78,7 +76,7 @@
 	border-radius: 6px;
 }
 
-.modal-backdrop.modal-absolute{
+.modal-backdrop.modal-absolute {
 	position: absolute;
 	z-index: 940;
 }
@@ -93,8 +91,8 @@
 */
 
 .modal.container {
-  width: 940px;
-  margin-left: -470px;
+	width: 940px;
+	margin-left: -470px;
 }
 
 /* Modal Overflow */
@@ -126,9 +124,9 @@
 }
 
 @media (max-width: 979px) {
-	.modal, 
+	.modal,
 	.modal.container,
-	.modal.modal-overflow 	{
+	.modal.modal-overflow {
 		top: 1%;
 		right: 1%;
 		left: 1%;
@@ -138,14 +136,14 @@
 		margin: 0 !important;
 		padding: 0 !important;
 	}
-	
-	.modal.fade.in, 
+
+	.modal.fade.in,
 	.modal.container.fade.in,
 	.modal.modal-overflow.fade.in {
 		top: 1%;
 		bottom: auto;
 	}
-	
+
 	.modal-body,
 	.modal-overflow .modal-body {
 		position: static;
@@ -154,7 +152,7 @@
 		max-height: none !important;
 		overflow: visible !important;
 	}
-	
+
 	.modal-footer,
 	.modal-overflow .modal-footer {
 		position: static;
@@ -176,37 +174,61 @@ Copyright (c) 2012 Dan Eden*/
 
 .animated {
 	-webkit-animation-duration: 1s;
-	   -moz-animation-duration: 1s;
-	     -o-animation-duration: 1s;
-	        animation-duration: 1s;
+	-moz-animation-duration: 1s;
+	-o-animation-duration: 1s;
+	animation-duration: 1s;
 	-webkit-animation-fill-mode: both;
-	   -moz-animation-fill-mode: both;
-	     -o-animation-fill-mode: both;
-	        animation-fill-mode: both;
+	-moz-animation-fill-mode: both;
+	-o-animation-fill-mode: both;
+	animation-fill-mode: both;
 }
 
 @-webkit-keyframes shake {
-	0%, 100% {-webkit-transform: translateX(0);}
-	10%, 30%, 50%, 70%, 90% {-webkit-transform: translateX(-10px);}
-	20%, 40%, 60%, 80% {-webkit-transform: translateX(10px);}
+	0%, 100% {
+		-webkit-transform: translateX(0);
+	}
+	10%, 30%, 50%, 70%, 90% {
+		-webkit-transform: translateX(-10px);
+	}
+	20%, 40%, 60%, 80% {
+		-webkit-transform: translateX(10px);
+	}
 }
 
 @-moz-keyframes shake {
-	0%, 100% {-moz-transform: translateX(0);}
-	10%, 30%, 50%, 70%, 90% {-moz-transform: translateX(-10px);}
-	20%, 40%, 60%, 80% {-moz-transform: translateX(10px);}
+	0%, 100% {
+		-moz-transform: translateX(0);
+	}
+	10%, 30%, 50%, 70%, 90% {
+		-moz-transform: translateX(-10px);
+	}
+	20%, 40%, 60%, 80% {
+		-moz-transform: translateX(10px);
+	}
 }
 
 @-o-keyframes shake {
-	0%, 100% {-o-transform: translateX(0);}
-	10%, 30%, 50%, 70%, 90% {-o-transform: translateX(-10px);}
-	20%, 40%, 60%, 80% {-o-transform: translateX(10px);}
+	0%, 100% {
+		-o-transform: translateX(0);
+	}
+	10%, 30%, 50%, 70%, 90% {
+		-o-transform: translateX(-10px);
+	}
+	20%, 40%, 60%, 80% {
+		-o-transform: translateX(10px);
+	}
 }
 
 @keyframes shake {
-	0%, 100% {transform: translateX(0);}
-	10%, 30%, 50%, 70%, 90% {transform: translateX(-10px);}
-	20%, 40%, 60%, 80% {transform: translateX(10px);}
+	0%, 100% {
+		transform: translateX(0);
+	}
+	10%, 30%, 50%, 70%, 90% {
+		transform: translateX(-10px);
+	}
+	20%, 40%, 60%, 80% {
+		transform: translateX(10px);
+	}
 }
 
 .shake {

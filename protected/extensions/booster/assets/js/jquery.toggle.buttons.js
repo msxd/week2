@@ -226,7 +226,7 @@
                     var $input = $(this).find('input');
                     $input.attr('checked', !$input.is(':checked')).trigger('change', skipOnChange);
                 },
-                setState: function(value, skipOnChange) {
+                setState: function (value, skipOnChange) {
                     $(this).find('input').attr('checked', value).trigger('change', skipOnChange);
                 }
             };

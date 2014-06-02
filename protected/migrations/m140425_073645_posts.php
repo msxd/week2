@@ -4,14 +4,14 @@ class m140425_073645_posts extends CDbMigration
 {
 	public function up()
 	{
-		$this->createTable('posts',array(
-			'id'=>"pk",
+		$this->createTable('posts', array(
+			'id' => "pk",
 			'body' => "text NOT NULL",
 			'title' => "varchar (255) NOT NULL DEFAULT ''",
 			'created_at' => "timestamp NULL",
 			'updated_at' => "timestamp NULL",
 			'user_id' => "integer NOT NULL",
-			'published' => "integer",// 1 - published, 0 - not published
+			'published' => "integer", // 1 - published, 0 - not published
 			'img_path' => "varchar (255) NULL",
 		), 'ENGINE=InnoDB DEFAULT CHARSET=utf8');
 

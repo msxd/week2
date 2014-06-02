@@ -132,13 +132,13 @@ class TbRelationalColumn extends TbDataColumn
 	 */
 	public function registerClientScript()
 	{
-        Bootstrap::getBooster()->registerAssetCss('bootstrap-relational.css');
+		Bootstrap::getBooster()->registerAssetCss('bootstrap-relational.css');
 
 		/** @var $cs CClientScript */
 		$cs = Yii::app()->getClientScript();
 		if ($this->afterAjaxUpdate !== null) {
 			if ((!$this->afterAjaxUpdate instanceof CJavaScriptExpression)
-				&& (strpos($this->afterAjaxUpdate,'js:') !== 0)
+				&& (strpos($this->afterAjaxUpdate, 'js:') !== 0)
 			) {
 				$this->afterAjaxUpdate = new CJavaScriptExpression($this->afterAjaxUpdate);
 			}
@@ -153,7 +153,7 @@ class TbRelationalColumn extends TbDataColumn
 		$cache = $this->cacheData ? 'true' : 'false';
 		$data = !empty($this->submitData) && is_array($this->submitData) ? $this->submitData : 'js:{}';
 		$data = CJavascript::encode($data);
-		list($parentId) = explode('_',$this->id);
+		list($parentId) = explode('_', $this->id);
 		$js = <<<EOD
 $(document).on('click','#{$parentId} .{$this->cssClass}', function(){
 	var span = $span;

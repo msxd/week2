@@ -81,7 +81,7 @@
                     inputSelector = '#' + id + ' .' + settings.filterClass + ' input, ' + '#' + id + ' .' + settings.filterClass + ' select';
 
                 settings = $.extend(settings, {
-                    colTemplate :  $.jqotec("#" +  id + "-col-template"),
+                    colTemplate: $.jqotec("#" + id + "-col-template"),
                     rowTemplate: $.jqotec("#" + id + "-row-template"),
                     keysTemplate: $.jqotec("#" + id + "-keys-template"),
                     pagerTemplate: $.jqotec("#" + id + "-pager-template"),
@@ -144,7 +144,7 @@
                 });
 
                 if (settings.enableHistory && settings.ajaxUpdate !== false && window.History.enabled) {
-                    $(window).bind('statechange', function() { // Note: We are using statechange instead of popstate
+                    $(window).bind('statechange', function () { // Note: We are using statechange instead of popstate
                         var State = window.History.getState(); // Note: We are using History.getState() instead of event.state
                         $('#' + id).yiiJsonGridView('update', {url: State.url});
                     });
@@ -241,7 +241,6 @@
         },
 
 
-
         /**
          * Performs an AJAX-based update of the grid view contents.
          * @param options map the AJAX request options (see jQuery.ajax API manual). By default,
@@ -277,29 +276,28 @@
                         $grid.find('.keys').jqotesub(settings.keysTemplate, data.keys);
 
                         if (data.summary !== null) {
-                            $( '.' + settings.summaryClass, $grid ).jqotesub(settings.summaryTemplate, data.summary);
-                            $( '.' + settings.summaryClass, $grid ).show();
+                            $('.' + settings.summaryClass, $grid).jqotesub(settings.summaryTemplate, data.summary);
+                            $('.' + settings.summaryClass, $grid).show();
                         } else {
-                            $( '.' + settings.summaryClass, $grid ).hide();
+                            $('.' + settings.summaryClass, $grid).hide();
                         }
 
-                        if (data.pager.length ) {
-                            $( '.' + settings.pagerClass + ' ul', $grid ).jqotesub(settings.pagerTemplate, data.pager);
-                            $( '.' + settings.pagerClass, $grid ).show();
+                        if (data.pager.length) {
+                            $('.' + settings.pagerClass + ' ul', $grid).jqotesub(settings.pagerTemplate, data.pager);
+                            $('.' + settings.pagerClass, $grid).show();
                         } else {
-                            $( '.' + settings.pagerClass, $grid ).hide();
+                            $('.' + settings.pagerClass, $grid).hide();
                         }
 
                         var url_params = $.deparam.querystring(data.url);
                         delete url_params[settings.ajaxVar];
                         $grid.find('.keys').attr('title', $.param.querystring(data.url.substr(0, data.url.indexOf('?')), url_params));
 
-                        data.pager.length ? $grid.find('.'+settings.pagerClass+' ul').jqotesub(settings.pagerTemplate, data.pager).show() : $grid.find('.' + settings.pagerClass).hide();
+                        data.pager.length ? $grid.find('.' + settings.pagerClass + ' ul').jqotesub(settings.pagerTemplate, data.pager).show() : $grid.find('.' + settings.pagerClass).hide();
 
-                        $.each(data.headers, function(){
-                            var $header = $('#' + this.id );
-                            if( $header.length )
-                            {
+                        $.each(data.headers, function () {
+                            var $header = $('#' + this.id);
+                            if ($header.length) {
                                 $header.html(this.content);
                             }
                         });

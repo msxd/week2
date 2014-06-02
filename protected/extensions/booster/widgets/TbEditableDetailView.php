@@ -15,7 +15,7 @@ Yii::import('bootstrap.widgets.TbDetailView');
  * EditableDetailView widget makes editable CDetailView (several attributes of single model shown as name-value table).
  *
  * @package booster.widgets.editable
-*/
+ */
 class TbEditableDetailView extends TbDetailView
 {
 
@@ -29,17 +29,17 @@ class TbEditableDetailView extends TbDetailView
 		if (!$this->data instanceof CModel)
 			throw new CException('Property "data" should be of CModel class.');
 
-        if (!is_array($this->htmlOptions)) {
-            $this->htmlOptions = array();
-        }
+		if (!is_array($this->htmlOptions)) {
+			$this->htmlOptions = array();
+		}
 
-        // Default css classes
-        $defaultClasses = 'table table-bordered table-striped table-hover';
-        if (!isset($this->htmlOptions['class'])) {
-            $this->htmlOptions['class'] = $defaultClasses;
-        } else {
-            $this->htmlOptions['class'] .= ' ' . $defaultClasses;
-        }
+		// Default css classes
+		$defaultClasses = 'table table-bordered table-striped table-hover';
+		if (!isset($this->htmlOptions['class'])) {
+			$this->htmlOptions['class'] = $defaultClasses;
+		} else {
+			$this->htmlOptions['class'] .= ' ' . $defaultClasses;
+		}
 
 		$this->cssFile = false;
 
