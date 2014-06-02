@@ -1,44 +1,16 @@
 <?php
-/* @var $this PostController */
+/* @var PostController $this */
 
 $this->breadcrumbs = array(
-	'Post',
+    'Post',
 );
 ?>
 
-<?
- $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'users-signin-form',
-	'htmlOptions' => array('class' => 'form-horizontal', 'enctype'=>'multipart/form-data'),
-	'enableAjaxValidation'=>false,
-));
-
-echo $form->textField($model, 'title', array('class' => 'span3'));
+<div class="form-horizontal col-xs-8 col-xs-offset-2" id="user_post">
+    <?
+    $this->renderPartial('_form', array('model' => $model));
+    ?>
 
 
-$this->widget(
-	'bootstrap.widgets.TbCKEditor',
-	array(
-		'model' => $model,
-		'attribute' => 'body',
-	)
-);
-
- echo $form->fileField($model, 'image');
-
-$this->widget(
-	'bootstrap.widgets.TbButton',
-	array('buttonType' => 'submit', 'label' => 'Add')
-);
-
-$this->endWidget();
-
-
-
-
-
-?>
-
-
-
+</div>
 

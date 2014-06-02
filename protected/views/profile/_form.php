@@ -4,55 +4,54 @@
 /* @var $form CActiveForm */
 ?>
 
-<div class="form">
+<div class="form-horizontal col-xs-8 col-xs-offset-2" id="user_edit">
 
-<?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'user-form',
-	// Please note: When you enable ajax validation, make sure the corresponding
-	// controller action is handling ajax validation correctly.
-	// There is a call to performAjaxValidation() commented in generated controller code.
-	// See class documentation of CActiveForm for details on this.
-	'enableAjaxValidation'=>false,
-)); ?>
+    <h1 class="text-center"><span class="glyphicon glyphicon-pencil"></span>My profile</h1>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
-	<?php echo $form->errorSummary($model); ?>
+    <?php $form = $this->beginWidget('CActiveForm', array(
+        'id' => 'user-form',
+        'enableAjaxValidation' => false,
+    )); ?>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'facebook_id'); ?>
-		<?php echo $form->textField($model,'facebook_id',array('size'=>50,'maxlength'=>50)); ?>
-		<?php echo $form->error($model,'facebook_id'); ?>
-	</div>
+    <?php echo $form->errorSummary($model); ?>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'email'); ?>
-		<?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'email'); ?>
-	</div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'phone'); ?>
-		<?php echo $form->textField($model,'phone',array('size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'phone'); ?>
-	</div>
+    <div class="input-group col-xs-12 padingf">
+        <span class="input-group-addon ads"><?php echo $form->labelEx($model, 'email'); ?></span>
+        <?php echo $form->textField($model, 'email', array('class' => 'form-control')); ?>
+        <?php echo $form->error($model, 'email'); ?>
+    </div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'first_name'); ?>
-		<?php echo $form->textField($model,'first_name',array('size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'first_name'); ?>
-	</div>
+    <div class="input-group col-xs-12 padingf">
+        <span class="input-group-addon ads"><?php echo $form->labelEx($model, 'phone'); ?></span>
+        <?php echo $form->textField($model, 'phone', array('class' => 'form-control')); ?>
+        <?php echo $form->error($model, 'phone'); ?>
+    </div>
 
-	<div class="row">
-		<?php echo $form->labelEx($model,'last_name'); ?>
-		<?php echo $form->textField($model,'last_name',array('size'=>60,'maxlength'=>255)); ?>
-		<?php echo $form->error($model,'last_name'); ?>
-	</div>
+    <div class="input-group col-xs-12 padingf">
+        <span class="input-group-addon ads"><?php echo $form->labelEx($model, 'first_name'); ?></span>
+        <?php echo $form->textField($model, 'first_name', array('class' => 'form-control')); ?>
+        <?php echo $form->error($model, 'first_name'); ?>
+    </div>
 
-	<div class="row buttons">
-		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
-	</div>
+    <div class="input-group col-xs-12 padingf">
+        <span class="input-group-addon ads"><?php echo $form->labelEx($model, 'last_name'); ?></span>
+        <?php echo $form->textField($model, 'last_name', array('class' => 'form-control')); ?>
+        <?php echo $form->error($model, 'last_name'); ?>
+    </div>
 
-<?php $this->endWidget(); ?>
+    <div class="input-group col-xs-12 padingf">
+        <span class="input-group-addon ads"><?php echo $form->labelEx($model, 'facebook_id'); ?></span>
+        <?php echo $form->textField($model, 'facebook_id', array('class' => 'form-control')); ?>
+        <?= $form->error($model, 'facebook_id'); ?>
+    </div>
 
-</div><!-- form -->
+
+    <div class="buttons text-center padingf">
+        <?= CHtml::submitButton('Save', array('class' => 'btn btn-default btn-lg')); ?>
+    </div>
+
+    <?php $this->endWidget(); ?>
+
+</div> <!-- form -->
