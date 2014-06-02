@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3daca558-caea-4db5-8250-fdb4518da283" name="Default" comment="Удаление комментариев по средствам аякс&#10;">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/controllers/SiteController.php" afterPath="$PROJECT_DIR$/protected/controllers/SiteController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/protected/views/site/_showComment.php" afterPath="$PROJECT_DIR$/protected/views/site/_showComment.php" />
+    <list default="true" id="3daca558-caea-4db5-8250-fdb4518da283" name="Default" comment="Remove comments ajax">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app.js" afterPath="$PROJECT_DIR$/js/app.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -33,37 +31,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="SiteController.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/protected/controllers/SiteController.php">
+      <file leaf-file-name="UpdateAccessRulesCommand.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/protected/commands/UpdateAccessRulesCommand.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="67" column="8" selection-start="2058" selection-end="2058" vertical-scroll-proportion="-8.0" vertical-offset="990" max-vertical-offset="2160">
+            <state line="25" column="36" selection-start="806" selection-end="817" vertical-scroll-proportion="-16.0" vertical-offset="18" max-vertical-offset="846">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="app.js" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/js/app.js">
+      <file leaf-file-name="PostController.php" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/protected/controllers/PostController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="9" selection-start="847" selection-end="847" vertical-scroll-proportion="0.5048544" vertical-offset="282" max-vertical-offset="900">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_showComment.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/protected/views/site/_showComment.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="0" selection-start="78" selection-end="78" vertical-scroll-proportion="-4.0" vertical-offset="0" max-vertical-offset="432">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="db.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/protected/config/db.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="25" selection-start="153" selection-end="153" vertical-scroll-proportion="-4.0" vertical-offset="0" max-vertical-offset="252">
+            <state line="38" column="57" selection-start="930" selection-end="945" vertical-scroll-proportion="0.35871404" vertical-offset="472" max-vertical-offset="2826">
               <folding />
             </state>
           </provider>
@@ -113,7 +93,6 @@
         <option value="$PROJECT_DIR$/protected/models/User.php" />
         <option value="$PROJECT_DIR$/protected/views/site/index.php" />
         <option value="$PROJECT_DIR$/protected/views/site/post.php" />
-        <option value="$PROJECT_DIR$/protected/controllers/PostController.php" />
         <option value="$PROJECT_DIR$/protected/models/Post.php" />
         <option value="$PROJECT_DIR$/protected/views/layouts/column2.php" />
         <option value="$PROJECT_DIR$/protected/views/mailur/aprove.php" />
@@ -133,6 +112,7 @@
         <option value="$PROJECT_DIR$/protected/views/site/_showComment.php" />
         <option value="$PROJECT_DIR$/protected/controllers/SiteController.php" />
         <option value="$PROJECT_DIR$/js/app.js" />
+        <option value="$PROJECT_DIR$/protected/controllers/PostController.php" />
       </list>
     </option>
   </component>
@@ -738,7 +718,11 @@
       <created>1401278428537</created>
       <updated>1401278428537</updated>
     </task>
-    <option name="localTasksCounter" value="77" />
+    <task id="LOCAL-00077" summary="Remove comments ajax">
+      <created>1401696578717</created>
+      <updated>1401696578718</updated>
+    </task>
+    <option name="localTasksCounter" value="78" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -767,21 +751,21 @@
     <layout>
       <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31163287" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" x="24" y="485" width="1872" height="135" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290735" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4685836" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.29028815" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32800853" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32848233" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4685836" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2489019" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2457265" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32977587" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32800853" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="FLOATING" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="98" y="125" width="1724" height="857" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32870865" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32848233" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
@@ -823,7 +807,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="API для постов, отправка ошибок" />
     <MESSAGE value="Для API добавлен метод toJSON" />
     <MESSAGE value="Исправленно добавление коментариев" />
     <MESSAGE value="Исправлен размер поля Path" />
@@ -848,7 +831,8 @@
     <MESSAGE value="Views changed" />
     <MESSAGE value="Удаление комментариев по средствам аякс&#10;" />
     <MESSAGE value="Форма редактирования и создания постов" />
-    <option name="LAST_COMMIT_MESSAGE" value="Форма редактирования и создания постов" />
+    <MESSAGE value="Remove comments ajax" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove comments ajax" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -887,13 +871,6 @@
         <state line="69" column="47" selection-start="1917" selection-end="1924" vertical-scroll-proportion="0.7878788" vertical-offset="783" max-vertical-offset="2142" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/controllers/UserController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="145" column="21" selection-start="4177" selection-end="4182" vertical-scroll-proportion="0.3325893" vertical-offset="2316" max-vertical-offset="2992">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/protected/components/WebUser.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0554371" vertical-offset="26" max-vertical-offset="986" />
@@ -909,11 +886,6 @@
         <state line="4" column="64" selection-start="122" selection-end="122" vertical-scroll-proportion="-2.6153846" vertical-offset="0" max-vertical-offset="425" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/commands/UpdateAccessRulesCommand.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="48" selection-start="53" selection-end="55" vertical-scroll-proportion="-0.54545456" vertical-offset="304" max-vertical-offset="799" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/protected/components/ApiController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="2" selection-start="0" selection-end="2" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2482" />
@@ -926,19 +898,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/protected/components/UserIdentity.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="50" selection-start="122" selection-end="124" vertical-scroll-proportion="0.14498934" vertical-offset="0" max-vertical-offset="969" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/protected/controllers/MailurController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state line="50" column="0" selection-start="1553" selection-end="1553" vertical-scroll-proportion="-32.692307" vertical-offset="0" max-vertical-offset="1105" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/protected/controllers/PostController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="101" column="52" selection-start="3302" selection-end="3302" vertical-scroll-proportion="-66.03846" vertical-offset="0" max-vertical-offset="2669" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/controllers/ProfileController.php">
@@ -962,7 +924,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/layouts/_menu.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="2" selection-start="0" selection-end="2" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="578" />
+        <state line="0" column="2" selection-start="0" selection-end="2" vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="578">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/layouts/column1.php">
@@ -994,7 +958,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/post/_form.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="5" selection-start="879" selection-end="879" vertical-scroll-proportion="-1.8846154" vertical-offset="393" max-vertical-offset="901" />
+        <state line="26" column="5" selection-start="879" selection-end="879" vertical-scroll-proportion="-1.8846154" vertical-offset="393" max-vertical-offset="901">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/views/post/add.php">
@@ -1105,7 +1071,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/controllers/api/PostController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="61" column="28" selection-start="1809" selection-end="1817" vertical-scroll-proportion="2.2110875" vertical-offset="0" max-vertical-offset="1275" />
+        <state line="61" column="28" selection-start="1809" selection-end="1817" vertical-scroll-proportion="2.2110875" vertical-offset="0" max-vertical-offset="1275">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/config/db.php">
@@ -1124,14 +1092,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/protected/controllers/SiteController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="67" column="8" selection-start="2058" selection-end="2058" vertical-scroll-proportion="-8.0" vertical-offset="990" max-vertical-offset="2160">
+        <state line="67" column="8" selection-start="2049" selection-end="2049" vertical-scroll-proportion="-8.0" vertical-offset="990" max-vertical-offset="2160">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="9" selection-start="847" selection-end="847" vertical-scroll-proportion="0.5048544" vertical-offset="282" max-vertical-offset="900">
+        <state line="47" column="1" selection-start="1227" selection-end="1227" vertical-scroll-proportion="0.0" vertical-offset="336" max-vertical-offset="954">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/components/UserIdentity.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="50" selection-start="122" selection-end="124" vertical-scroll-proportion="-2.6666667" vertical-offset="0" max-vertical-offset="1026">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/controllers/UserController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="93" column="21" selection-start="2759" selection-end="2759" vertical-scroll-proportion="-5.60241" vertical-offset="1209" max-vertical-offset="3168">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/commands/UpdateAccessRulesCommand.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="36" selection-start="806" selection-end="817" vertical-scroll-proportion="-16.0" vertical-offset="18" max-vertical-offset="846">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/protected/controllers/PostController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="57" selection-start="930" selection-end="945" vertical-scroll-proportion="0.35871404" vertical-offset="472" max-vertical-offset="2826">
           <folding />
         </state>
       </provider>

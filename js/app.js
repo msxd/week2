@@ -10,32 +10,31 @@ function scroll_to_elem(elem, speed, pid) {
         jQuery("html,body").animate({scrollTop: destination}, speed);
     }
 }
-function redir(){
+function redir() {
     window.location.href = "/";
 }
 
 function closeIt(elem) {
-    setTimeout(function(){
+    setTimeout(function () {
         window.location.href = "/";
-    },2000);
+    }, 2000);
 
     $(elem).parent().fadeOut(1000).end().remove().done();
 }
 
-$('body').on('click','#clear_parrent_comment',function(){
+$('body').on('click', '#clear_parrent_comment', function () {
     $('#Comment_parent_id').val(null);
     $('#to').html('post');
 });
 
 $('.removeComment').click(function () {
-    //console.log('click');
     var btn = this;
     $.ajax(
         {
             type: "POST",
             url: $(this).data('url'),
             success: function (msg) {
-                btn.parentNode.parentNode.remove()
+                $('#comments').load(document.location.href.getElementById('comments'));
             },
             error: function (dat) {
                 alert('Something went wrong, try again leter. Datas:' + dat);
@@ -43,3 +42,7 @@ $('.removeComment').click(function () {
         }
     );
 });
+
+var getElem = function (dat) {
+    console.log(dat);
+}
