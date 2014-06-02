@@ -27,13 +27,18 @@ $('body').on('click','#clear_parrent_comment',function(){
     $('#to').html('post');
 });
 
-$('#removeComment').click(function () {
+$('.removeComment').click(function () {
+    //console.log('click');
+    var btn = this;
     $.ajax(
         {
-            type: "GET",
-            url: $('#removeComment').data('url'),
+            type: "POST",
+            url: $(this).data('url'),
             success: function (msg) {
-                $('#removeComment').parent().parent().remove();
+                btn.parentNode.parentNode.remove()
+            },
+            error: function (dat) {
+                alert('Something went wrong, try again leter. Datas:' + dat);
             }
         }
     );

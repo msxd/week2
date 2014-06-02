@@ -63,10 +63,10 @@ class SiteController extends Controller
     public function actionRemovecomment($id)
     {
         if (Yii::app()->user->checkAccess(User::ROLE_ADMIN))
-            return Comment::model()->deleteByPk($id);
-        else
-            return false;
-    }
+			Comment::model()->deleteByPk($id);
+
+		return $id;
+	}
 
     public function actionLogin()
     {
