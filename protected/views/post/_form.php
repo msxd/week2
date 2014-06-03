@@ -43,6 +43,7 @@ if (!$model->isNewRecord) {
 	<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save', array('class' => 'btn btn-default btn-lg')); ?>
 </div>
 
+<?=$form->errorSummary($model);?>
 <?php $this->endWidget(); ?>
 
 </div> <!-- form -->

@@ -69,7 +69,7 @@ class PostController extends Controller
 				$this->redirect(array('/site'));
 			} else {
 //				dbug::dumpArray($model->getErrors());
-				$this->render('add', array('errors' => $model->getErrors()));
+				$this->render('add', array('model' => $model));
 			}
 		} else {
 			$this->render('add', array('model' => $model));

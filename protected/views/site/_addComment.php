@@ -15,8 +15,7 @@
 	?>
 
 	<div class="col-xs-8 col-xs-offset-2" id="add-comment">
-		<?php echo $form->errorSummary($model);
-		?>
+		<?=$form->errorSummary($model);?>
 
 		<div class="row">
 			<div class="col-xs-8">

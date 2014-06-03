@@ -159,8 +159,15 @@ class Post extends CActiveRecord
 			$image = Yii::app()->image->load($this->img_path);
 			$image->resize(400, 100)->quality(75)->sharpen(20);
 			$image->save($this->getPreviewPath($this->img_path)); // or $image->save('images/small.jpg');
-			return true;
 		}
+	}
+
+	public function beforeSave(){
+		if(empty($this->body)||empty($this->title)){
+			$this->addError('Scripts','Не допустимые символы');
+			return false;
+		}
+		return true;
 	}
 
 	//get

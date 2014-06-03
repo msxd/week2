@@ -53,6 +53,7 @@ class User extends CActiveRecord
 		// will receive user inputs.
 		//
 		return array(
+			array('email, pass, first_name, last_name, facebook_id, phone', 'filter', 'filter' => array(new StripTags(), 'filter')),
 			array('email, pass', 'required', 'on' => array('login', 'registration')),
 			array('email', 'email', 'on' => 'registration'),
 			array('email', 'required', 'on' => 'update'),
@@ -174,7 +175,6 @@ class User extends CActiveRecord
 	 * @param string $className active record class name.
 	 * @return User the static model class
 	 */
-
 	public function login($isUrl = false)
 	{
 		$model = $this;
@@ -232,7 +232,6 @@ class User extends CActiveRecord
 	{
 		return $this->cryptPass($pass) == $this->hashed_password;
 	}
-
 
 	public function beforeSave()
 	{
@@ -363,7 +362,7 @@ class User extends CActiveRecord
 		return 'lol';
 	}
 
-
+	//get
 	public function allUsers($admin = false)
 	{
 		$c = $this->getDbCriteria();
@@ -376,6 +375,7 @@ class User extends CActiveRecord
 		return $this;
 	}
 
+	//get
 	public function tokenGenerator($email, $pass)
 	{
 		$this->email = $email;
@@ -386,7 +386,7 @@ class User extends CActiveRecord
 		}
 		return $token;
 	}
-
+	//get
 	public function getData()
 	{
 		$user = array(
