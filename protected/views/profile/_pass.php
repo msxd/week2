@@ -17,19 +17,19 @@
 
 	<div class="input-group col-xs-12 padingf">
 		<span class="input-group-addon ads"><?php echo $form->labelEx($model, 'old_pass'); ?></span>
-		<?php echo $form->textField($model, 'old_pass', array('size' => 60, 'maxlength' => 255, 'class' => 'form-control')); ?>
+		<?php echo $form->passwordField($model, 'old_pass', array('size' => 60, 'maxlength' => 255, 'class' => 'form-control')); ?>
 		<?php echo $form->error($model, 'old_pass'); ?>
 	</div>
 
 	<div class="input-group col-xs-12 padingf">
 		<span class="input-group-addon ads"><?php echo $form->labelEx($model, 'pass'); ?></span>
-		<?php echo $form->textField($model, 'pass', array('size' => 60, 'maxlength' => 255, 'class' => 'form-control')); ?>
+		<?php echo $form->passwordField($model, 'pass', array('size' => 60, 'maxlength' => 255, 'class' => 'form-control')); ?>
 		<?php echo $form->error($model, 'pass'); ?>
 	</div>
 
 	<div class="input-group col-xs-12 padingf">
 		<span class="input-group-addon ads"><?php echo $form->labelEx($model, 'r_pass'); ?></span>
-		<?php echo $form->textField($model, 'r_pass', array('size' => 60, 'maxlength' => 255, 'class' => 'form-control')); ?>
+		<?php echo $form->passwordField($model, 'r_pass', array('size' => 60, 'maxlength' => 255, 'class' => 'form-control')); ?>
 		<?php echo $form->error($model, 'r_pass'); ?>
 	</div>
 

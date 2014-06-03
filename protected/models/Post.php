@@ -41,7 +41,6 @@ class Post extends CActiveRecord
 		return array(
 			array('body, title, user_id', 'required'),
 			array('body, title', 'filter', 'filter' => array($purifier, 'purify')),
-
 			array('title, img_path', 'length', 'max' => 127),
 			array('created_at, updated_at', 'default', 'setOnEmpty' => true, 'value' => null),
 			array('published', 'default', 'setOnEmpty' => true, 'value' => Yii::app()->params['defaultPublished']),
@@ -163,6 +162,7 @@ class Post extends CActiveRecord
 	}
 
 	public function beforeSave(){
+		parent::beforeSave();
 		if(empty($this->body)||empty($this->title)){
 			$this->addError('Scripts','Не допустимые символы');
 			return false;
