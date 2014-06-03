@@ -3,7 +3,6 @@
  * @var SiteController $this
  * @var Post[] $posts
  */
-//Yii::app()->bootstrap->init();
 $this->pageTitle = Yii::app()->name;
 
 
@@ -14,7 +13,7 @@ if (isset($posts)) {
 			<div class="row" id="title">
 				<h3 class="text-center">' . strip_tags($post->title) . '</h3>
 			</div>' . (($post->getPreviewImgURL()) ? '<center><img src="' . $post->getPreviewImgURL() . '"></img></center><br/>' : '') . MCText::shorten($post->body) .
-			'<div class="text-right text-info">by ' . $post->user->first_name . '<br/>' . CHtml::link('Read more', array('site/view/' . $post->id)) . '</div>
+			'<div class="text-right text-info">by ' . $post->user->first_name .'<br/>' . CHtml::link('Read more ['.count($post->comments).' comments]', array('site/view/' . $post->id)) . '</div>
 			<div id="foo" class="row">';
 		if (isset($post->created_at)) echo '<div class="col-xs-12">Created at: ' . $post->created_at . '</div>';
 		if (isset($post->updated_at)) echo '<div class="col-xs-12">Updated at: ' . $post->updated_at . '</div></div>';
