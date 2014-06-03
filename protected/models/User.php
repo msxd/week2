@@ -243,14 +243,16 @@ class User extends CActiveRecord
 		return true;
 	}
 
+	public function afterSave()
+	{
+		if ($this->getIsNewRecord()) {
+			$this->genAproveUrl();
+		}
+	}
+
 	public function cryptPass($str)
 	{
 		return md5($str);
-	}
-
-	public function getRole()
-	{
-		return $this->role_id;
 	}
 
 	public static function model($className = __CLASS__)
@@ -258,35 +260,7 @@ class User extends CActiveRecord
 		return parent::model($className);
 	}
 
-	/** @var User $user */
-	public function genAproveUrl()
-	{
-		if ($this->approved == 0) {
-			return $this->sendMail('Copy and past it ' . Yii::app()->controller->createAbsoluteUrl(
-					'/mailur/aprove?url=' . str_replace('=', '', base64_encode('aprove_email:1:' . $this->hashed_password . ':' . $this->email . ':' . $this->last_name . ':' . $this->first_name))), 'Pleace, <a href="' . (Yii::app()->controller->createAbsoluteUrl(
-					'/mailur/aprove?url=' . str_replace('=', '', base64_encode('aprove_email:1:' . $this->hashed_password . ':' . $this->email . ':' . $this->last_name . ':' . $this->first_name)))) . '">Click here</a>');
-		} else {
-			return 'Something went wrong. Please contact with administrator <a href="mailto:' . Yii::app()->params['adminEmail'] . '';
-		}
-	}
-
-	public function sendMail($alt, $text)
-	{
-		$message = "Message sent!";
-		$mail = Yii::app()->mailer;
-		$mail->AddAddress($this->email, $this->first_name);
-		$mail->IsHTML(true); // set email format to HTML
-		$mail->Subject = "From my site";
-		$mail->Body = $text;
-		$mail->AltBody = $alt;
-		if (!$mail->Send()) {
-			$message = "Message could not be sent. <p>";
-			$message = "Mailer Error: " . $mail->ErrorInfo;
-			return false;
-		}
-		return true;
-	}
-
+	//set
 	public function aproveMe($url)
 	{
 
@@ -304,26 +278,7 @@ class User extends CActiveRecord
 		return $me->save();
 	}
 
-	public function afterSave()
-	{
-		if ($this->getIsNewRecord()) {
-			$this->genAproveUrl();
-		}
-	}
-
-	/**
-	 * @param User $user
-	 * @return string
-	 */
-	public function passRecovery()
-	{
-		$str = '<a href="' . Yii::app()->controller->createAbsoluteUrl(
-				'/mailur/check?url=' . str_replace('=', '', base64_encode(base64_encode('recover') . ':' . base64_encode($this->hashed_password) . ':' . base64_encode(time()) . ':' . base64_encode($this->email) . ':' . base64_encode($this->last_name) . ':' . base64_encode($this->first_name)))) . '">url to recovery password</a><br/> After that your new password has send to this email';
-		$alt = 'Copy and past this url in u browser and create new password ' . Yii::app()->controller->createAbsoluteUrl(
-				'/mailur/check?url=' . str_replace('=', '', base64_encode(base64_encode('recover') . ':' . base64_encode($this->hashed_password) . ':' . base64_encode(time()) . ':' . base64_encode($this->email) . ':' . base64_encode($this->last_name) . ':' . base64_encode($this->first_name)))) . '\n After that your new password has send to this email';
-		return self::sendMail($alt, $str);
-	}
-
+	//set
 	/**
 	 * @param bool $recover
 	 * @param string $url
@@ -350,16 +305,43 @@ class User extends CActiveRecord
 			$me->setScenario('recovery');
 			if ($me->hashed_password == $res[1]) {
 				$me->pass = Yii::app()->getSecurityManager()->generateRandomString(8);
-				//$me->r_pass =  Yii::app()->getSecurityManager()->generateRandomString(8);
 				$me->save();
 				$me->sendMail('Your new password is: ' . $me->pass, 'Your new password is: ' . $me->pass);
-			} else {
-				return 'smt went wrong';
 			}
-		} else {
-			return 'Просрочено';
 		}
-		return 'lol';
+		return true;
+	}
+
+	//get
+	/**
+	 * @param User $user
+	 * @return string
+	 */
+	public function passRecovery()
+	{
+		$str = '<a href="' . Yii::app()->controller->createAbsoluteUrl(
+				'/mailur/check?url=' . str_replace('=', '', base64_encode(base64_encode('recover') . ':' . base64_encode($this->hashed_password) . ':' . base64_encode(time()) . ':' . base64_encode($this->email) . ':' . base64_encode($this->last_name) . ':' . base64_encode($this->first_name)))) . '">url to recovery password</a><br/> After that your new password has send to this email';
+		$alt = 'Copy and past this url in u browser and create new password ' . Yii::app()->controller->createAbsoluteUrl(
+				'/mailur/check?url=' . str_replace('=', '', base64_encode(base64_encode('recover') . ':' . base64_encode($this->hashed_password) . ':' . base64_encode(time()) . ':' . base64_encode($this->email) . ':' . base64_encode($this->last_name) . ':' . base64_encode($this->first_name)))) . '\n After that your new password has send to this email';
+		return self::sendMail($alt, $str);
+	}
+
+	//get
+	public function sendMail($alt, $text)
+	{
+		$message = "Message sent!";
+		$mail = Yii::app()->mailer;
+		$mail->AddAddress($this->email, $this->first_name);
+		$mail->IsHTML(true); // set email format to HTML
+		$mail->Subject = "From my site";
+		$mail->Body = $text;
+		$mail->AltBody = $alt;
+		if (!$mail->Send()) {
+			$message = "Message could not be sent. <p>";
+			$message = "Mailer Error: " . $mail->ErrorInfo;
+			return false;
+		}
+		return true;
 	}
 
 	//get
@@ -399,4 +381,21 @@ class User extends CActiveRecord
 		);
 		return $user;
 	}
+
+	//get
+	public function genAproveUrl()
+	{
+		if ($this->approved == 0) {
+			return $this->sendMail('Copy and past it ' . Yii::app()->controller->createAbsoluteUrl(
+					'/mailur/aprove?url=' . str_replace('=', '', base64_encode('aprove_email:1:' . $this->hashed_password . ':' . $this->email . ':' . $this->last_name . ':' . $this->first_name))), 'Pleace, <a href="' . (Yii::app()->controller->createAbsoluteUrl(
+					'/mailur/aprove?url=' . str_replace('=', '', base64_encode('aprove_email:1:' . $this->hashed_password . ':' . $this->email . ':' . $this->last_name . ':' . $this->first_name)))) . '">Click here</a>');
+		}
+	}
+
+	//get
+	public function getRole()
+	{
+		return $this->role_id;
+	}
+
 }
