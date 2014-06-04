@@ -34,7 +34,7 @@ $('.removeComment').click(function () {
             type: "POST",
             url: $(this).data('url'),
             success: function (msg) {
-                $('#comments').load(document.location.href.getElementById('comments'));
+                location.reload();
             },
             error: function (dat) {
                 alert('Something went wrong, try again leter. Datas:' + dat);
